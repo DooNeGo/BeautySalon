@@ -1,19 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Security;
+﻿namespace BeautySalon.Domain;
 
-namespace BeautySalonDomain
+public sealed record User
 {
-    public class User
+    private User() { }
+
+    public User(string username, string password)
     {
-        [Key]
-        public int Id { get; set; }
-
-        public string Username { get; set; } = string.Empty;
-
-        public SecureString Password { get; set; } = null!;
-
-        public string Role { get; set; } = string.Empty;
-
-        public List<Procedure> Procedures { get; set; } = null!;
+        Username = username;
+        Password = password;
     }
+
+    public int Id { get; }
+
+    public string Username { get; set; } = null!;
+
+    public string Password { get; set; } = null!;
 }

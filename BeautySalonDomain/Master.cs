@@ -1,27 +1,33 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace BeautySalon.Domain;
 
-namespace BeautySalonDomain
+public sealed record Master
 {
-    public class Master
+    private Master() { }
+
+    public Master(string surname, string name, string? middleName, Salon salon, Position position, string contactInfo, byte[] photo)
     {
-        [Key]
-        public int Id { get; set; }
-
-        public string Name { get; set; } = string.Empty;
-
-        public int Age { get; set; }
-
-        public int ProfessionId { get; set; }
-
-        [ForeignKey("ProfessionId")]
-        public Profession Profession { get; set; } = null!;
-
-        public int OfficeId { get; set; }
-
-        [ForeignKey("OfficeId")]
-        public Office Office { get; set; } = null!;
-
-        public List<Procedure> Procedures { get; set; } = null!;
+        Surname = surname;
+        Name = name;
+        MiddleName = middleName;
+        Salon = salon;
+        Position = position;
+        ContactInfo = contactInfo;
+        Photo = photo;
     }
+
+    public int Id { get; }
+
+    public string Surname { get; set; } = null!;
+
+    public string Name { get; set; } = null!;
+
+    public string? MiddleName { get; set; }
+
+    public Salon Salon { get; set; } = null!;
+
+    public Position Position { get; set; } = null!;
+
+    public string ContactInfo { get; set; } = null!;
+
+    public byte[]? Photo { get; set; }
 }

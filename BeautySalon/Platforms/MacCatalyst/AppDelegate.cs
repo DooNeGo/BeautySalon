@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace BeautySalon;
+namespace BeautySalon.UI;
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate
 {

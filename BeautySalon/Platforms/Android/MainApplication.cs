@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace BeautySalon;
+namespace BeautySalon.UI;
 [Application]
 public class MainApplication : MauiApplication
 {

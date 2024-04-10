@@ -1,25 +1,26 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿namespace BeautySalon.Domain;
 
-namespace BeautySalonDomain
+public sealed record Service
 {
-    public class Service
+    private Service() { }
+
+    public Service(string name, decimal price, TimeSpan duration, ServiceType type)
     {
-        [Key]
-        public int Id { get; set; }
-
-        public string Name { get; set; } = string.Empty;
-
-        [Column(TypeName = "money")]
-        public decimal Cost { get; set; }
-
-        public int ProfessionId { get; set; }
-
-        public int Duration { get; set; }
-
-        [ForeignKey("ProfessionId")]
-        public Profession Profession { get; set; } = null!;
-
-        public List<ProcedureItem> ProcedureItems { get; set; } = null!;
+        Name = name;
+        Price = price;
+        Duration = duration;
+        Type = type;
     }
+
+    public int Id { get; }
+
+    public string Name { get; set; } = null!;
+    
+    public decimal Price { get; set; }
+
+    public TimeSpan Duration { get; set; }
+
+    public ServiceType Type { get; set; } = null!;
+
+    public List<Appointment> Appointments { get; set; } = null!;
 }

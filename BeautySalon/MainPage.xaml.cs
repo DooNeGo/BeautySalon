@@ -1,12 +1,17 @@
-﻿namespace BeautySalon;
+﻿using BeautySalon.Application;
+
+namespace BeautySalon.UI;
 
 public partial class MainPage : ContentPage
 {
-    int count = 0;
+    private int count;
 
-    public MainPage()
+    private readonly IApplicationContext _context;
+
+    public MainPage(IApplicationContext context)
     {
         InitializeComponent();
+        _context = context;
     }
 
     private void OnCounterClicked(object sender, EventArgs e)
@@ -19,6 +24,6 @@ public partial class MainPage : ContentPage
             CounterBtn.Text = $"Clicked {count} times";
 
         SemanticScreenReader.Announce(CounterBtn.Text);
+
     }
 }
-

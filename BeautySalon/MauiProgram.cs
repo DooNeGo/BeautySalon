@@ -1,9 +1,8 @@
-﻿using CommunityToolkit.Maui;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using BeautySalon.Application;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
-namespace BeautySalon;
+namespace BeautySalon.UI;
 
 public static class MauiProgram
 {
@@ -19,12 +18,10 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        builder.Configuration
-               .AddJsonFile("appsettings.json", false, true);
-
         builder.Services
                .AddMediator()
-               .AddDbContext<BeautySalonDBContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+               .AddDbContext<IApplicationContext, ApplicationContext>()
+               .AddSingleton<MainPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

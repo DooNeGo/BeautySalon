@@ -1,4 +1,4 @@
-﻿namespace BeautySalon;
+﻿namespace BeautySalon.UI;
 
 public partial class AppShell : Shell
 {
