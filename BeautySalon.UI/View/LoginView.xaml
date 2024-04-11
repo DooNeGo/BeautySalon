@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BeautySalon.UI.View.LoginView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodel="clr-namespace:BeautySalon.UI.ViewModel"
+    Padding="5"
+    x:DataType="viewmodel:LoginViewModel"
+    Focused="ContentPage_Focused"
+    HideSoftInputOnTapped="True">
+
+    <VerticalStackLayout VerticalOptions="Center">
+
+        <VerticalStackLayout.GestureRecognizers>
+            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+        </VerticalStackLayout.GestureRecognizers>
+
+        <Label
+            Margin="0,0,0,40"
+            FontAttributes="Bold"
+            FontSize="30"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            Text="Login" />
+
+        <Border
+            Padding="10,5,10,5"
+            Background="White"
+            StrokeThickness="0"
+            VerticalOptions="Center">
+
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="15" />
+            </Border.StrokeShape>
+
+            <Border.Shadow>
+                <Shadow
+                    x:Name="BorderShadow"
+                    Brush="Black"
+                    Opacity="0"
+                    Radius="30"
+                    Offset="10, 10" />
+            </Border.Shadow>
+
+            <VerticalStackLayout>
+                <Entry
+                    x:Name="UsernameEntry"
+                    toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PasswordEntry}"
+                    ClearButtonVisibility="WhileEditing"
+                    Focused="Entry_Focused"
+                    Placeholder="Username"
+                    ReturnType="Next"
+                    Text="{Binding Username}" />
+                <Entry
+                    x:Name="PasswordEntry"
+                    toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference LoginButton}"
+                    Focused="Entry_Focused"
+                    IsPassword="True"
+                    Placeholder="Password"
+                    Text="{Binding Password}" />
+            </VerticalStackLayout>
+        </Border>
+
+        <Button
+            x:Name="LoginButton"
+            Margin="0,40,0,10"
+            Clicked="LoginButton_Clicked"
+            Command="{Binding LoginCommand}"
+            CornerRadius="20"
+            FontSize="16"
+            IsEnabled="{Binding IsLoginButtonEnable}"
+            Text="Log in"
+            WidthRequest="200" />
+
+        <Label
+            FontSize="14"
+            HorizontalOptions="Center"
+            Text="Forgot your password?"
+            TextColor="{StaticResource Primary}" />
+    </VerticalStackLayout>
+</ContentPage>

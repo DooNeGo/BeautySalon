@@ -12,7 +12,7 @@ public sealed record Customer
         ContactInfo = contactInfo;
     }
 
-    public int Id { get; }
+    public int Id { get; set; }
 
     public string Surname { get; set; } = null!;
 

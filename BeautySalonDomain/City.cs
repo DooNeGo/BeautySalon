@@ -9,9 +9,9 @@ public sealed record City
         Name = name;
     }
 
-    public int Id { get; }
+    public int Id { get; set; }
 
     public string Name { get; set; } = null!;
 
-    public List<Salon> Salons { get; } = null!;
+    public List<Salon> Salons { get; set; } = null!;
 }

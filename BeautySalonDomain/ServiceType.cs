@@ -10,11 +10,11 @@ public sealed record ServiceType
         Description = description;
     }
 
-    public int Id { get; }
+    public int Id { get; set; }
 
     public string Title { get; set; } = null!;
 
     public string Description { get; set; } = null!;
 
-    public List<Service> Services { get; } = null!;
+    public List<Service> Services { get; set; } = null!;
 }

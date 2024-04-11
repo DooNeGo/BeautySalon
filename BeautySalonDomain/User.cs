@@ -10,7 +10,7 @@ public sealed record User
         Password = password;
     }
 
-    public int Id { get; }
+    public int Id { get; set; }
 
     public string Username { get; set; } = null!;
 

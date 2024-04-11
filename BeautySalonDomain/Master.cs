@@ -15,7 +15,7 @@ public sealed record Master
         Photo = photo;
     }
 
-    public int Id { get; }
+    public int Id { get; set; }
 
     public string Surname { get; set; } = null!;
 

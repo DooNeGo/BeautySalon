@@ -11,7 +11,7 @@ public sealed record Salon
         City = city;
     }
 
-    public int Id { get; }
+    public int Id { get; set; }
 
     public string Name { get; set; } = null!;
 
@@ -19,5 +19,5 @@ public sealed record Salon
 
     public City City { get; set; } = null!;
 
-    public List<Master> Masters { get; } = null!;
+    public List<Master> Masters { get; set; } = null!;
 }

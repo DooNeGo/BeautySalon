@@ -13,7 +13,7 @@ public sealed record Appointment
         Customer = customer;
     }
 
-    public int Id { get; }
+    public int Id { get; set; }
 
     public DateOnly Date { get; set; }
 
@@ -21,7 +21,7 @@ public sealed record Appointment
 
     public Master Master { get; set; } = null!;
 
-    public List<Service> Services { get; } = null!;
+    public List<Service> Services { get; set; } = null!;
 
     public Customer Customer { get; set; } = null!;
 }
