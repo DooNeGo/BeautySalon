@@ -21,7 +21,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>BeautySalon.UI</ApplicationTitle>
+		<ApplicationTitle>BeautySalon</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.beautysalon.ui</ApplicationId>

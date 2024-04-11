@@ -24,7 +24,7 @@ public partial class LoginView : ContentPage
         _cancellationToken.Dispose();
         _cancellationToken = new CancellationTokenSource();
 
-        ShadeEntryBorder(_cancellationToken.Token);
+        Task.Run(() => ShadeEntryBorder(_cancellationToken.Token));
     }
 
     private void ContentPage_Focused(object sender, FocusEventArgs e)
@@ -36,7 +36,7 @@ public partial class LoginView : ContentPage
         UsernameEntry.Unfocus();
         PasswordEntry.Unfocus();
 
-        UnshadeEntryBorder(_cancellationToken.Token);
+        Task.Run(() => UnshadeEntryBorder(_cancellationToken.Token));
     }
 
     private async Task ShadeEntryBorder(CancellationToken cancellationToken)
@@ -72,6 +72,6 @@ public partial class LoginView : ContentPage
             PasswordEntry.HideSoftInputAsync(CancellationToken.None);
         }
 
-        UnshadeEntryBorder(_cancellationToken.Token);
+        Task.Run(() => UnshadeEntryBorder(_cancellationToken.Token));
     }
 }
