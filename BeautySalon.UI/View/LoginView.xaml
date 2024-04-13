@@ -5,10 +5,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodel="clr-namespace:BeautySalon.UI.ViewModel"
-    Padding="5"
+    Padding="10"
     x:DataType="viewmodel:LoginViewModel"
-    Focused="ContentPage_Focused"
     HideSoftInputOnTapped="True">
+
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="White" StatusBarStyle="DarkContent" />
+    </ContentPage.Behaviors>
 
     <VerticalStackLayout Spacing="10" VerticalOptions="Center">
 
@@ -17,16 +20,15 @@
         </VerticalStackLayout.GestureRecognizers>
 
         <Label
-            Margin="0,0,0,10"
-            FontAttributes="Bold"
-            FontSize="24"
+            Margin="0,0,0,50"
+            FontFamily="Lato"
+            FontSize="30"
             HorizontalOptions="Center"
             HorizontalTextAlignment="Center"
-            Text="Login" />
-
-        <Image HeightRequest="120" Source="logo.png" />
+            Text="Log in" />
 
         <Border
+            x:Name="LoginBorder"
             Padding="10,5,10,5"
             Background="White"
             StrokeThickness="0"
@@ -41,7 +43,7 @@
                     x:Name="BorderShadow"
                     Brush="Black"
                     Opacity="0"
-                    Radius="30"
+                    Radius="20"
                     Offset="0, 10" />
             </Border.Shadow>
 
@@ -51,36 +53,44 @@
                     toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PasswordEntry}"
                     ClearButtonVisibility="WhileEditing"
                     Focused="Entry_Focused"
+                    FontFamily="Lato"
                     FontSize="16"
                     Placeholder="Username"
                     ReturnType="Next"
-                    Text="{Binding Username}" />
+                    Text="{Binding Username}"
+                    VerticalTextAlignment="Center" />
                 <Entry
                     x:Name="PasswordEntry"
                     toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference LoginButton}"
                     Focused="Entry_Focused"
+                    FontFamily="Lato"
                     FontSize="16"
                     IsPassword="True"
                     Placeholder="Password"
-                    Text="{Binding Password}" />
+                    Text="{Binding Password}"
+                    VerticalTextAlignment="Center" />
             </VerticalStackLayout>
         </Border>
 
         <Button
             x:Name="LoginButton"
+            Margin="0,30,0,0"
             Clicked="LoginButton_Clicked"
             Command="{Binding LoginCommand}"
-            CornerRadius="20"
+            CornerRadius="25"
+            FontFamily="Lato"
             FontSize="16"
+            HeightRequest="50"
             IsEnabled="{Binding IsLoginButtonEnable}"
             Text="Log in"
             WidthRequest="200" />
 
         <Label
             Margin="0,0,0,100"
+            FontFamily="Lato"
             FontSize="13"
             HorizontalOptions="Center"
-            Text="Forgot your password?"
+            Text="Forgot password?"
             TextColor="{StaticResource Primary}" />
     </VerticalStackLayout>
 </ContentPage>

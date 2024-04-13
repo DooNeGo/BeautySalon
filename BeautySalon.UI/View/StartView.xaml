@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BeautySalon.UI.View.StartView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Padding="10">
+
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="White" StatusBarStyle="DarkContent" />
+    </ContentPage.Behaviors>
+
+    <VerticalStackLayout
+        Padding="20,0"
+        Spacing="15"
+        VerticalOptions="Center">
+
+        <Label
+            Margin="0,0,0,15"
+            FontAttributes="Bold"
+            FontFamily="Florisel"
+            FontSize="50"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            Text="Beauty Salon" />
+
+        <Image
+            Margin="0,0,0,40"
+            HeightRequest="180"
+            Source="logo.png" />
+
+        <Button
+            CornerRadius="20"
+            FontFamily="Loto"
+            Text="Create an account" />
+
+        <Button
+            BackgroundColor="Transparent"
+            BorderColor="{StaticResource Primary}"
+            BorderWidth="1"
+            Clicked="Button_Clicked"
+            CornerRadius="20"
+            FontFamily="Loto"
+            Text="Log in with an existing account"
+            TextColor="{StaticResource Primary}" />
+
+    </VerticalStackLayout>
+</ContentPage>

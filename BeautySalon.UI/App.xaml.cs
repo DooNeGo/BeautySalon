@@ -7,5 +7,6 @@ public partial class App
         InitializeComponent();
 
         MainPage = new AppShell();
+        UserAppTheme = AppTheme.Light;
     }
 }
