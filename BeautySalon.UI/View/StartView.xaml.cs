@@ -9,8 +9,13 @@ public partial class StartView : ContentPage
 		InitializeComponent();
 	}
 
-    private void Button_Clicked(object sender, EventArgs e)
+    private void LoginWithAccountButton_Clicked(object sender, EventArgs e)
     {
 		Shell.Current.GoToAsync(nameof(LoginViewModel));
+    }
+
+    private void CreateAccountButton_Clicked(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync(nameof(CreateAccountViewModel));
     }
 }

@@ -1,11 +1,9 @@
 using BeautySalon.UI.ViewModel;
-using CommunityToolkit.Maui.Core.Platform;
 
 namespace BeautySalon.UI.View;
 
-public partial class LoginView : ContentPage
+public partial class LoginView : ContentPage, IDisposable
 {
-    //private CancellationTokenSource _cancellationToken = new();
     private readonly Animation _shadeBorderAnimation;
     private readonly Animation _unshadeBorderAnimation;
 
@@ -62,5 +60,12 @@ public partial class LoginView : ContentPage
             LoginBorder.AbortAnimation(nameof(_shadeBorderAnimation));
             _unshadeBorderAnimation.Commit(this, nameof(_unshadeBorderAnimation));
         }
+    }
+
+    public void Dispose()
+    {
+        _shadeBorderAnimation.Dispose();
+        _unshadeBorderAnimation.Dispose();
+        GC.SuppressFinalize(this);
     }
 }

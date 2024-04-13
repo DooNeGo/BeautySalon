@@ -30,6 +30,7 @@
             Source="logo.png" />
 
         <Button
+            Clicked="CreateAccountButton_Clicked"
             CornerRadius="20"
             FontFamily="Loto"
             Text="Create an account" />
@@ -38,7 +39,7 @@
             BackgroundColor="Transparent"
             BorderColor="{StaticResource Primary}"
             BorderWidth="1"
-            Clicked="Button_Clicked"
+            Clicked="LoginWithAccountButton_Clicked"
             CornerRadius="20"
             FontFamily="Loto"
             Text="Log in with an existing account"

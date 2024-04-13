@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BeautySalon.UI.View.CreateAccountView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:BeautySalon.UI.ViewModel"
+    Padding="10"
+    x:DataType="viewmodel:CreateAccountViewModel">
+
+    <VerticalStackLayout Spacing="15">
+        <VerticalStackLayout.Resources>
+            <Style TargetType="Border">
+                <Setter Property="StrokeShape" Value="RoundRectangle 20" />
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="Stroke" Value="{StaticResource Gray200}" />
+            </Style>
+
+            <Style TargetType="Entry">
+                <Setter Property="Keyboard" Value="Text" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="ClearButtonVisibility" Value="WhileEditing" />
+                <Setter Property="ReturnType" Value="Next" />
+            </Style>
+
+            <Style x:Key="ErrorLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource Error}" />
+                <Setter Property="Margin" Value="5,-6,0,0" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+        </VerticalStackLayout.Resources>
+
+        <Label
+            Margin="0,0,0,15"
+            FontAttributes="Bold"
+            FontFamily="Loto"
+            FontSize="30"
+            HorizontalOptions="Start"
+            Text="Account Information" />
+
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="5">
+            <Border Grid.Column="0">
+                <VerticalStackLayout>
+                    <Entry
+                        x:Name="FirstNameEntry"
+                        Placeholder="First Name"
+                        Text="{Binding FirstName}" />
+                    <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding FirstNameError}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Grid.Column="1">
+                <VerticalStackLayout>
+                    <Entry Placeholder="Last Name" Text="{Binding LastName}" />
+                    <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding LastNameError}" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <Border>
+            <VerticalStackLayout>
+                <Entry Placeholder="Middle Name" Text="{Binding MiddleName}" />
+                <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding MiddleNameError}" />
+            </VerticalStackLayout>
+        </Border>
+
+        <Border>
+            <VerticalStackLayout>
+                <Entry
+                    Keyboard="Telephone"
+                    Placeholder="Phone"
+                    ReturnType="Done"
+                    Text="{Binding Phone}" />
+                <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding PhoneError}" />
+            </VerticalStackLayout>
+        </Border>
+
+        <Button
+            Margin="30,20,20,0"
+            Command="{Binding GoNextCommand}"
+            CornerRadius="25"
+            FontSize="16"
+            HeightRequest="50"
+            HorizontalOptions="End"
+            Text="Next"
+            WidthRequest="140" />
+    </VerticalStackLayout>
+</ContentPage>

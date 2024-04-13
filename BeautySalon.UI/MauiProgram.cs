@@ -23,9 +23,11 @@ public static class MauiProgram
                 fonts.AddFont("Floriselscript.ttf", "Florisel");
             });
 
-        builder.Services.AddApplication()
-                        .AddInfrastructure()
-                        .AddTransientWithShellRoute<LoginView, LoginViewModel>(nameof(LoginViewModel));
+        builder.Services
+            .AddApplication()
+            .AddInfrastructure()
+            .AddTransientWithShellRoute<LoginView, LoginViewModel>(nameof(LoginViewModel))
+            .AddTransientWithShellRoute<CreateAccountView, CreateAccountViewModel>(nameof(CreateAccountViewModel));
 
 #if DEBUG
 		builder.Logging.AddDebug();

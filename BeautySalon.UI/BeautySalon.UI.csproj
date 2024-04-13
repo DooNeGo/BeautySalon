@@ -79,6 +79,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="View\CreateAccountView.xaml.cs">
+	    <DependentUpon>CreateAccountView.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="View\CreateAccountView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\LoginView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
