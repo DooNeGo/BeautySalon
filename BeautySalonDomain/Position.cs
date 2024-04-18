@@ -6,11 +6,12 @@ public sealed record Position
 
     public Position(string title, Salon salon)
     {
+        Id = Guid.NewGuid();
         Title = title;
         Salon = salon;
     }
 
-    public int Id { get; set; }
+    public Guid Id { get; }
 
     public string Title { get; set; } = null!;
 

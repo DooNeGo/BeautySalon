@@ -6,6 +6,7 @@ public sealed record Master
 
     public Master(string surname, string name, string? middleName, Salon salon, Position position, string contactInfo, byte[] photo)
     {
+        Id = Guid.NewGuid();
         Surname = surname;
         Name = name;
         MiddleName = middleName;
@@ -15,7 +16,7 @@ public sealed record Master
         Photo = photo;
     }
 
-    public int Id { get; set; }
+    public Guid Id { get; }
 
     public string Surname { get; set; } = null!;
 

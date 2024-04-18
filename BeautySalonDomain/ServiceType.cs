@@ -6,11 +6,12 @@ public sealed record ServiceType
 
     public ServiceType(string title, string description)
     {
+        Id = Guid.NewGuid();
         Title = title;
         Description = description;
     }
 
-    public int Id { get; set; }
+    public Guid Id { get; }
 
     public string Title { get; set; } = null!;
 

@@ -3,13 +3,13 @@ using Mediator;
 
 namespace BeautySalon.Application.Commands.AddUserCommand;
 
-public sealed class AddUserCommandHandler(IApplicationContext context) : ICommandHandler<AddUserCommand>
+public sealed class AddUserCommandHandler(IApplicationContext context) : ICommandHandler<AddUserCommand, Guid>
 {
-    public async ValueTask<Unit> Handle(AddUserCommand command, CancellationToken cancellationToken)
+    public async ValueTask<Guid> Handle(AddUserCommand command, CancellationToken cancellationToken)
     {
-        await context.Users.AddAsync(command.User, cancellationToken);
+        User value = (await context.Users.AddAsync(command.User, cancellationToken)).Entity;
         await context.SaveChangesAsync(cancellationToken);
 
-        return Unit.Value;
+        return value.Id;
     }
 }

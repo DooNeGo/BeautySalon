@@ -6,13 +6,14 @@ public sealed record Service
 
     public Service(string name, decimal price, TimeSpan duration, ServiceType type)
     {
+        Id = Guid.NewGuid();
         Name = name;
         Price = price;
         Duration = duration;
         Type = type;
     }
 
-    public int Id { get; set; }
+    public Guid Id { get; }
 
     public string Name { get; set; } = null!;
     

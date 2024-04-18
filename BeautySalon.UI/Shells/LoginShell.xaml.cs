@@ -1,8 +1,8 @@
 ﻿namespace BeautySalon.UI;
 
-public partial class AppShell : Shell
+public partial class LoginShell : Shell
 {
-    public AppShell()
+    public LoginShell()
     {
         InitializeComponent();
     }

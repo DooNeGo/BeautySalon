@@ -6,10 +6,11 @@ public sealed record City
 
     public City(string name)
     {
+        Id = Guid.NewGuid();
         Name = name;
     }
 
-    public int Id { get; set; }
+    public Guid Id { get; }
 
     public string Name { get; set; } = null!;
 

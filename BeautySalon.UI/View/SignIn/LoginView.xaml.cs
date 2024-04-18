@@ -1,8 +1,8 @@
 using BeautySalon.UI.ViewModel;
 
-namespace BeautySalon.UI.View;
+namespace BeautySalon.UI.View.SignIn;
 
-public partial class LoginView : ContentPage, IDisposable
+public sealed partial class LoginView : ContentPage, IDisposable
 {
     private readonly Animation _shadeBorderAnimation;
     private readonly Animation _unshadeBorderAnimation;
@@ -12,8 +12,8 @@ public partial class LoginView : ContentPage, IDisposable
         InitializeComponent();
 
         BindingContext = viewModel;
-        _shadeBorderAnimation = new Animation(a => BorderShadow.Opacity = (float)a, 0, 0.35f, Easing.Linear);
-        _unshadeBorderAnimation = new Animation(a => BorderShadow.Opacity = (float)a, 0.35f, 0, Easing.Linear);
+        _shadeBorderAnimation = new Animation(a => BorderShadow.Opacity = (float)a, 0, 0.35, Easing.Linear);
+        _unshadeBorderAnimation = new Animation(a => BorderShadow.Opacity = (float)a, 0.35, 0, Easing.Linear);
     }
 
     protected async override void OnAppearing()
@@ -23,18 +23,12 @@ public partial class LoginView : ContentPage, IDisposable
         UsernameEntry.Focus();
     }
 
-    private void LoginButton_Clicked(object sender, EventArgs e)
-    {
-        DisplayAlert("Login button", "Button was clicked", "Close");
-    }
-
     private void Entry_Focused(object sender, FocusEventArgs e)
     {
         if (!_shadeBorderAnimation.IsEnabled && BorderShadow.Opacity is 0f)
         {
-            LoginButton.Focus();
-            LoginBorder.ScaleTo(1.01f);
             LoginBorder.AbortAnimation(nameof(_unshadeBorderAnimation));
+            LoginBorder.ScaleTo(1.015);
             _shadeBorderAnimation.Commit(this, nameof(_shadeBorderAnimation));
         }
     }
@@ -49,15 +43,10 @@ public partial class LoginView : ContentPage, IDisposable
             UsernameEntry.HideSoftInputAsync(CancellationToken.None);
         }
 
-        if (PasswordEntry.IsSoftInputShowing())
-        {
-            PasswordEntry.HideSoftInputAsync(CancellationToken.None);
-        }
-
         if (!_unshadeBorderAnimation.IsEnabled && BorderShadow.Opacity is not 0f)
         {
-            LoginBorder.ScaleTo(1f);
             LoginBorder.AbortAnimation(nameof(_shadeBorderAnimation));
+            LoginBorder.ScaleTo(1);
             _unshadeBorderAnimation.Commit(this, nameof(_unshadeBorderAnimation));
         }
     }

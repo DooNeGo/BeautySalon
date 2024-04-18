@@ -11,6 +11,8 @@ public interface IApplicationContext
 
     public DbSet<Master> Masters { get; }
 
+    public DbSet<Customer> Customers { get; }
+
     public DbSet<Position> Positions { get; }
 
     public DbSet<Service> Services { get; }

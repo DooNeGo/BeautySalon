@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace BeautySalon.UI.Attributes;
 
-public partial class PhoneNumberAttribute(string errorMessage) : ValidationAttribute
+public sealed partial class PhoneNumberAttribute(string errorMessage) : ValidationAttribute
 {
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {

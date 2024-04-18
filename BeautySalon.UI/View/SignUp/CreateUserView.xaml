@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BeautySalon.UI.View.SignUp.CreateUserView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:BeautySalon.UI.ViewModel"
+    Padding="10"
+    x:DataType="viewmodel:CreateUserViewModel"
+    HideSoftInputOnTapped="True">
+
+    <VerticalStackLayout>
+        <VerticalStackLayout.Resources>
+            <Style TargetType="Entry">
+                <Setter Property="Keyboard" Value="Text" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="ClearButtonVisibility" Value="WhileEditing" />
+                <Setter Property="ReturnType" Value="Next" />
+            </Style>
+
+            <Style x:Key="ErrorLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource Error}" />
+                <Setter Property="Margin" Value="5,-6,0,0" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+        </VerticalStackLayout.Resources>
+
+        <Label
+            Margin="0,0,0,15"
+            FontAttributes="Bold"
+            FontSize="30"
+            HorizontalOptions="Start"
+            Text="Credential"
+            VerticalOptions="Center" />
+
+        <VerticalStackLayout>
+            <Entry
+                x:Name="UsernameEntry"
+                Placeholder="Username"
+                Text="{Binding Username}" />
+            <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding UsernameError}" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout>
+            <Entry
+                x:Name="PasswordEntry"
+                IsPassword="True"
+                Placeholder="Password"
+                Text="{Binding Password}" />
+            <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding PasswordError}" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout>
+            <Entry
+                x:Name="ConfirmedPasswordEntry"
+                IsPassword="True"
+                Placeholder="Confirm Password"
+                Text="{Binding ConfirmedPassword}" />
+            <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding ConfirmedPasswordError}" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout>
+            <Entry
+                x:Name="EmailEntry"
+                Keyboard="Email"
+                Placeholder="Email"
+                ReturnType="Done"
+                Text="{Binding Email}" />
+            <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding EmailError}" />
+        </VerticalStackLayout>
+
+        <Button
+            Margin="30,20,20,0"
+            Command="{Binding CreateUserCommand}"
+            CornerRadius="25"
+            FontSize="16"
+            HeightRequest="50"
+            HorizontalOptions="End"
+            Text="Create"
+            WidthRequest="140" />
+    </VerticalStackLayout>
+</ContentPage>

@@ -3,7 +3,7 @@ using Mediator;
 
 namespace BeautySalon.Application.Commands.AddUserCommand;
 
-public readonly struct AddUserCommand(User user) : ICommand
+public readonly struct AddUserCommand(User user) : ICommand<Guid>
 {
-    public User User { get; } = user;
+    public User User => user;
 }

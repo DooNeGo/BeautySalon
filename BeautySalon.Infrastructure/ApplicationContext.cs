@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BeautySalon.Infrastructure
 {
-    public sealed class ApplicationContext : DbContext, IApplicationContext
+    internal sealed class ApplicationContext : DbContext, IApplicationContext
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
@@ -17,6 +17,8 @@ namespace BeautySalon.Infrastructure
         public DbSet<Salon> Salons => Set<Salon>();
 
         public DbSet<Master> Masters => Set<Master>();
+
+        public DbSet<Customer> Customers => Set<Customer>();
 
         public DbSet<Position> Positions => Set<Position>();
 

@@ -6,12 +6,13 @@ public sealed record Salon
 
     public Salon(string name, string address, City city)
     {
+        Id = Guid.NewGuid();
         Name = name;
         Address = address;
         City = city;
     }
 
-    public int Id { get; set; }
+    public Guid Id { get; }
 
     public string Name { get; set; } = null!;
 

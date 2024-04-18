@@ -79,19 +79,31 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="View\CreateAccountView.xaml.cs">
+	  <Compile Update="Shells\LoginShell.xaml.cs">
+	    <DependentUpon>LoginShell.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\SignUp\CreateAccountView.xaml.cs">
 	    <DependentUpon>CreateAccountView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="View\CreateAccountView.xaml">
+	  <MauiXaml Update="Shells\MainShell.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\LoginView.xaml">
+	  <MauiXaml Update="View\SignUp\CreateAccountView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\StartView.xaml">
+	  <MauiXaml Update="View\SignUp\CreateUserView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\SignIn\LoginView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\MainView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\SignIn\StartView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

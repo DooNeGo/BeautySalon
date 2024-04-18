@@ -1,12 +1,22 @@
-﻿namespace BeautySalon.UI;
+﻿using BeautySalon.Application.Interfaces;
+using BeautySalon.Domain;
+using BeautySalon.UI.Shells;
 
-public partial class App
+namespace BeautySalon.UI;
+
+public sealed partial class App
 {
-    public App()
+    public App(IIdentityService identityService)
     {
         InitializeComponent();
 
-        MainPage = new AppShell();
+        identityService.LoginSuccesful += IdentityService_LoginSuccesful;
+        MainPage = new LoginShell();
         UserAppTheme = AppTheme.Light;
+    }
+
+    private void IdentityService_LoginSuccesful(User obj)
+    {
+        MainPage = new MainShell();
     }
 }

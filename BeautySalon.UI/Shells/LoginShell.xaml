@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="BeautySalon.UI.LoginShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:loginview="clr-namespace:BeautySalon.UI.View.SignIn"
+    xmlns:mainview="clr-namespace:BeautySalon.UI.View"
+    xmlns:signupview="clr-namespace:BeautySalon.UI.View.SignUp"
+    Title="Beauty Salon"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.ForegroundColor="Black">
+
+    <ShellContent ContentTemplate="{DataTemplate loginview:StartView}" />
+    <ShellContent ContentTemplate="{DataTemplate loginview:LoginView}" />
+    <ShellContent ContentTemplate="{DataTemplate signupview:CreateAccountView}" />
+    <ShellContent ContentTemplate="{DataTemplate signupview:CreateUserView}" />
+</Shell>

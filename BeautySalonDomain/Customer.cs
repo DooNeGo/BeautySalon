@@ -4,21 +4,22 @@ public sealed record Customer
 {
     private Customer() { }
 
-    public Customer(string surname, string name, string middleName, string contactInfo)
+    public Customer(string lastName, string firstName, string middleName, string phone)
     {
-        Surname = surname;
-        Name = name;
+        Id = Guid.NewGuid();
+        LastName = lastName;
+        FirstName = firstName;
         MiddleName = middleName;
-        ContactInfo = contactInfo;
+        Phone = phone;
     }
 
-    public int Id { get; set; }
+    public Guid Id { get; }
 
-    public string Surname { get; set; } = null!;
+    public string LastName { get; set; } = null!;
 
-    public string Name { get; set; } = null!;
+    public string FirstName { get; set; } = null!;
 
     public string MiddleName { get; set; } = null!;
 
-    public string ContactInfo { get; set; } = null!;
+    public string Phone { get; set; } = null!;
 }
