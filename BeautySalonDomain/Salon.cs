@@ -4,12 +4,11 @@ public sealed record Salon
 {
     private Salon() { }
 
-    public Salon(string name, string address, City city)
+    public Salon(string name, string address)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.Empty;
         Name = name;
         Address = address;
-        City = city;
     }
 
     public Guid Id { get; }
@@ -20,5 +19,7 @@ public sealed record Salon
 
     public City City { get; set; } = null!;
 
-    public List<Master> Masters { get; set; } = null!;
+    public List<Master> Masters { get; set; } = [];
+
+    public List<Position> Positions { get; set; } = [];
 }

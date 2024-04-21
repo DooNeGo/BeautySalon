@@ -4,12 +4,11 @@ public sealed record User
 {
     private User() { }
 
-    public User(string username, string password, string email, Customer customer)
+    public User(string username, string password, string email)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.Empty;
         Username = username;
         Password = password;
-        Customer = customer;
         Email = email;
     }
 
@@ -21,5 +20,5 @@ public sealed record User
 
     public string Email { get; set; } = null!;
 
-    public Customer Customer { get; set; } = null!;
+    public Customer? Customer { get; set; }
 }

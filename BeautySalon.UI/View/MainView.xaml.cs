@@ -1,6 +1,6 @@
 namespace BeautySalon.UI.View;
 
-public partial class MainView : ContentPage
+public sealed partial class MainView : ContentPage
 {
 	public MainView()
 	{

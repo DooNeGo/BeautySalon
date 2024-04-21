@@ -2,6 +2,6 @@
 
 namespace BeautySalon.UI.ViewModel;
 
-public partial class MainViewModel : ObservableObject
+public sealed partial class MainViewModel : ObservableObject
 {
 }

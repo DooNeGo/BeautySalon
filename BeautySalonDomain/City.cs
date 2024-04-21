@@ -6,7 +6,7 @@ public sealed record City
 
     public City(string name)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.Empty;
         Name = name;
     }
 
@@ -14,5 +14,5 @@ public sealed record City
 
     public string Name { get; set; } = null!;
 
-    public List<Salon> Salons { get; set; } = null!;
+    public List<Salon> Salons { get; set; } = [];
 }

@@ -4,11 +4,10 @@ public sealed record Position
 {
     private Position() { }
 
-    public Position(string title, Salon salon)
+    public Position(string title)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.Empty;
         Title = title;
-        Salon = salon;
     }
 
     public Guid Id { get; }

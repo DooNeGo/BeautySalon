@@ -4,9 +4,9 @@ public sealed record Appointment
 {
     private Appointment() { }
 
-    public Appointment(DateOnly date, TimeOnly time, Master master, List<Service> services, Customer customer)
+    public Appointment(DateOnly date, TimeOnly time, Master master, Customer customer, List<Service> services)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.Empty;
         Date = date;
         Time = time;
         Master = master;

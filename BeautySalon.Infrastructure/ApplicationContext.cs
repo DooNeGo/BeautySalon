@@ -8,7 +8,7 @@ namespace BeautySalon.Infrastructure
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
-            //Database.EnsureDeleted();
+            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
@@ -44,7 +44,10 @@ namespace BeautySalon.Infrastructure
             modelBuilder.Entity<Salon>().HasKey(p => p.Id);
             modelBuilder.Entity<Service>().HasKey(p => p.Id);
             modelBuilder.Entity<ServiceType>().HasKey(p => p.Id);
+
             modelBuilder.Entity<User>().HasKey(p => p.Id);
+            modelBuilder.Entity<User>().HasIndex(p => p.Username).IsUnique();
+            modelBuilder.Entity<User>().HasIndex(p => p.Email).IsUnique();
         }
     }
 }

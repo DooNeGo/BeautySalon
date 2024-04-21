@@ -1,22 +1,30 @@
 ﻿using BeautySalon.Application.Interfaces;
-using BeautySalon.Domain;
 using BeautySalon.UI.Shells;
+using BeautySalon.UI.View.SignIn;
 
 namespace BeautySalon.UI;
 
 public sealed partial class App
 {
-    public App(IIdentityService identityService)
+    private readonly IIdentityService _identityService;
+    private readonly IServiceProvider _serviceProvider;
+
+    public App(IIdentityService identityService, IServiceProvider serviceProvider)
     {
         InitializeComponent();
 
-        identityService.LoginSuccesful += IdentityService_LoginSuccesful;
-        MainPage = new LoginShell();
+        MainPage = new MainShell();
         UserAppTheme = AppTheme.Light;
+
+        _identityService = identityService;
+        _serviceProvider = serviceProvider;
     }
 
-    private void IdentityService_LoginSuccesful(User obj)
+    protected override void OnStart()
     {
-        MainPage = new MainShell();
+        if (_identityService.CurrentUser is null)
+        {
+            MainPage?.Navigation.PushAsync(_serviceProvider.GetRequiredService<StartView>());
+        }
     }
 }

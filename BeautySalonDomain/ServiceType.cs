@@ -6,7 +6,7 @@ public sealed record ServiceType
 
     public ServiceType(string title, string description)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.Empty;
         Title = title;
         Description = description;
     }
@@ -17,5 +17,5 @@ public sealed record ServiceType
 
     public string Description { get; set; } = null!;
 
-    public List<Service> Services { get; set; } = null!;
+    public List<Service> Services { get; set; } = [];
 }

@@ -6,7 +6,7 @@ public sealed record Service
 
     public Service(string name, decimal price, TimeSpan duration, ServiceType type)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.Empty;
         Name = name;
         Price = price;
         Duration = duration;
@@ -23,5 +23,5 @@ public sealed record Service
 
     public ServiceType Type { get; set; } = null!;
 
-    public List<Appointment> Appointments { get; set; } = null!;
+    public List<Appointment> Appointments { get; set; } = [];
 }

@@ -7,6 +7,10 @@
     Padding="10"
     x:DataType="viewmodel:CreateAccountViewModel">
 
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
+
     <VerticalStackLayout Spacing="15">
         <VerticalStackLayout.Resources>
             <Style TargetType="Entry">
@@ -56,7 +60,7 @@
         <VerticalStackLayout>
             <Entry
                 x:Name="MiddleNameEntry"
-                Placeholder="Middle Name"
+                Placeholder="Middle Name (unrequired)"
                 Text="{Binding MiddleName}" />
             <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding MiddleNameError}" />
         </VerticalStackLayout>
@@ -74,13 +78,12 @@
 
         <Button
             Margin="30,20,20,0"
-            Clicked="NextButton_Clicked"
-            Command="{Binding GoNextCommand}"
+            Command="{Binding CreateCustomerAccountCommand}"
             CornerRadius="25"
             FontSize="16"
             HeightRequest="50"
             HorizontalOptions="End"
-            Text="Next"
+            Text="Finish"
             WidthRequest="140" />
     </VerticalStackLayout>
 </ContentPage>

@@ -1,5 +1,6 @@
 ﻿using BeautySalon.Application.Commands.AddUserCommand;
 using BeautySalon.Domain;
+using BeautySalon.UI.Attributes;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Mediator;
@@ -7,26 +8,24 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BeautySalon.UI.ViewModel;
 
-public sealed partial class CreateUserViewModel(IMediator mediator) : ObservableValidator, IQueryAttributable
+public sealed partial class CreateUserViewModel(IMediator mediator) : ObservableValidator
 {
-    private Customer _customer = null!;
-
     [Required(ErrorMessage = "*Required")]
-    //[Base64String]
-    [MinLength(3, ErrorMessage = "*Minimum length is 3")]
+    [LatinOnly("*Must contain only a-z, A-Z or 0-9")]
+    [MinLength(4, ErrorMessage = "*Minimum length is 4")]
     [NotifyDataErrorInfo]
     [ObservableProperty]
     private string _username = string.Empty;
 
     [Required(ErrorMessage = "*Required")]
-    //[Base64String]
-    [MinLength(3, ErrorMessage = "*Minimum length is 3")]
+    [LatinOnly("*Must contain only a-z, A-Z or 0-9")]
+    [MinLength(8, ErrorMessage = "*Minimum length is 8")]
     [NotifyDataErrorInfo]
     [ObservableProperty]
     private string _password = string.Empty;
 
     [Required(ErrorMessage = "*Required")]
-    //[Base64String]
+    [LatinOnly("*Must contain only a-z, A-Z or 0-9")]
     [NotifyDataErrorInfo]
     [ObservableProperty]
     private string _confirmedPassword = string.Empty;
@@ -49,14 +48,14 @@ public sealed partial class CreateUserViewModel(IMediator mediator) : Observable
     [ObservableProperty]
     private string _emailError = string.Empty;
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
-    {
-        _customer = (Customer)query["Customer"];
-    }
-
     [RelayCommand]
     private async Task CreateUser()
     {
+        Username = Username.Trim();
+        Password = Password.Trim();
+        ConfirmedPassword = ConfirmedPassword.Trim();
+        Email = Email.Trim();
+
         ValidateAllProperties();
         UpdateErrorMessages();
 
@@ -65,8 +64,8 @@ public sealed partial class CreateUserViewModel(IMediator mediator) : Observable
             return;
         }
 
-        await mediator.Send(new AddUserCommand(new User(Username, Password, Email, _customer)));
-        await Shell.Current.GoToAsync(nameof(MainViewModel));
+        Guid id = await mediator.Send(new AddUserCommand(new User(Username, Password, Email)));
+        await Shell.Current.GoToAsync(nameof(CreateAccountViewModel), new ShellNavigationQueryParameters { { "UserId", id } });
     }
 
     private void UpdateErrorMessages()

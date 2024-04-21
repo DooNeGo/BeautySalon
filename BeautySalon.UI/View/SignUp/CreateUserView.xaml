@@ -27,6 +27,7 @@
         <Label
             Margin="0,0,0,15"
             FontAttributes="Bold"
+            FontFamily="Loto"
             FontSize="30"
             HorizontalOptions="Start"
             Text="Credential"
@@ -75,7 +76,7 @@
             FontSize="16"
             HeightRequest="50"
             HorizontalOptions="End"
-            Text="Create"
+            Text="Next"
             WidthRequest="140" />
     </VerticalStackLayout>
 </ContentPage>

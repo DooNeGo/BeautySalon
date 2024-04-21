@@ -4,31 +4,27 @@ public sealed record Master
 {
     private Master() { }
 
-    public Master(string surname, string name, string? middleName, Salon salon, Position position, string contactInfo, byte[] photo)
+    public Master(string lastName, string firstName, string? middleName, Position position, string phone)
     {
-        Id = Guid.NewGuid();
-        Surname = surname;
-        Name = name;
+        Id = Guid.Empty;
+        LastName = lastName;
+        FirstName = firstName;
         MiddleName = middleName;
-        Salon = salon;
         Position = position;
-        ContactInfo = contactInfo;
-        Photo = photo;
+        Phone = phone;
     }
 
     public Guid Id { get; }
 
-    public string Surname { get; set; } = null!;
+    public string LastName { get; set; } = null!;
 
-    public string Name { get; set; } = null!;
+    public string FirstName { get; set; } = null!;
 
     public string? MiddleName { get; set; }
 
-    public Salon Salon { get; set; } = null!;
-
     public Position Position { get; set; } = null!;
 
-    public string ContactInfo { get; set; } = null!;
+    public string Phone { get; set; } = null!;
 
-    public byte[]? Photo { get; set; }
+    public Salon Salon { get; set; } = null!;
 }

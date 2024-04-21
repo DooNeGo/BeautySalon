@@ -48,9 +48,4 @@ public sealed partial class CreateAccountView : ContentPage
             FirstNameEntry.HideSoftInputAsync(CancellationToken.None);
         }
     }
-
-    private void NextButton_Clicked(object sender, EventArgs e)
-    {
-        //_viewModel.GoNextCommand.Execute(null);
-    }
 }

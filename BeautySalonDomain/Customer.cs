@@ -6,7 +6,7 @@ public sealed record Customer
 
     public Customer(string lastName, string firstName, string middleName, string phone)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.Empty;
         LastName = lastName;
         FirstName = firstName;
         MiddleName = middleName;

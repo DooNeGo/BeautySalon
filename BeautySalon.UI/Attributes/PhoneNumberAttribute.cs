@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace BeautySalon.UI.Attributes;
 
-public sealed partial class PhoneNumberAttribute(string errorMessage) : ValidationAttribute
+internal sealed partial class PhoneNumberAttribute(string errorMessage) : ValidationAttribute
 {
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
@@ -22,6 +22,6 @@ public sealed partial class PhoneNumberAttribute(string errorMessage) : Validati
         }
     }
 
-    [GeneratedRegex("^\\+375(25|29|33|44)[0-9]{7}$", RegexOptions.Compiled)]
+    [GeneratedRegex(@"^\+375(25|29|33|44)[0-9]{7}$", RegexOptions.Compiled)]
     private static partial Regex GetPhoneRegex();
 }

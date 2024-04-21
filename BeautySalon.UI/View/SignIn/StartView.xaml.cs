@@ -20,6 +20,6 @@ public sealed partial class StartView : ContentPage
 
     private void CreateAccountButton_Clicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(_serviceProvider.GetRequiredService<CreateAccountView>());
+        Navigation.PushAsync(_serviceProvider.GetRequiredService<CreateUserView>());
     }
 }

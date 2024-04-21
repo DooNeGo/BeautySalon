@@ -23,8 +23,11 @@ public sealed partial class LoginViewModel(IIdentityService identityService) : O
                                     && !string.IsNullOrWhiteSpace(Password);
 
     [RelayCommand]
-    public Task Login()
+    public async Task Login()
     {
-        return identityService.AuthorizeAsync(Username, Password);
+        if (await identityService.AuthorizeAsync(Username, Password))
+        {
+            await Shell.Current.Navigation.PopToRootAsync();
+        }
     }
 }

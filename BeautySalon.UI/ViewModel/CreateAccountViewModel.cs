@@ -1,12 +1,16 @@
-﻿using BeautySalon.Domain;
+﻿using BeautySalon.Application.Commands.UpdateUser;
+using BeautySalon.Application.Queries.GetUser;
+using BeautySalon.Domain;
 using BeautySalon.UI.Attributes;
+using CommunityToolkit.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Mediator;
 using System.ComponentModel.DataAnnotations;
 
 namespace BeautySalon.UI.ViewModel;
 
-public sealed partial class CreateAccountViewModel : ObservableValidator
+public sealed partial class CreateAccountViewModel(IMediator mediator) : ObservableValidator, IQueryAttributable
 {
     [ObservableProperty]
     [NotifyDataErrorInfo]
@@ -41,9 +45,21 @@ public sealed partial class CreateAccountViewModel : ObservableValidator
     [ObservableProperty]
     private string _phoneError = string.Empty;
 
-    [RelayCommand]
-    private void GoNext()
+    private Guid _userId = Guid.Empty;
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
+        _userId = (Guid)query["UserId"];
+    }
+
+    [RelayCommand]
+    private async Task CreateCustomerAccount()
+    {
+        FirstName = FirstName.Trim();
+        LastName = LastName.Trim();
+        MiddleName = MiddleName.Trim();
+        Phone = Phone.Trim();
+
         ValidateAllProperties();
         UpdateErrorMessages();
 
@@ -52,8 +68,16 @@ public sealed partial class CreateAccountViewModel : ObservableValidator
             return;
         }
 
-        var customer = new Customer(LastName, FirstName, MiddleName, Phone);
-        Shell.Current.GoToAsync(nameof(CreateUserViewModel), new ShellNavigationQueryParameters { {"Customer", customer} });
+        if (_userId.Equals(Guid.Empty))
+        {
+            ThrowHelper.ThrowInvalidDataException("The user id was empty");
+        }
+
+        Customer customer = new(LastName, FirstName, MiddleName, Phone);
+        User user = (await mediator.Send(new GetUserByIdQuery(_userId)))!;
+        user.Customer = customer;
+        await mediator.Send(new UpdateUserCommand(user));
+        await Shell.Current.Navigation.PopToRootAsync();
     }
 
     private void UpdateErrorMessages()
