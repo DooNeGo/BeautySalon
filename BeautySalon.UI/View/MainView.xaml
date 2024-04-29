@@ -15,180 +15,172 @@
     Shell.TabBarIsVisible="True">
 
     <Grid>
-        <Image Source="background1.jpg" VerticalOptions="Start" />
+        <Image
+            Aspect="AspectFill"
+            Source="background1.png"
+            VerticalOptions="Start" />
         <ScrollView>
-            <Grid RowDefinitions="200, *">
-                <Border
-                    Grid.Row="1"
-                    BackgroundColor="White"
-                    StrokeShape="RoundRectangle 15,15,0,0"
-                    StrokeThickness="0">
+            <Border
+                Grid.Row="1"
+                Margin="0,200,0,0"
+                BackgroundColor="White"
+                StrokeShape="RoundRectangle 15,15,0,0"
+                StrokeThickness="0">
 
-                    <Border.Shadow>
-                        <Shadow
-                            Brush="Black"
-                            Opacity="0.8"
-                            Radius="40"
-                            Offset="0,-20" />
-                    </Border.Shadow>
-
-                    <VerticalStackLayout Padding="10" Spacing="10">
-                        <Grid>
-                            <toolkit:AvatarView
-                                HeightRequest="100"
-                                HorizontalOptions="Start"
-                                ImageSource="logo.png"
-                                Text="Салон красоты"
-                                WidthRequest="100" />
-                            <Button
-                                BackgroundColor="{StaticResource Primary}"
-                                CornerRadius="25"
-                                FontSize="15"
-                                HorizontalOptions="End"
-                                Text="Записаться"
-                                VerticalOptions="Center" />
-                        </Grid>
-
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="18"
-                            Text="Салон красоты"
-                            VerticalOptions="Center" />
-
-                        <Grid>
-                            <Label FontSize="16" Text="{Binding Salon.Address}" />
-                            <HorizontalStackLayout HorizontalOptions="End" Spacing="5">
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="14"
-                                    Text="На карте"
-                                    VerticalOptions="Center" />
-
-                                <Image HeightRequest="13" Source="angle_right.svg" />
-                            </HorizontalStackLayout>
-                        </Grid>
-
-                        <Label
+                <VerticalStackLayout Padding="10" Spacing="10">
+                    <Grid>
+                        <Image
+                            HeightRequest="100"
+                            HorizontalOptions="Start"
+                            Source="logo.png" />
+                        <Button
+                            BackgroundColor="{StaticResource Primary}"
+                            CornerRadius="25"
                             FontSize="15"
-                            Text="Пн – Вс: 09:00 – 17.00"
+                            HorizontalOptions="End"
+                            Text="Записаться"
                             VerticalOptions="Center" />
+                    </Grid>
 
-                        <Grid Margin="0,10,0,0">
-                            <HorizontalStackLayout Spacing="10">
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="20"
-                                    Text="Услуги"
-                                    TextColor="{StaticResource Primary}" />
-                                <Label
-                                    FontSize="20"
-                                    Text="100"
-                                    TextColor="{StaticResource Gray400}" />
-                            </HorizontalStackLayout>
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="Салон красоты"
+                        VerticalOptions="Center" />
 
+                    <Grid>
+                        <Label FontSize="16" Text="{Binding Salon.Address}" />
+                        <HorizontalStackLayout HorizontalOptions="End" Spacing="5">
                             <Label
-                                FontSize="16"
-                                HorizontalOptions="End"
-                                Text="См. все"
-                                TextColor="{StaticResource Primary}"
-                                VerticalOptions="Center">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="ServicesViewAll_OnTapped" />
-                                </Label.GestureRecognizers>
-                            </Label>
-                        </Grid>
+                                FontAttributes="Bold"
+                                FontSize="14"
+                                Text="На карте"
+                                VerticalOptions="Center" />
 
-                        <VerticalStackLayout Margin="15,0" BindableLayout.ItemsSource="{Binding Salon.Services}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="model:Service">
-                                    <Grid Padding="5">
-                                        <HorizontalStackLayout Spacing="15">
-                                            <Frame Padding="5" BackgroundColor="{StaticResource Gray50}">
-                                                <Image Source="empty_photo.svg" />
-                                            </Frame>
+                            <Image HeightRequest="13" Source="angle_right.svg" />
+                        </HorizontalStackLayout>
+                    </Grid>
 
-                                            <VerticalStackLayout>
-                                                <Label FontSize="16" Text="{Binding Name}" />
-                                                <Label>
-                                                    <Label.Resources>
-                                                        <Style TargetType="Span">
-                                                            <Setter Property="TextColor" Value="{StaticResource Gray400}" />
-                                                        </Style>
-                                                    </Label.Resources>
+                    <Label
+                        FontSize="15"
+                        Text="Пн – Вс: 09:00 – 17.00"
+                        VerticalOptions="Center" />
 
-                                                    <Label.FormattedText>
-                                                        <FormattedString>
-                                                            <Span Text="{Binding Price}" />
-                                                            <Span Text=" BYN    " />
-                                                            <Span Text="{Binding Duration.TotalMinutes}" />
-                                                            <Span Text=" мин" />
-                                                        </FormattedString>
-                                                    </Label.FormattedText>
-                                                </Label>
-                                            </VerticalStackLayout>
-
-                                        </HorizontalStackLayout>
-                                        <Image
-                                            HeightRequest="14"
-                                            HorizontalOptions="End"
-                                            Source="angle_right"
-                                            VerticalOptions="Center" />
-                                    </Grid>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </VerticalStackLayout>
-
-                        <Grid Margin="0,10,0,0">
-                            <HorizontalStackLayout Spacing="10">
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="20"
-                                    Text="Мастера"
-                                    TextColor="{StaticResource Primary}" />
-                                <Label
-                                    FontSize="20"
-                                    Text="9"
-                                    TextColor="{StaticResource Gray400}" />
-                            </HorizontalStackLayout>
-
+                    <Grid Margin="0,10,0,0">
+                        <HorizontalStackLayout Spacing="10">
                             <Label
-                                FontSize="16"
-                                HorizontalOptions="End"
-                                Text="См. все"
-                                TextColor="{StaticResource Primary}"
-                                VerticalOptions="Center">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="MastersViewAll_OnTapped" />
-                                </Label.GestureRecognizers>
-                            </Label>
-                        </Grid>
+                                FontAttributes="Bold"
+                                FontSize="20"
+                                Text="Услуги"
+                                TextColor="{StaticResource Primary}" />
+                            <Label
+                                FontSize="20"
+                                Text="100"
+                                TextColor="{StaticResource Gray400}" />
+                        </HorizontalStackLayout>
 
-                        <VerticalStackLayout Margin="15,0" BindableLayout.ItemsSource="{Binding Salon.Masters}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="model:Master">
-                                    <Grid Padding="5">
-                                        <HorizontalStackLayout Spacing="15">
-                                            <Frame Padding="5" BackgroundColor="{StaticResource Gray50}">
-                                                <Image Source="empty_photo.svg" />
-                                            </Frame>
+                        <Label
+                            FontSize="16"
+                            HorizontalOptions="End"
+                            Text="См. все"
+                            TextColor="{StaticResource Primary}"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ServicesViewAll_OnTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
 
-                                            <VerticalStackLayout>
-                                                <Label FontSize="16" Text="{Binding FirstName}" />
-                                                <Label Text="{Binding Position.Title}" TextColor="{StaticResource Gray400}" />
-                                            </VerticalStackLayout>
-                                        </HorizontalStackLayout>
-                                        <Image
-                                            HeightRequest="14"
-                                            HorizontalOptions="End"
-                                            Source="angle_right"
-                                            VerticalOptions="Center" />
-                                    </Grid>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </VerticalStackLayout>
+                    <VerticalStackLayout Margin="15,0" BindableLayout.ItemsSource="{Binding Salon.Services}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="model:Service">
+                                <Grid Padding="5">
+                                    <HorizontalStackLayout Spacing="15">
+                                        <Frame Padding="5" BackgroundColor="{StaticResource Gray50}">
+                                            <Image Source="empty_photo.svg" />
+                                        </Frame>
+
+                                        <VerticalStackLayout>
+                                            <Label FontSize="16" Text="{Binding Name}" />
+                                            <Label>
+                                                <Label.Resources>
+                                                    <Style TargetType="Span">
+                                                        <Setter Property="TextColor" Value="{StaticResource Gray400}" />
+                                                    </Style>
+                                                </Label.Resources>
+
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Price}" />
+                                                        <Span Text=" BYN    " />
+                                                        <Span Text="{Binding Duration.TotalMinutes}" />
+                                                        <Span Text=" мин" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </VerticalStackLayout>
+                                    </HorizontalStackLayout>
+
+                                    <Image
+                                        HeightRequest="14"
+                                        HorizontalOptions="End"
+                                        Source="angle_right"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
-                </Border>
-            </Grid>
+
+                    <Grid Margin="0,10,0,0">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="20"
+                                Text="Мастера"
+                                TextColor="{StaticResource Primary}" />
+                            <Label
+                                FontSize="20"
+                                Text="9"
+                                TextColor="{StaticResource Gray400}" />
+                        </HorizontalStackLayout>
+
+                        <Label
+                            FontSize="16"
+                            HorizontalOptions="End"
+                            Text="См. все"
+                            TextColor="{StaticResource Primary}"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="MastersViewAll_OnTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+
+                    <VerticalStackLayout Margin="15,0" BindableLayout.ItemsSource="{Binding Salon.Masters}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="model:Master">
+                                <Grid Padding="5">
+                                    <HorizontalStackLayout Spacing="15">
+                                        <Frame Padding="5" BackgroundColor="{StaticResource Gray50}">
+                                            <Image Source="empty_photo.svg" />
+                                        </Frame>
+
+                                        <VerticalStackLayout>
+                                            <Label FontSize="16" Text="{Binding FirstName}" />
+                                            <Label Text="{Binding Position.Title}" TextColor="{StaticResource Gray400}" />
+                                        </VerticalStackLayout>
+                                    </HorizontalStackLayout>
+                                    <Image
+                                        HeightRequest="14"
+                                        HorizontalOptions="End"
+                                        Source="angle_right"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
         </ScrollView>
     </Grid>
 </ContentPage>

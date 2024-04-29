@@ -9,7 +9,7 @@ public sealed class UpdateUserCommandHandler(IApplicationContext context) : ICom
 {
     public async ValueTask<Unit> Handle(UpdateUserCommand command, CancellationToken cancellationToken)
     {
-        User? user = await context.Users.FirstOrDefaultAsync(p => p.Id == command.UpdatedUser.Id, cancellationToken);
+        User? user = await context.Users.FindAsync([command.UpdatedUser.Id], cancellationToken);
 
         if (user is null) return Unit.Value;
 
