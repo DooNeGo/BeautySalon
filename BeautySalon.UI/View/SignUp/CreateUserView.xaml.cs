@@ -18,4 +18,9 @@ public sealed partial class CreateUserView
 
         base.OnAppearing();
     }
+
+    private void EmailEntry_OnCompleted(object? sender, EventArgs e)
+    {
+        NextButton.SendClicked();
+    }
 }

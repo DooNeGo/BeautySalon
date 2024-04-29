@@ -27,6 +27,7 @@ public sealed partial class CreateAccountView
     private void PhoneEntry_Completed(object sender, EventArgs e)
     {
         UnfocusEntries();
+        FinishButton.SendClicked();
     }
 
     private void UnfocusEntries()

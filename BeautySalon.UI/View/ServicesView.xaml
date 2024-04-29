@@ -20,8 +20,8 @@
                         </Frame>
 
                         <VerticalStackLayout>
-                            <Label FontSize="18" Text="{Binding Name}" />
-                            <Label FontSize="15">
+                            <Label FontSize="16" Text="{Binding Name}" />
+                            <Label>
                                 <Label.Resources>
                                     <Style TargetType="Span">
                                         <Setter Property="TextColor" Value="{StaticResource Gray400}" />

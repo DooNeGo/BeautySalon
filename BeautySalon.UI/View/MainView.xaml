@@ -14,7 +14,7 @@
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="True">
 
-    <Grid BackgroundColor="{StaticResource PrimaryDark}">
+    <Grid>
         <Image Source="background1.jpg" VerticalOptions="Start" />
         <ScrollView>
             <Grid RowDefinitions="200, *">
@@ -77,11 +77,11 @@
                             <HorizontalStackLayout Spacing="10">
                                 <Label
                                     FontAttributes="Bold"
-                                    FontSize="21"
+                                    FontSize="20"
                                     Text="Услуги"
                                     TextColor="{StaticResource Primary}" />
                                 <Label
-                                    FontSize="21"
+                                    FontSize="20"
                                     Text="100"
                                     TextColor="{StaticResource Gray400}" />
                             </HorizontalStackLayout>
@@ -108,8 +108,8 @@
                                             </Frame>
 
                                             <VerticalStackLayout>
-                                                <Label FontSize="18" Text="{Binding Name}" />
-                                                <Label FontSize="15">
+                                                <Label FontSize="16" Text="{Binding Name}" />
+                                                <Label>
                                                     <Label.Resources>
                                                         <Style TargetType="Span">
                                                             <Setter Property="TextColor" Value="{StaticResource Gray400}" />
@@ -142,11 +142,11 @@
                             <HorizontalStackLayout Spacing="10">
                                 <Label
                                     FontAttributes="Bold"
-                                    FontSize="21"
+                                    FontSize="20"
                                     Text="Мастера"
                                     TextColor="{StaticResource Primary}" />
                                 <Label
-                                    FontSize="21"
+                                    FontSize="20"
                                     Text="9"
                                     TextColor="{StaticResource Gray400}" />
                             </HorizontalStackLayout>
@@ -173,11 +173,8 @@
                                             </Frame>
 
                                             <VerticalStackLayout>
-                                                <Label FontSize="18" Text="{Binding FirstName}" />
-                                                <Label
-                                                    FontSize="15"
-                                                    Text="{Binding Position.Title}"
-                                                    TextColor="{StaticResource Gray400}" />
+                                                <Label FontSize="16" Text="{Binding FirstName}" />
+                                                <Label Text="{Binding Position.Title}" TextColor="{StaticResource Gray400}" />
                                             </VerticalStackLayout>
                                         </HorizontalStackLayout>
                                         <Image

@@ -20,11 +20,8 @@
                         </Frame>
 
                         <VerticalStackLayout>
-                            <Label FontSize="18" Text="{Binding FirstName}" />
-                            <Label
-                                FontSize="15"
-                                Text="{Binding Position.Title}"
-                                TextColor="{StaticResource Gray400}" />
+                            <Label FontSize="16" Text="{Binding FirstName}" />
+                            <Label Text="{Binding Position.Title}" TextColor="{StaticResource Gray400}" />
                         </VerticalStackLayout>
                     </HorizontalStackLayout>
 
