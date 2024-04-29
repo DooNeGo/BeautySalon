@@ -1,5 +1,4 @@
 ﻿using BeautySalon.Application.Interfaces;
-using BeautySalon.UI.Shells;
 using BeautySalon.UI.View.SignIn;
 
 namespace BeautySalon.UI;
@@ -13,18 +12,20 @@ public sealed partial class App
     {
         InitializeComponent();
 
-        MainPage = new MainShell();
+        MainPage = new AppShell();
         UserAppTheme = AppTheme.Light;
 
         _identityService = identityService;
         _serviceProvider = serviceProvider;
+
+        _identityService.LoginSuccessful += _ => MainPage.Navigation.PopToRootAsync();
     }
 
     protected override void OnStart()
     {
         if (_identityService.CurrentUser is null)
         {
-            MainPage?.Navigation.PushAsync(_serviceProvider.GetRequiredService<StartView>());
+            MainPage!.Navigation.PushAsync(_serviceProvider.GetRequiredService<StartView>());
         }
     }
 }

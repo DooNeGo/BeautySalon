@@ -2,59 +2,55 @@ using BeautySalon.UI.ViewModel;
 
 namespace BeautySalon.UI.View.SignIn;
 
-public sealed partial class LoginView : ContentPage, IDisposable
+public sealed partial class LoginView
 {
-    private readonly Animation _shadeBorderAnimation;
-    private readonly Animation _unshadeBorderAnimation;
+    private const double IncrementValue = 0.03;
+    private readonly double _defaultLoginBorderScale;
+    private readonly double _incrementedLoginBoarderScale;
 
     public LoginView(LoginViewModel viewModel)
     {
         InitializeComponent();
 
         BindingContext = viewModel;
-        _shadeBorderAnimation = new Animation(a => BorderShadow.Opacity = (float)a, 0, 0.35, Easing.Linear);
-        _unshadeBorderAnimation = new Animation(a => BorderShadow.Opacity = (float)a, 0.35, 0, Easing.Linear);
+        _defaultLoginBorderScale = LoginBorder.Scale;
+        _incrementedLoginBoarderScale = _defaultLoginBorderScale + IncrementValue;
     }
 
-    protected async override void OnAppearing()
+    protected override async void OnAppearing()
     {
-        base.OnAppearing();
         await Task.Delay(400);
         UsernameEntry.Focus();
+
+        base.OnAppearing();
     }
 
-    private void Entry_Focused(object sender, FocusEventArgs e)
+    private void Entry_OnFocused(object? sender, FocusEventArgs e)
     {
-        if (!_shadeBorderAnimation.IsEnabled && BorderShadow.Opacity is 0f)
-        {
-            LoginBorder.AbortAnimation(nameof(_unshadeBorderAnimation));
-            LoginBorder.ScaleTo(1.015);
-            _shadeBorderAnimation.Commit(this, nameof(_shadeBorderAnimation));
-        }
+        LoginBorder.ScaleTo(_incrementedLoginBoarderScale, 400, Easing.Default);
     }
 
-    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    private void Entry_OnUnfocused(object? sender, FocusEventArgs e)
+    {
+        LoginBorder.ScaleTo(_defaultLoginBorderScale, easing: Easing.Linear);
+    }
+
+    private void UnfocusEntries()
     {
         UsernameEntry.Unfocus();
         PasswordEntry.Unfocus();
 
-        if (UsernameEntry.IsSoftInputShowing())
-        {
-            UsernameEntry.HideSoftInputAsync(CancellationToken.None);
-        }
-
-        if (!_unshadeBorderAnimation.IsEnabled && BorderShadow.Opacity is not 0f)
-        {
-            LoginBorder.AbortAnimation(nameof(_shadeBorderAnimation));
-            LoginBorder.ScaleTo(1);
-            _unshadeBorderAnimation.Commit(this, nameof(_unshadeBorderAnimation));
-        }
+        if (UsernameEntry.IsSoftInputShowing()) UsernameEntry.HideSoftInputAsync(CancellationToken.None);
     }
 
-    public void Dispose()
+    private void TapGestureRecognizer_OnTapped(object? sender, TappedEventArgs e)
     {
-        _shadeBorderAnimation.Dispose();
-        _unshadeBorderAnimation.Dispose();
-        GC.SuppressFinalize(this);
+        UnfocusEntries();
+    }
+
+    private void PasswordEntry_OnCompleted(object? sender, EventArgs e)
+    {
+        UnfocusEntries();
+        LoginButton.SendClicked();
     }
 }

@@ -1,6 +1,9 @@
 ﻿using Foundation;
+using Microsoft.Maui;
+using Microsoft.Maui.Hosting;
 
 namespace BeautySalon.UI;
+
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate
 {

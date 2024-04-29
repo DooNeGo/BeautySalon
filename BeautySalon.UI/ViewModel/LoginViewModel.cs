@@ -6,28 +6,30 @@ namespace BeautySalon.UI.ViewModel;
 
 public sealed partial class LoginViewModel(IIdentityService identityService) : ObservableObject
 {
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsLoginButtonEnable))]
-    private string _username = string.Empty;
+    [ObservableProperty] private string _errorMessage = string.Empty;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsLoginButtonEnable))]
     private string _password = string.Empty;
 
     [ObservableProperty]
-    private string _errorMessage = string.Empty;
+    [NotifyPropertyChangedFor(nameof(IsLoginButtonEnable))]
+    private string _username = string.Empty;
 
-    public bool IsLoginButtonEnable => Username.Length >= 3
-                                    && Password.Length >= 3
-                                    && !string.IsNullOrWhiteSpace(Username)
-                                    && !string.IsNullOrWhiteSpace(Password);
+    public bool IsLoginButtonEnable =>
+            Username.Length >= 3 && Password.Length >= 3 && !string.IsNullOrWhiteSpace(Username)
+            && !string.IsNullOrWhiteSpace(Password);
 
     [RelayCommand]
-    public async Task Login()
+    private async Task Login()
     {
-        if (await identityService.AuthorizeAsync(Username, Password))
+        if (await identityService.AuthorizeAsync(Username.Trim(), Password.Trim()))
         {
             await Shell.Current.Navigation.PopToRootAsync();
+        }
+        else
+        {
+            ErrorMessage = "*Wrong username or password";
         }
     }
 }

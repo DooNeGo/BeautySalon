@@ -3,4 +3,4 @@ using Mediator;
 
 namespace BeautySalon.Application.Commands.UpdateUser;
 
-public readonly record struct UpdateUserCommand(User UpdatedUser) : ICommand;
+public record UpdateUserCommand(User UpdatedUser) : ICommand;

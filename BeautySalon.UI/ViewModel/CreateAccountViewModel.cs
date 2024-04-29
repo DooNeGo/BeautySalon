@@ -1,12 +1,12 @@
-﻿using BeautySalon.Application.Commands.UpdateUser;
-using BeautySalon.Application.Queries.GetUser;
+﻿using System.ComponentModel.DataAnnotations;
+using BeautySalon.Application.Commands.UpdateUser;
+using BeautySalon.Application.Queries.GetUserById;
 using BeautySalon.Domain;
 using BeautySalon.UI.Attributes;
 using CommunityToolkit.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Mediator;
-using System.ComponentModel.DataAnnotations;
 
 namespace BeautySalon.UI.ViewModel;
 
@@ -18,14 +18,18 @@ public sealed partial class CreateAccountViewModel(IMediator mediator) : Observa
     [MinLength(2, ErrorMessage = "*Minimum length is 2")]
     private string _firstName = string.Empty;
 
+    [ObservableProperty] private string _firstNameError = string.Empty;
+
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "*Required")]
     [MinLength(2, ErrorMessage = "*Minimum length is 2")]
     private string _lastName = string.Empty;
 
-    [ObservableProperty]
-    private string _middleName = string.Empty;
+    [ObservableProperty] private string _lastNameError = string.Empty;
+
+    [ObservableProperty] private string _middleName = string.Empty;
+    [ObservableProperty] private string _middleNameError = string.Empty;
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
@@ -33,17 +37,7 @@ public sealed partial class CreateAccountViewModel(IMediator mediator) : Observa
     [PhoneNumber("*Is not valid phone number")]
     private string _phone = string.Empty;
 
-    [ObservableProperty]
-    private string _firstNameError = string.Empty;
-
-    [ObservableProperty]
-    private string _lastNameError = string.Empty;
-
-    [ObservableProperty]
-    private string _middleNameError = string.Empty;
-
-    [ObservableProperty]
-    private string _phoneError = string.Empty;
+    [ObservableProperty] private string _phoneError = string.Empty;
 
     private Guid _userId = Guid.Empty;
 
@@ -63,19 +57,12 @@ public sealed partial class CreateAccountViewModel(IMediator mediator) : Observa
         ValidateAllProperties();
         UpdateErrorMessages();
 
-        if (HasErrors)
-        {
-            return;
-        }
+        if (HasErrors) return;
+        if (_userId == Guid.Empty) ThrowHelper.ThrowInvalidDataException("The user id was empty");
 
-        if (_userId.Equals(Guid.Empty))
-        {
-            ThrowHelper.ThrowInvalidDataException("The user id was empty");
-        }
-
-        Customer customer = new(LastName, FirstName, MiddleName, Phone);
         User user = (await mediator.Send(new GetUserByIdQuery(_userId)))!;
-        user.Customer = customer;
+        user.Customer = new Customer(LastName, FirstName, MiddleName, Phone);
+
         await mediator.Send(new UpdateUserCommand(user));
         await Shell.Current.Navigation.PopToRootAsync();
     }

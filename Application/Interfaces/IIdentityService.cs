@@ -6,7 +6,7 @@ public interface IIdentityService
 {
     public User? CurrentUser { get; }
 
-    public event Action<User>? LoginSuccesful;
+    public event Action<User>? LoginSuccessful;
 
     public Task<bool> AuthorizeAsync(string username, string password);
 }

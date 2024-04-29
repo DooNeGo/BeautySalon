@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage
     x:Class="BeautySalon.UI.View.SignIn.LoginView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -14,9 +15,8 @@
     </ContentPage.Behaviors>
 
     <Grid RowDefinitions="2*,*,2.4*">
-
         <Grid.GestureRecognizers>
-            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+            <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
         </Grid.GestureRecognizers>
 
         <Label
@@ -28,48 +28,43 @@
             Text="Log in"
             VerticalOptions="Center" />
 
-        <Border
-            x:Name="LoginBorder"
-            Grid.Row="1"
-            Padding="10,5,10,5"
-            Background="White"
-            Stroke="{StaticResource Gray100}"
-            StrokeThickness="1"
-            VerticalOptions="Center">
+        <VerticalStackLayout Grid.Row="1">
+            <Border
+                x:Name="LoginBorder"
+                Padding="10,5,10,5"
+                Background="White"
+                Stroke="{StaticResource Gray100}"
+                StrokeThickness="1"
+                VerticalOptions="Center">
 
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="15" />
-            </Border.StrokeShape>
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="15" />
+                </Border.StrokeShape>
 
-            <Border.Shadow>
-                <Shadow
-                    x:Name="BorderShadow"
-                    Brush="Black"
-                    Opacity="0"
-                    Radius="20"
-                    Offset="0, 10" />
-            </Border.Shadow>
+                <VerticalStackLayout Spacing="5" VerticalOptions="Center">
+                    <Entry
+                        x:Name="UsernameEntry"
+                        ClearButtonVisibility="WhileEditing"
+                        Focused="Entry_OnFocused"
+                        Placeholder="Username"
+                        ReturnType="Next"
+                        Text="{Binding Username}"
+                        Unfocused="Entry_OnUnfocused"
+                        VerticalTextAlignment="Center" />
 
-            <VerticalStackLayout Spacing="5" VerticalOptions="Center">
-                <Entry
-                    x:Name="UsernameEntry"
-                    toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PasswordEntry}"
-                    ClearButtonVisibility="WhileEditing"
-                    Focused="Entry_Focused"
-                    Placeholder="Username"
-                    ReturnType="Next"
-                    Text="{Binding Username}"
-                    VerticalTextAlignment="Center" />
-
-                <Entry
-                    x:Name="PasswordEntry"
-                    Focused="Entry_Focused"
-                    IsPassword="True"
-                    Placeholder="Password"
-                    Text="{Binding Password}"
-                    VerticalTextAlignment="Center" />
-            </VerticalStackLayout>
-        </Border>
+                    <Entry
+                        x:Name="PasswordEntry"
+                        Completed="PasswordEntry_OnCompleted"
+                        Focused="Entry_OnFocused"
+                        IsPassword="True"
+                        Placeholder="Password"
+                        Text="{Binding Password}"
+                        Unfocused="Entry_OnUnfocused"
+                        VerticalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Border>
+            <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding ErrorMessage}" />
+        </VerticalStackLayout>
 
         <VerticalStackLayout
             Grid.Row="2"
@@ -97,10 +92,10 @@
     </Grid>
 
     <!--<FlexLayout
-        x:Name="FlexLayout"
-        Margin="0,0,0,0"
         Direction="Column"
-        JustifyContent="SpaceEvenly">
+        JustifyContent="SpaceEvenly"
+        Margin="0,0,0,0"
+        x:Name="FlexLayout">
 
         <FlexLayout.GestureRecognizers>
             <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
@@ -115,52 +110,41 @@
             Text="Log in" />
 
         <Border
-            x:Name="LoginBorder"
-            Padding="10,5,10,5"
             Background="White"
+            Padding="10,5,10,5"
             Stroke="{StaticResource Gray100}"
             StrokeThickness="1"
-            VerticalOptions="Center">
+            VerticalOptions="Center"
+            x:Name="LoginBorder">
 
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="15" />
             </Border.StrokeShape>
 
-            <Border.Shadow>
-                <Shadow
-                    x:Name="BorderShadow"
-                    Brush="Black"
-                    Opacity="0"
-                    Radius="20"
-                    Offset="0, 10" />
-            </Border.Shadow>
-
             <VerticalStackLayout Spacing="5">
                 <Entry
-                    x:Name="UsernameEntry"
-                    toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PasswordEntry}"
                     ClearButtonVisibility="WhileEditing"
                     Focused="Entry_Focused"
                     Placeholder="Username"
                     ReturnType="Next"
                     Text="{Binding Username}"
-                    VerticalTextAlignment="Center" />
-    -->
-    <!--<BoxView BackgroundColor="{StaticResource Gray100}" HeightRequest="1" />-->
-    <!--
+                    Unfocused="Entry_OnUnfocused"
+                    VerticalTextAlignment="Center"
+                    toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PasswordEntry}"
+                    x:Name="UsernameEntry" />
                 <Entry
-                    x:Name="PasswordEntry"
                     Focused="Entry_Focused"
                     IsPassword="True"
                     Placeholder="Password"
                     Text="{Binding Password}"
-                    VerticalTextAlignment="Center" />
+                    Unfocused="Entry_OnUnfocused"
+                    VerticalTextAlignment="Center"
+                    x:Name="PasswordEntry" />
             </VerticalStackLayout>
         </Border>
 
         <VerticalStackLayout Spacing="10">
             <Button
-                x:Name="LoginButton"
                 Command="{Binding LoginCommand}"
                 CornerRadius="25"
                 FontFamily="Lato"
@@ -169,7 +153,8 @@
                 HorizontalOptions="Center"
                 IsEnabled="{Binding IsLoginButtonEnable}"
                 Text="Log in"
-                WidthRequest="200" />
+                WidthRequest="200"
+                x:Name="LoginButton" />
 
             <Label
                 FontFamily="Lato"
@@ -180,18 +165,16 @@
         </VerticalStackLayout>
     </FlexLayout>-->
 
-    <!--<VerticalStackLayout Spacing="10" VerticalOptions="Center">
-
+    <!--<VerticalStackLayout Spacing="50" VerticalOptions="StartAndExpand">
         <VerticalStackLayout.GestureRecognizers>
-            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+            <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
         </VerticalStackLayout.GestureRecognizers>
 
         <Label
-            Margin="0,0,0,50"
+            Margin="0,30, 0, 30"
             FontAttributes="Bold"
             FontFamily="Lato"
             FontSize="30"
-            HorizontalOptions="Center"
             HorizontalTextAlignment="Center"
             Text="Log in" />
 
@@ -199,35 +182,29 @@
             x:Name="LoginBorder"
             Padding="10,5,10,5"
             Background="White"
-            StrokeThickness="0"
+            StrokeThickness="1"
+            Stroke="{StaticResource Gray100}"
             VerticalOptions="Center">
 
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="15" />
             </Border.StrokeShape>
 
-            <Border.Shadow>
-                <Shadow
-                    x:Name="BorderShadow"
-                    Brush="Black"
-                    Opacity="0"
-                    Radius="20"
-                    Offset="0, 10" />
-            </Border.Shadow>
-
             <VerticalStackLayout Spacing="5">
                 <Entry
                     x:Name="UsernameEntry"
-                    toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference PasswordEntry}"
                     ClearButtonVisibility="WhileEditing"
-                    Focused="Entry_Focused"
+                    Focused="Entry_OnFocused"
+                    Unfocused="Entry_OnUnfocused"
                     Placeholder="Username"
                     ReturnType="Next"
                     Text="{Binding Username}"
                     VerticalTextAlignment="Center" />
                 <Entry
                     x:Name="PasswordEntry"
-                    Focused="Entry_Focused"
+                    Focused="Entry_OnFocused"
+                    Unfocused="Entry_OnUnfocused"
+                    Completed="PasswordEntry_OnCompleted"
                     IsPassword="True"
                     Placeholder="Password"
                     Text="{Binding Password}"
@@ -235,24 +212,26 @@
             </VerticalStackLayout>
         </Border>
 
-        <Button
-            x:Name="LoginButton"
-            Margin="0,30,0,0"
-            Command="{Binding LoginCommand}"
-            CornerRadius="25"
-            FontFamily="Lato"
-            FontSize="16"
-            HeightRequest="50"
-            IsEnabled="{Binding IsLoginButtonEnable}"
-            Text="Log in"
-            WidthRequest="200" />
+        <VerticalStackLayout Spacing="10">
+            <Button
+                x:Name="LoginButton"
+                Margin="0,0,0,0"
+                Command="{Binding LoginCommand}"
+                CornerRadius="25"
+                FontFamily="Lato"
+                FontSize="16"
+                HeightRequest="50"
+                IsEnabled="{Binding IsLoginButtonEnable}"
+                Text="Log in"
+                WidthRequest="200" />
 
-        <Label
-            Margin="0,0,0,100"
-            FontFamily="Lato"
-            FontSize="13"
-            HorizontalOptions="Center"
-            Text="Forgot password?"
-            TextColor="{StaticResource Primary}" />
+            <Label
+                Margin="0,0,0,0"
+                FontFamily="Lato"
+                FontSize="13"
+                HorizontalOptions="Center"
+                Text="Forgot password?"
+                TextColor="{StaticResource Primary}" />
+        </VerticalStackLayout>
     </VerticalStackLayout>-->
 </ContentPage>

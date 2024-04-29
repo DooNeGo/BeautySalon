@@ -3,23 +3,14 @@ using System.Text.RegularExpressions;
 
 namespace BeautySalon.UI.Attributes;
 
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
 internal sealed partial class PhoneNumberAttribute(string errorMessage) : ValidationAttribute
 {
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
-        if (value is null || value is not string)
-        {
-            return null;
-        }
-
-        if (GetPhoneRegex().IsMatch((string)value))
-        {
-            return ValidationResult.Success;
-        }
-        else
-        {
-            return new ValidationResult(errorMessage);
-        }
+        var str = value?.ToString();
+        return string.IsNullOrWhiteSpace(str) ? null :
+                GetPhoneRegex().IsMatch(str) ? ValidationResult.Success : new ValidationResult(errorMessage);
     }
 
     [GeneratedRegex(@"^\+375(25|29|33|44)[0-9]{7}$", RegexOptions.Compiled)]

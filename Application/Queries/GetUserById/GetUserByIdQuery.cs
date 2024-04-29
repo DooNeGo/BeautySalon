@@ -1,6 +1,6 @@
 ﻿using BeautySalon.Domain;
 using Mediator;
 
-namespace BeautySalon.Application.Queries.GetUser;
+namespace BeautySalon.Application.Queries.GetUserById;
 
-public readonly record struct GetUserByIdQuery(Guid Id) : IQuery<User?>;
+public record GetUserByIdQuery(Guid Id) : IQuery<User?>;

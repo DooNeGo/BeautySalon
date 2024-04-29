@@ -2,7 +2,7 @@ using BeautySalon.UI.View.SignUp;
 
 namespace BeautySalon.UI.View.SignIn;
 
-public sealed partial class StartView : ContentPage
+public sealed partial class StartView
 {
     private readonly IServiceProvider _serviceProvider;
 
@@ -13,12 +13,12 @@ public sealed partial class StartView : ContentPage
         _serviceProvider = serviceProvider;
     }
 
-    private void LoginWithAccountButton_Clicked(object sender, EventArgs e)
+    private void LoginWithAccountButton_Clicked(object? sender, EventArgs e)
     {
         Navigation.PushAsync(_serviceProvider.GetRequiredService<LoginView>());
     }
 
-    private void CreateAccountButton_Clicked(object sender, EventArgs e)
+    private void CreateAccountButton_Clicked(object? sender, EventArgs e)
     {
         Navigation.PushAsync(_serviceProvider.GetRequiredService<CreateUserView>());
     }

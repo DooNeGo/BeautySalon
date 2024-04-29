@@ -1,12 +1,10 @@
 ﻿using BeautySalon.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace BeautySalon.Application;
+namespace BeautySalon.Application.Interfaces;
 
 public interface IApplicationContext
 {
-    public DbSet<City> Cities { get; }
-
     public DbSet<Salon> Salons { get; }
 
     public DbSet<Master> Masters { get; }

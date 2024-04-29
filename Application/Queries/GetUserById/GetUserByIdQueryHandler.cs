@@ -1,4 +1,4 @@
-﻿using BeautySalon.Application.Queries.GetUser;
+﻿using BeautySalon.Application.Interfaces;
 using BeautySalon.Domain;
 using Mediator;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +10,6 @@ public sealed class GetUserByIdQueryHandler(IApplicationContext context) : IQuer
     public ValueTask<User?> Handle(GetUserByIdQuery query, CancellationToken cancellationToken)
     {
         return new ValueTask<User?>(context.Users.AsNoTracking()
-            .FirstOrDefaultAsync(p => p.Id == query.Id, cancellationToken));
+                .FirstOrDefaultAsync(p => p.Id == query.Id, cancellationToken));
     }
 }

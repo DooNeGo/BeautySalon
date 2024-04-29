@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="BeautySalon.UI.View.MastersView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
+    xmlns:viewmodel="clr-namespace:BeautySalon.UI.ViewModel"
+    Title="Мастера"
+    Padding="10"
+    x:DataType="viewmodel:MastersViewModel">
+
+    <CollectionView ItemsSource="{Binding Masters}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="model:Master">
+                <Grid Padding="5">
+                    <HorizontalStackLayout Spacing="15">
+                        <Frame Padding="5" BackgroundColor="{StaticResource Gray50}">
+                            <Image Source="empty_photo.svg" />
+                        </Frame>
+
+                        <VerticalStackLayout>
+                            <Label FontSize="18" Text="{Binding FirstName}" />
+                            <Label
+                                FontSize="15"
+                                Text="{Binding Position.Title}"
+                                TextColor="{StaticResource Gray400}" />
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+
+                    <Image
+                        HeightRequest="14"
+                        HorizontalOptions="End"
+                        Source="angle_right"
+                        VerticalOptions="Center" />
+                </Grid>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

@@ -1,9 +1,6 @@
 ﻿using BeautySalon.Domain;
 using Mediator;
 
-namespace BeautySalon.Application.Commands.AddCustomerCommand;
+namespace BeautySalon.Application.Commands.AddCustomer;
 
-public readonly struct AddCustomerCommand(Customer customer) : ICommand<Guid>
-{
-    public Customer Customer => customer;
-}
+public record AddCustomerCommand(Customer Customer) : ICommand<Guid>;

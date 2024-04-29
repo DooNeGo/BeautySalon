@@ -9,22 +9,17 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
-        var builder = MauiApp.CreateBuilder();
-        builder
-            .UseMauiApp<App>()
-            .UseMauiCommunityToolkit()
-            .ConfigureFonts(fonts =>
-            {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                fonts.AddFont("Lato-Regular.ttf", "Lato");
-                fonts.AddFont("Floriselscript.ttf", "Florisel");
-            });
+        MauiAppBuilder builder = MauiApp.CreateBuilder();
+        builder.UseMauiApp<App>().UseMauiCommunityToolkit().ConfigureFonts(fonts =>
+        {
+            fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+            fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            fonts.AddFont("Lato-Regular.ttf", "Lato");
+            fonts.AddFont("Floriselscript.ttf", "Florisel");
+            fonts.AddFont("FASolid.otf", "FASolid");
+        });
 
-        builder.Services
-            .AddApplication()
-            .AddInfrastructure()
-            .AddUI();
+        builder.Services.AddApplication().AddInfrastructure().AddUI();
 
 #if DEBUG
         builder.Logging.AddDebug();

@@ -2,23 +2,21 @@ using BeautySalon.UI.ViewModel;
 
 namespace BeautySalon.UI.View.SignUp;
 
-public sealed partial class CreateAccountView : ContentPage
+public sealed partial class CreateAccountView
 {
-    private readonly CreateAccountViewModel _viewModel;
-
     public CreateAccountView(CreateAccountViewModel viewModel)
     {
         InitializeComponent();
 
-        _viewModel = viewModel;
-        BindingContext = _viewModel;
+        BindingContext = viewModel;
     }
 
-    protected async override void OnAppearing()
+    protected override async void OnAppearing()
     {
-        base.OnAppearing();
         await Task.Delay(400);
         FirstNameEntry.Focus();
+
+        base.OnAppearing();
     }
 
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
@@ -38,14 +36,11 @@ public sealed partial class CreateAccountView : ContentPage
         MiddleNameEntry.Unfocus();
         PhoneEntry.Unfocus();
 
-        TryHideKeyaboard();
+        TryHideKeyboard();
     }
 
-    private void TryHideKeyaboard()
+    private void TryHideKeyboard()
     {
-        if (FirstNameEntry.IsSoftInputShowing())
-        {
-            FirstNameEntry.HideSoftInputAsync(CancellationToken.None);
-        }
+        if (FirstNameEntry.IsSoftInputShowing()) FirstNameEntry.HideSoftInputAsync(CancellationToken.None);
     }
 }

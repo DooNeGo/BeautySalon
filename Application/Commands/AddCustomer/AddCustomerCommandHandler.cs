@@ -1,6 +1,7 @@
-﻿using Mediator;
+﻿using BeautySalon.Application.Interfaces;
+using Mediator;
 
-namespace BeautySalon.Application.Commands.AddCustomerCommand;
+namespace BeautySalon.Application.Commands.AddCustomer;
 
 public sealed class AddCustomerCommandHandler(IApplicationContext context) : ICommandHandler<AddCustomerCommand, Guid>
 {
