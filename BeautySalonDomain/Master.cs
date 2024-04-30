@@ -27,4 +27,6 @@ public sealed record Master
     public string Phone { get; set; } = null!;
 
     public Salon Salon { get; set; } = null!;
+
+    public List<Service> Services { get; set; } = [];
 }

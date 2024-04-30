@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BeautySalon.UI.ViewModel;
 
-public partial class MastersViewModel : ObservableObject
+public sealed partial class MastersViewModel : ObservableObject
 {
     [ObservableProperty]
     private ObservableCollection<Master> _masters;

@@ -4,13 +4,19 @@
     x:Class="BeautySalon.UI.View.MainView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customcontrol="clr-namespace:BeautySalon.UI.CustomControl"
     xmlns:model="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodel="clr-namespace:BeautySalon.UI.ViewModel"
     Padding="0"
     x:DataType="viewmodel:MainViewModel"
     BackgroundColor="{StaticResource Gray50}"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="True">
+
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="White" StatusBarStyle="DarkContent" />
+    </ContentPage.Behaviors>
 
     <Grid>
         <Image
@@ -19,7 +25,6 @@
             VerticalOptions="Start" />
         <ScrollView>
             <Border
-                Grid.Row="1"
                 Margin="0,250,0,0"
                 BackgroundColor="White"
                 StrokeShape="RoundRectangle 15,15,0,0"
@@ -33,6 +38,7 @@
                             Source="logo.png" />
                         <Button
                             BackgroundColor="{StaticResource Primary}"
+                            Clicked="SignUpForServiceButton_OnClicked"
                             CornerRadius="25"
                             FontSize="15"
                             HorizontalOptions="End"
@@ -91,40 +97,8 @@
 
                     <VerticalStackLayout Margin="15,0" BindableLayout.ItemsSource="{Binding Salon.Services}">
                         <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="model:Service">
-                                <Grid Padding="5">
-                                    <HorizontalStackLayout Spacing="15">
-                                        <Frame Padding="5" BackgroundColor="{StaticResource Gray50}">
-                                            <Image Source="empty_photo.svg" />
-                                        </Frame>
-
-                                        <VerticalStackLayout>
-                                            <Label FontSize="16" Text="{Binding Name}" />
-                                            <Label>
-                                                <Label.Resources>
-                                                    <Style TargetType="Span">
-                                                        <Setter Property="TextColor" Value="{StaticResource Gray400}" />
-                                                    </Style>
-                                                </Label.Resources>
-
-                                                <Label.FormattedText>
-                                                    <FormattedString>
-                                                        <Span Text="{Binding Price}" />
-                                                        <Span Text=" BYN    " />
-                                                        <Span Text="{Binding Duration.TotalMinutes}" />
-                                                        <Span Text=" мин" />
-                                                    </FormattedString>
-                                                </Label.FormattedText>
-                                            </Label>
-                                        </VerticalStackLayout>
-                                    </HorizontalStackLayout>
-
-                                    <Image
-                                        HeightRequest="14"
-                                        HorizontalOptions="End"
-                                        Source="angle_right"
-                                        VerticalOptions="Center" />
-                                </Grid>
+                            <DataTemplate>
+                                <customcontrol:ServiceItem />
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
@@ -156,24 +130,8 @@
 
                     <VerticalStackLayout Margin="15,0" BindableLayout.ItemsSource="{Binding Salon.Masters}">
                         <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="model:Master">
-                                <Grid Padding="5">
-                                    <HorizontalStackLayout Spacing="15">
-                                        <Frame Padding="5" BackgroundColor="{StaticResource Gray50}">
-                                            <Image Source="empty_photo.svg" />
-                                        </Frame>
-
-                                        <VerticalStackLayout>
-                                            <Label FontSize="16" Text="{Binding FirstName}" />
-                                            <Label Text="{Binding Position.Title}" TextColor="{StaticResource Gray400}" />
-                                        </VerticalStackLayout>
-                                    </HorizontalStackLayout>
-                                    <Image
-                                        HeightRequest="14"
-                                        HorizontalOptions="End"
-                                        Source="angle_right"
-                                        VerticalOptions="Center" />
-                                </Grid>
+                            <DataTemplate>
+                                <customcontrol:MasterItem />
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>

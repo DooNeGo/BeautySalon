@@ -35,22 +35,17 @@ public sealed partial class LoginView
         LoginBorder.ScaleTo(_defaultLoginBorderScale, easing: Easing.Linear);
     }
 
-    private void UnfocusEntries()
+    private void TapGestureRecognizer_OnTapped(object? sender, TappedEventArgs e)
     {
         UsernameEntry.Unfocus();
         PasswordEntry.Unfocus();
 
-        if (UsernameEntry.IsSoftInputShowing()) UsernameEntry.HideSoftInputAsync(CancellationToken.None);
+        UsernameEntry.HideSoftInputAsync(CancellationToken.None);
     }
 
-    private void TapGestureRecognizer_OnTapped(object? sender, TappedEventArgs e)
+    private async void PasswordEntry_OnCompleted(object? sender, EventArgs e)
     {
-        UnfocusEntries();
-    }
-
-    private void PasswordEntry_OnCompleted(object? sender, EventArgs e)
-    {
-        UnfocusEntries();
+        await UsernameEntry.HideSoftInputAsync(CancellationToken.None);
         LoginButton.SendClicked();
     }
 }

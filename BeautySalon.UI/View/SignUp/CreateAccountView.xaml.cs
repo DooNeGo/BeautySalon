@@ -21,27 +21,17 @@ public sealed partial class CreateAccountView
 
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-        UnfocusEntries();
-    }
-
-    private void PhoneEntry_Completed(object sender, EventArgs e)
-    {
-        UnfocusEntries();
-        FinishButton.SendClicked();
-    }
-
-    private void UnfocusEntries()
-    {
         FirstNameEntry.Unfocus();
         LastNameEntry.Unfocus();
         MiddleNameEntry.Unfocus();
         PhoneEntry.Unfocus();
 
-        TryHideKeyboard();
+        FirstNameEntry.HideSoftInputAsync(CancellationToken.None);
     }
 
-    private void TryHideKeyboard()
-    {
-        if (FirstNameEntry.IsSoftInputShowing()) FirstNameEntry.HideSoftInputAsync(CancellationToken.None);
+    private async void PhoneEntry_Completed(object sender, EventArgs e)
+    { 
+        await FirstNameEntry.HideSoftInputAsync(CancellationToken.None);
+        FinishButton.SendClicked();
     }
 }

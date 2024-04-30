@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Grid
+    x:Class="BeautySalon.UI.CustomControl.MasterItem"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
+    Padding="5"
+    x:DataType="model:Master">
+    <HorizontalStackLayout Spacing="15">
+        <Frame Padding="5" BackgroundColor="{StaticResource Gray50}">
+            <Image Source="empty_photo.svg" />
+        </Frame>
+
+        <VerticalStackLayout>
+            <Label FontSize="16" Text="{Binding FirstName}" />
+            <Label Text="{Binding Position.Title}" TextColor="{StaticResource Gray400}" />
+        </VerticalStackLayout>
+    </HorizontalStackLayout>
+
+    <Image
+        HeightRequest="14"
+        HorizontalOptions="End"
+        Source="angle_right"
+        VerticalOptions="Center" />
+</Grid>

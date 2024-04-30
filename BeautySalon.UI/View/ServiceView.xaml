@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="BeautySalon.UI.View.ServiceView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:BeautySalon.UI.ViewModel"
+    Title="Услуга"
+    Padding="10"
+    x:DataType="viewmodel:ServiceViewModel">
+
+    <VerticalStackLayout>
+        <Frame BackgroundColor="{StaticResource Gray100}" HorizontalOptions="Center">
+            <Image Source="empty_photo.svg" WidthRequest="100" />
+        </Frame>
+
+        <Label
+            Margin="0,10,0,0"
+            FontSize="22"
+            HorizontalOptions="Center"
+            Text="{Binding Service.Name}" />
+
+        <Label FontSize="16" HorizontalOptions="Center">
+            <Label.Resources>
+                <Style TargetType="Span">
+                    <Setter Property="TextColor" Value="{StaticResource Gray400}" />
+                </Style>
+            </Label.Resources>
+
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="{Binding Service.Price}" />
+                    <Span Text=" BYN,  " />
+                    <Span Text="{Binding Service.Duration.TotalMinutes}" />
+                    <Span Text=" мин" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <Button
+            Margin="0,15,0,0"
+            FontSize="14"
+            HorizontalOptions="Center"
+            Text="Записаться"
+            TextTransform="Uppercase"
+            WidthRequest="200" />
+
+        <!--<VerticalStackLayout BindableLayout.ItemsSource="">
+            <BindableLayout.ItemTemplate />
+        </VerticalStackLayout>-->
+    </VerticalStackLayout>
+</ContentPage>

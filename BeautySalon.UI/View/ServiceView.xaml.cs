@@ -2,9 +2,9 @@ using BeautySalon.UI.ViewModel;
 
 namespace BeautySalon.UI.View;
 
-public sealed partial class MastersView
+public sealed partial class ServiceView
 {
-    public MastersView(MastersViewModel viewModel)
+    public ServiceView(ServiceViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;

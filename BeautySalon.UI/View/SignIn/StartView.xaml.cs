@@ -9,7 +9,6 @@ public sealed partial class StartView
     public StartView(IServiceProvider serviceProvider)
     {
         InitializeComponent();
-
         _serviceProvider = serviceProvider;
     }
 

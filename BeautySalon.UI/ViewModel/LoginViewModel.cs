@@ -23,11 +23,7 @@ public sealed partial class LoginViewModel(IIdentityService identityService) : O
     [RelayCommand]
     private async Task Login()
     {
-        if (await identityService.AuthorizeAsync(Username.Trim(), Password.Trim()))
-        {
-            await Shell.Current.Navigation.PopToRootAsync();
-        }
-        else
+        if (!await identityService.AuthorizeAsync(Username.Trim(), Password.Trim()))
         {
             ErrorMessage = "*Wrong username or password";
         }

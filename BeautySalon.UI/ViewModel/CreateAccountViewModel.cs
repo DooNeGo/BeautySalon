@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using BeautySalon.Application.Commands.UpdateUser;
+using BeautySalon.Application.Interfaces;
 using BeautySalon.Application.Queries.GetUserById;
 using BeautySalon.Domain;
 using BeautySalon.UI.Attributes;
@@ -10,7 +11,7 @@ using Mediator;
 
 namespace BeautySalon.UI.ViewModel;
 
-public sealed partial class CreateAccountViewModel(IMediator mediator) : ObservableValidator, IQueryAttributable
+public sealed partial class CreateAccountViewModel(IMediator mediator, IIdentityService identityService) : ObservableValidator, IQueryAttributable
 {
     [ObservableProperty]
     [NotifyDataErrorInfo]
@@ -64,7 +65,7 @@ public sealed partial class CreateAccountViewModel(IMediator mediator) : Observa
         user.Customer = new Customer(LastName, FirstName, MiddleName, Phone);
 
         await mediator.Send(new UpdateUserCommand(user));
-        await Shell.Current.Navigation.PopToRootAsync();
+        await identityService.AuthorizeAsync(user.Username, user.Password);
     }
 
     private void UpdateErrorMessages()

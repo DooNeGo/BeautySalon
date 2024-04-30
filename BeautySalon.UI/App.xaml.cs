@@ -1,4 +1,5 @@
 ﻿using BeautySalon.Application.Interfaces;
+using BeautySalon.UI.View;
 using BeautySalon.UI.View.SignIn;
 
 namespace BeautySalon.UI;
@@ -18,7 +19,12 @@ public sealed partial class App
         _identityService = identityService;
         _serviceProvider = serviceProvider;
 
-        _identityService.LoginSuccessful += _ => MainPage.Navigation.PopToRootAsync();
+        _identityService.LoginSuccessful += async _ =>
+        {
+            Page mainView = _serviceProvider.GetRequiredService<MainView>();
+            await MainPage.Navigation.PushAsync(mainView);
+            MainPage.Navigation.ClearNavigationStack();
+        };
     }
 
     protected override void OnStart()

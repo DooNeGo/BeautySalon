@@ -2,7 +2,7 @@ using System.Collections;
 
 namespace BeautySalon.UI.TemplateSelectors;
 
-public class ParitySelector : DataTemplateSelector
+public sealed class ParitySelector : DataTemplateSelector
 {
     public DataTemplate? DefaultTemplate { get; set; }
     

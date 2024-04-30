@@ -20,5 +20,5 @@ public sealed record Service
 
     public TimeSpan Duration { get; set; }
 
-    public List<Appointment> Appointments { get; set; } = [];
+    public List<Master> Masters { get; set; } = [];
 }

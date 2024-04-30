@@ -3,12 +3,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BeautySalon.UI.ViewModel;
 
-public sealed partial class ServicesViewModel : ObservableObject
+public sealed partial class SignUpForServicePageModel : ObservableObject
 {
     [ObservableProperty]
     private IEnumerable<Service> _services;
 
-    public ServicesViewModel()
+    public SignUpForServicePageModel()
     {
         Services = 
         [

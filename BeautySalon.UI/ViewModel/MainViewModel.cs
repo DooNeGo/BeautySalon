@@ -6,8 +6,7 @@ namespace BeautySalon.UI.ViewModel;
 
 public sealed partial class MainViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private Salon _salon;
+    [ObservableProperty] private Salon _salon;
 
     public MainViewModel()
     {
@@ -35,5 +34,11 @@ public sealed partial class MainViewModel : ObservableObject
                                                             "+375447452007")
                             ]
             };
+    }
+
+    [RelayCommand]
+    private void SignUpForService()
+    {
+        
     }
 }
