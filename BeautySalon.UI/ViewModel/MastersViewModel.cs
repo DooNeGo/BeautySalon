@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+using BeautySalon.Application.Interfaces;
 using BeautySalon.Domain;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -7,15 +7,10 @@ namespace BeautySalon.UI.ViewModel;
 public sealed partial class MastersViewModel : ObservableObject
 {
     [ObservableProperty]
-    private ObservableCollection<Master> _masters;
+    private IEnumerable<Master> _masters = [];
 
-    public MastersViewModel()
+    public MastersViewModel(IApplicationContext applicationContext)
     {
-        Masters =
-        [
-                new Master("Кострома", "Матвей", null, new Position("Парикмахер"), "+375447452007"),
-                new Master("Западнюк", "Анастасия", null, new Position("Универсал"), "+375447452007"),
-                new Master("Посредников", "Иван", null, new Position("Визажист"), "+375447452007")
-        ];
+        Task.Run(() => Masters = applicationContext.Masters);
     }
 }

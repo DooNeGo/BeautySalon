@@ -12,7 +12,7 @@
     <VerticalStackLayout Spacing="5">
         <VerticalStackLayout.Resources>
             <Style TargetType="Entry">
-                <Setter Property="Keyboard" Value="Text" />
+                <Setter Property="Keyboard" Value="Default" />
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="ClearButtonVisibility" Value="WhileEditing" />
                 <Setter Property="ReturnType" Value="Next" />
@@ -38,7 +38,6 @@
 
         <VerticalStackLayout>
             <Entry
-                x:Name="PasswordEntry"
                 IsPassword="True"
                 Placeholder="Password"
                 Text="{Binding Password}" />
@@ -47,7 +46,6 @@
 
         <VerticalStackLayout>
             <Entry
-                x:Name="ConfirmedPasswordEntry"
                 IsPassword="True"
                 Placeholder="Re-type Password"
                 Text="{Binding ConfirmedPassword}" />
@@ -56,7 +54,6 @@
 
         <VerticalStackLayout>
             <Entry
-                x:Name="EmailEntry"
                 Completed="EmailEntry_OnCompleted"
                 Keyboard="Email"
                 Placeholder="Email"
@@ -64,6 +61,8 @@
                 Text="{Binding Email}" />
             <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding EmailError}" />
         </VerticalStackLayout>
+
+        <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding Error}" />
 
         <Button
             x:Name="NextButton"

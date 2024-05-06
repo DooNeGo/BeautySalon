@@ -6,7 +6,7 @@ public sealed record Appointment
 
     public Appointment(DateOnly date, TimeOnly time, Master master, Customer customer, List<Service> services)
     {
-        Id = Guid.Empty;
+        Id = Guid.NewGuid();
         Date = date;
         Time = time;
         Master = master;
@@ -22,7 +22,7 @@ public sealed record Appointment
 
     public Master Master { get; set; } = null!;
 
-    public List<Service> Services { get; set; } = null!;
+    public List<Service> Services { get; set; } = [];
 
     public Customer Customer { get; set; } = null!;
 }

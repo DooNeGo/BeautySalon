@@ -1,4 +1,6 @@
-﻿namespace BeautySalon.Domain;
+﻿using System.Collections.ObjectModel;
+
+namespace BeautySalon.Domain;
 
 public sealed record Salon
 {
@@ -6,13 +8,13 @@ public sealed record Salon
 
     public Salon(string address)
     {
-        Id = Guid.Empty;
+        Id = Guid.NewGuid();
         Address = address;
     }
 
     public Guid Id { get; }
 
-    public string Address { get; set; } = null!;
+    public string Address { get; set; } = string.Empty;
 
     public List<Master> Masters { get; set; } = [];
 

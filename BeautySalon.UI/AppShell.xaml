@@ -4,11 +4,12 @@
     x:Class="BeautySalon.UI.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:signInView="clr-namespace:BeautySalon.UI.View.SignIn"
     xmlns:view="clr-namespace:BeautySalon.UI.View"
     FlyoutBehavior="Disabled"
     ForegroundColor="Black">
 
-    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+    <TabBar x:Name="TabBar">
         <ShellContent Title="Home" ContentTemplate="{DataTemplate view:MainView}" />
-    </FlyoutItem>
+    </TabBar>
 </Shell>

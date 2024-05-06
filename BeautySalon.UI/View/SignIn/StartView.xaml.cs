@@ -1,24 +1,17 @@
-using BeautySalon.UI.View.SignUp;
+using BeautySalon.UI.ViewModel;
 
 namespace BeautySalon.UI.View.SignIn;
 
 public sealed partial class StartView
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public StartView(IServiceProvider serviceProvider)
+    public StartView()
     {
         InitializeComponent();
-        _serviceProvider = serviceProvider;
     }
 
-    private void LoginWithAccountButton_Clicked(object? sender, EventArgs e)
-    {
-        Navigation.PushAsync(_serviceProvider.GetRequiredService<LoginView>());
-    }
+    private void LoginWithAccountButton_Clicked(object? sender, EventArgs e) =>
+            Shell.Current.GoToAsync(nameof(LoginViewModel));
 
-    private void CreateAccountButton_Clicked(object? sender, EventArgs e)
-    {
-        Navigation.PushAsync(_serviceProvider.GetRequiredService<CreateUserView>());
-    }
+    private void CreateAccountButton_Clicked(object? sender, EventArgs e) =>
+            Shell.Current.GoToAsync(nameof(CreateUserViewModel));
 }

@@ -9,7 +9,6 @@ public sealed class AddUserCommandHandler(IApplicationContext context) : IComman
     {
         Guid id = (await context.Users.AddAsync(command.User, cancellationToken)).Entity.Id;
         await context.SaveChangesAsync(cancellationToken);
-
         return id;
     }
 }

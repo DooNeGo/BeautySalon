@@ -11,7 +11,10 @@
 
     <VerticalStackLayout>
         <Frame BackgroundColor="{StaticResource Gray100}" HorizontalOptions="Center">
-            <Image Source="empty_photo.svg" WidthRequest="100" />
+            <Image
+                HeightRequest="100"
+                Source="empty_photo.svg"
+                WidthRequest="100" />
         </Frame>
 
         <Label
@@ -39,6 +42,7 @@
 
         <Button
             Margin="0,15,0,0"
+            Command="{Binding SignUpCommand}"
             FontSize="14"
             HorizontalOptions="Center"
             Text="Записаться"

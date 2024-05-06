@@ -10,22 +10,12 @@ namespace BeautySalon.UI.ViewModel;
 
 public sealed partial class CreateUserViewModel(IMediator mediator) : ObservableValidator
 {
-    //[Compare(nameof(Password), ErrorMessage = "Passwords must match")]
     [Required(ErrorMessage = "*Required")]
     [LatinOnly("*Must contain only a-z, A-Z or 0-9")]
+    [MinLength(4, ErrorMessage = "*Minimum length is 4")]
     [NotifyDataErrorInfo]
     [ObservableProperty]
-    private string _confirmedPassword = string.Empty;
-
-    [ObservableProperty] private string _confirmedPasswordError = string.Empty;
-
-    [Required(ErrorMessage = "*Required")]
-    [EmailAddress]
-    [NotifyDataErrorInfo]
-    [ObservableProperty]
-    private string _email = string.Empty;
-
-    [ObservableProperty] private string _emailError = string.Empty;
+    private string _username = string.Empty;
     
     [Required(ErrorMessage = "*Required")]
     [LatinOnly("*Must contain only a-z, A-Z or 0-9")]
@@ -33,17 +23,25 @@ public sealed partial class CreateUserViewModel(IMediator mediator) : Observable
     [NotifyDataErrorInfo]
     [ObservableProperty]
     private string _password = string.Empty;
-
-    [ObservableProperty] private string _passwordError = string.Empty;
-
+    
+    //[Compare(nameof(Password), ErrorMessage = "Passwords must match")]
     [Required(ErrorMessage = "*Required")]
     [LatinOnly("*Must contain only a-z, A-Z or 0-9")]
-    [MinLength(4, ErrorMessage = "*Minimum length is 4")]
     [NotifyDataErrorInfo]
     [ObservableProperty]
-    private string _username = string.Empty;
+    private string _confirmedPassword = string.Empty;
+
+    [Required(ErrorMessage = "*Required")]
+    [EmailAddress]
+    [NotifyDataErrorInfo]
+    [ObservableProperty]
+    private string _email = string.Empty;
 
     [ObservableProperty] private string _usernameError = string.Empty;
+    [ObservableProperty] private string _passwordError = string.Empty;
+    [ObservableProperty] private string _confirmedPasswordError = string.Empty;
+    [ObservableProperty] private string _emailError = string.Empty;
+    [ObservableProperty] private string _error = string.Empty;
 
     [RelayCommand]
     private async Task CreateUser()
@@ -58,9 +56,16 @@ public sealed partial class CreateUserViewModel(IMediator mediator) : Observable
 
         if (HasErrors) return;
 
-        Guid id = await mediator.Send(new AddUserCommand(new User(Username, Password, Email)));
-        await Shell.Current.GoToAsync(nameof(CreateAccountViewModel),
-                new ShellNavigationQueryParameters { { "UserId", id } });
+        try
+        {
+            Guid id = await mediator.Send(new AddUserCommand(new User(Username, Password, Email)));
+            await Shell.Current.GoToAsync(nameof(CreateAccountViewModel),
+                    new ShellNavigationQueryParameters { { "UserId", id } });
+        }
+        catch (Exception e)
+        {
+            Error = e.InnerException?.Message ?? string.Empty;
+        }
     }
 
     private void UpdateErrorMessages()

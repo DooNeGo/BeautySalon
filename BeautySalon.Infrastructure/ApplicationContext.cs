@@ -12,6 +12,8 @@ internal sealed class ApplicationContext : DbContext, IApplicationContext
         Batteries_V2.Init();
         Database.EnsureDeleted();
         Database.EnsureCreated();
+        
+        this.LoadData();
     }
     
     public DbSet<Salon> Salons => Set<Salon>();

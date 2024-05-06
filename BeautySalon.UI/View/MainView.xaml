@@ -5,7 +5,6 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:customcontrol="clr-namespace:BeautySalon.UI.CustomControl"
-    xmlns:model="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodel="clr-namespace:BeautySalon.UI.ViewModel"
     Padding="0"
@@ -79,7 +78,7 @@
                                 TextColor="{StaticResource Primary}" />
                             <Label
                                 FontSize="20"
-                                Text="100"
+                                Text="{Binding Salon.Services.Count}"
                                 TextColor="{StaticResource Gray400}" />
                         </HorizontalStackLayout>
 
@@ -95,7 +94,7 @@
                         </Label>
                     </Grid>
 
-                    <VerticalStackLayout Margin="15,0" BindableLayout.ItemsSource="{Binding Salon.Services}">
+                    <VerticalStackLayout Margin="15,0" BindableLayout.ItemsSource="{Binding FirstFiveServices}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <customcontrol:ServiceItem />
@@ -112,7 +111,7 @@
                                 TextColor="{StaticResource Primary}" />
                             <Label
                                 FontSize="20"
-                                Text="9"
+                                Text="{Binding Salon.Masters.Count}"
                                 TextColor="{StaticResource Gray400}" />
                         </HorizontalStackLayout>
 
@@ -128,7 +127,7 @@
                         </Label>
                     </Grid>
 
-                    <VerticalStackLayout Margin="15,0" BindableLayout.ItemsSource="{Binding Salon.Masters}">
+                    <VerticalStackLayout Margin="15,0" BindableLayout.ItemsSource="{Binding FirstFiveMasters}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <customcontrol:MasterItem />

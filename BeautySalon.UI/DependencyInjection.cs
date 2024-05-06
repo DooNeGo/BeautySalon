@@ -10,7 +10,7 @@ internal static class DependencyInjection
 {
     public static IServiceCollection AddUI(this IServiceCollection services)
     {
-        return services.AddTransient<StartView>()
+        return services.AddTransientWithShellRoute<StartView, StartView>(nameof(StartView))
                 .AddTransientWithShellRoute<LoginView, LoginViewModel>(nameof(LoginViewModel))
                 .AddTransientWithShellRoute<CreateAccountView, CreateAccountViewModel>(nameof(CreateAccountViewModel))
                 .AddTransientWithShellRoute<CreateUserView, CreateUserViewModel>(nameof(CreateUserViewModel))

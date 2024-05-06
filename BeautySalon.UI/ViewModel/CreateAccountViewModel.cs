@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BeautySalon.Application.Commands.AddCustomer;
 using BeautySalon.Application.Commands.UpdateUser;
 using BeautySalon.Application.Interfaces;
 using BeautySalon.Application.Queries.GetUserById;
@@ -61,11 +62,9 @@ public sealed partial class CreateAccountViewModel(IMediator mediator, IIdentity
         if (HasErrors) return;
         if (_userId == Guid.Empty) ThrowHelper.ThrowInvalidDataException("The user id was empty");
 
-        User user = (await mediator.Send(new GetUserByIdQuery(_userId)))!;
-        user.Customer = new Customer(LastName, FirstName, MiddleName, Phone);
-
-        await mediator.Send(new UpdateUserCommand(user));
-        await identityService.AuthorizeAsync(user.Username, user.Password);
+        Customer customer = new(LastName, FirstName, MiddleName, Phone, _userId);
+        await mediator.Send(new AddCustomerCommand(customer));
+        await Shell.Current.Navigation.PopToRootAsync();
     }
 
     private void UpdateErrorMessages()

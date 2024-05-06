@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BeautySalon.Infrastructure;
 
-public class IdentityService(IApplicationContext context) : IIdentityService
+public sealed class IdentityService(IApplicationContext context) : IIdentityService
 {
     public User? CurrentUser { get; private set; }
 

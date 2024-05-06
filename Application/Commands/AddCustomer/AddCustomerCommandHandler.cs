@@ -8,13 +8,8 @@ public sealed class AddCustomerCommandHandler(IApplicationContext context) : ICo
 {
     public async ValueTask<Guid> Handle(AddCustomerCommand command, CancellationToken cancellationToken)
     {
-        User? user = await context.Users.FindAsync([command.UserId], cancellationToken);
-        if (user is not null)
-        {
-            user.Customer = command.Customer;
-        }
-
+        Guid id = (await context.Customers.AddAsync(command.Customer, cancellationToken)).Entity.Id;
         await context.SaveChangesAsync(cancellationToken);
-        return Guid.Empty;
+        return id;
     }
 }
