@@ -10,29 +10,29 @@ namespace BeautySalon.UI.ViewModel;
 
 public sealed partial class CreateUserViewModel(IMediator mediator) : ObservableValidator
 {
-    [Required(ErrorMessage = "*Required")]
-    [LatinOnly("*Must contain only a-z, A-Z or 0-9")]
-    [MinLength(4, ErrorMessage = "*Minimum length is 4")]
+    [Required(ErrorMessage = "*Обязательное поле")]
+    [LatinOnly("*Поле должно состоять только из латиницы, 0-9 и _")]
+    [MinLength(4, ErrorMessage = "*Минимальная длина поля 4")]
     [NotifyDataErrorInfo]
     [ObservableProperty]
     private string _username = string.Empty;
     
-    [Required(ErrorMessage = "*Required")]
-    [LatinOnly("*Must contain only a-z, A-Z or 0-9")]
-    [MinLength(8, ErrorMessage = "*Minimum length is 8")]
+    [Required(ErrorMessage = "*Обязательное поле")]
+    [LatinOnly("*Поле должно состоять только из латиницы, 0-9 и _")]
+    [MinLength(8, ErrorMessage = "*Минимальная длина поля 8")]
     [NotifyDataErrorInfo]
     [ObservableProperty]
     private string _password = string.Empty;
     
     //[Compare(nameof(Password), ErrorMessage = "Passwords must match")]
-    [Required(ErrorMessage = "*Required")]
-    [LatinOnly("*Must contain only a-z, A-Z or 0-9")]
+    [Required(ErrorMessage = "*Обязательное поле")]
+    [LatinOnly("*Поле должно состоять только из латиницы, 0-9 и _")]
     [NotifyDataErrorInfo]
     [ObservableProperty]
     private string _confirmedPassword = string.Empty;
 
-    [Required(ErrorMessage = "*Required")]
-    [EmailAddress]
+    [Required(ErrorMessage = "*Обязательное поле")]
+    [EmailAddress(ErrorMessage = "*Неверный адрес электронной почты")]
     [NotifyDataErrorInfo]
     [ObservableProperty]
     private string _email = string.Empty;

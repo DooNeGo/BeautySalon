@@ -25,7 +25,7 @@ public sealed partial class LoginViewModel(IIdentityService identityService) : O
     {
         if (!await identityService.AuthorizeAsync(Username.Trim(), Password.Trim()))
         {
-            ErrorMessage = "*Wrong username or password";
+            ErrorMessage = "*Неверный Логин или Пароль";
         }
     }
 }

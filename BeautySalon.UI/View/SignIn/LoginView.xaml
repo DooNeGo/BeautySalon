@@ -8,7 +8,8 @@
     xmlns:viewmodel="clr-namespace:BeautySalon.UI.ViewModel"
     Padding="10"
     x:DataType="viewmodel:LoginViewModel"
-    HideSoftInputOnTapped="True">
+    HideSoftInputOnTapped="True"
+    Shell.TabBarIsVisible="False">
 
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="White" StatusBarStyle="DarkContent" />
@@ -25,7 +26,7 @@
             FontFamily="Lato"
             FontSize="30"
             HorizontalOptions="Center"
-            Text="Log in"
+            Text="Вход"
             VerticalOptions="Center" />
 
         <VerticalStackLayout Grid.Row="1">
@@ -46,7 +47,7 @@
                         x:Name="UsernameEntry"
                         ClearButtonVisibility="WhileEditing"
                         Focused="Entry_OnFocused"
-                        Placeholder="Username"
+                        Placeholder="Логин"
                         ReturnType="Next"
                         Text="{Binding Username}"
                         Unfocused="Entry_OnUnfocused"
@@ -57,13 +58,16 @@
                         Completed="PasswordEntry_OnCompleted"
                         Focused="Entry_OnFocused"
                         IsPassword="True"
-                        Placeholder="Password"
+                        Placeholder="Пароль"
                         Text="{Binding Password}"
                         Unfocused="Entry_OnUnfocused"
                         VerticalTextAlignment="Center" />
                 </VerticalStackLayout>
             </Border>
-            <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding ErrorMessage}" />
+            <Label
+                Margin="5,5,0,0"
+                Style="{StaticResource ErrorLabelStyle}"
+                Text="{Binding ErrorMessage}" />
         </VerticalStackLayout>
 
         <VerticalStackLayout
@@ -79,14 +83,14 @@
                 HeightRequest="50"
                 HorizontalOptions="Center"
                 IsEnabled="{Binding IsLoginButtonEnable}"
-                Text="Log in"
+                Text="Войти"
                 WidthRequest="200" />
 
             <Label
                 FontFamily="Lato"
                 FontSize="13"
                 HorizontalOptions="Center"
-                Text="Forgot password?"
+                Text="Забыли пароль?"
                 TextColor="{StaticResource Primary}" />
         </VerticalStackLayout>
     </Grid>

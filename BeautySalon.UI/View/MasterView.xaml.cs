@@ -1,0 +1,12 @@
+using BeautySalon.UI.ViewModel;
+
+namespace BeautySalon.UI.View;
+
+public partial class MasterView
+{
+    public MasterView(MasterViewModel viewModel)
+    {
+        InitializeComponent();
+        BindingContext = viewModel;
+    }
+}

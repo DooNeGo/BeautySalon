@@ -7,6 +7,11 @@
     xmlns:model="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
     Padding="5"
     x:DataType="model:Master">
+
+    <Grid.GestureRecognizers>
+        <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
+    </Grid.GestureRecognizers>
+
     <HorizontalStackLayout Spacing="15">
         <Frame Padding="5" BackgroundColor="{StaticResource Gray50}">
             <Image Source="empty_photo.svg" />

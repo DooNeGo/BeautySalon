@@ -19,21 +19,13 @@
 
         <VerticalStackLayout>
             <Label FontSize="16" Text="{Binding Name}" />
-            <Label>
-                <Label.Resources>
-                    <Style TargetType="Span">
-                        <Setter Property="TextColor" Value="{StaticResource Gray400}" />
-                    </Style>
-                </Label.Resources>
-
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="{Binding Price}" />
-                        <Span Text=" BYN    " />
-                        <Span Text="{Binding Duration.TotalMinutes}" />
-                        <Span Text=" мин" />
-                    </FormattedString>
-                </Label.FormattedText>
+            <Label TextColor="{StaticResource Gray400}">
+                <Label.Text>
+                    <MultiBinding StringFormat="{}{0} BYN, {1} мин">
+                        <Binding Path="Price" />
+                        <Binding Path="Duration.TotalMinutes" />
+                    </MultiBinding>
+                </Label.Text>
             </Label>
         </VerticalStackLayout>
 

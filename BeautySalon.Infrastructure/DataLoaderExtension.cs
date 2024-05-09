@@ -10,16 +10,6 @@ internal static class DataLoaderExtension
         if (context.Salons.Any()) return;
         
         var salon = new Salon("Гомель, Советская 16");
-        
-        List<Position> positions = 
-        [
-                new Position("Визажист"),
-                new Position("Парикмахер"),
-                new Position("Мастер маникюра"),
-                new Position("Мастре педикюра"),
-                new Position("Бровист"),
-                new Position("Мастер рисниц"),
-        ];
 
         List<Service> services =
         [
@@ -34,6 +24,16 @@ internal static class DataLoaderExtension
                 new Service("Естественное наращивание ресниц", 40, TimeSpan.FromMinutes(180)),
                 new Service("Комплекс бровей", 40, TimeSpan.FromMinutes(60)),
                 new Service("Окрашевание бровей", 25, TimeSpan.FromMinutes(20))
+        ];
+        
+        List<Position> positions = 
+        [
+            new Position("Визажист") { Services = [services[1], services[5]]},
+            new Position("Парикмахер"),
+            new Position("Мастер маникюра") { Services = [services[2], services[0]]},
+            new Position("Мастер педикюра") { Services = [services[3], services[4]]},
+            new Position("Бровист") { Services = [services[10], services[9]]},
+            new Position("Мастер рeсниц") { Services = [services[8], services[7], services[6]]},
         ];
 
         List<Master> masters =

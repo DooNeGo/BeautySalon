@@ -16,16 +16,16 @@ public sealed partial class CreateAccountViewModel(IMediator mediator, IIdentity
 {
     [ObservableProperty]
     [NotifyDataErrorInfo]
-    [Required(ErrorMessage = "*Required")]
-    [MinLength(2, ErrorMessage = "*Minimum length is 2")]
+    [Required(ErrorMessage = "*Обязательное поле")]
+    [MinLength(2, ErrorMessage = "*Минимальная длина поля 2")]
     private string _firstName = string.Empty;
 
     [ObservableProperty] private string _firstNameError = string.Empty;
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
-    [Required(ErrorMessage = "*Required")]
-    [MinLength(2, ErrorMessage = "*Minimum length is 2")]
+    [Required(ErrorMessage = "*Обязательное поле")]
+    [MinLength(2, ErrorMessage = "*Минимальная длина поля 2")]
     private string _lastName = string.Empty;
 
     [ObservableProperty] private string _lastNameError = string.Empty;
@@ -35,8 +35,8 @@ public sealed partial class CreateAccountViewModel(IMediator mediator, IIdentity
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
-    [Required(ErrorMessage = "*Required")]
-    [PhoneNumber("*Is not valid phone number")]
+    [Required(ErrorMessage = "*Обязательное поле")]
+    [PhoneNumber("*Неверный номер телефон")]
     private string _phone = string.Empty;
 
     [ObservableProperty] private string _phoneError = string.Empty;

@@ -5,7 +5,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    Padding="10">
+    Padding="10"
+    Shell.TabBarIsVisible="False">
 
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="White" StatusBarStyle="DarkContent" />
@@ -34,7 +35,7 @@
             Clicked="CreateAccountButton_Clicked"
             CornerRadius="20"
             FontFamily="Loto"
-            Text="Create an account" />
+            Text="Создать аккаунт" />
 
         <Button
             BackgroundColor="Transparent"
@@ -43,7 +44,7 @@
             Clicked="LoginWithAccountButton_Clicked"
             CornerRadius="20"
             FontFamily="Loto"
-            Text="Log in with an existing account"
+            Text="Войти с существующим аккаунтом"
             TextColor="{StaticResource Primary}" />
 
     </VerticalStackLayout>

@@ -30,6 +30,4 @@ public sealed record Master
     public Salon Salon { get; set; } = null!;
     
     public Guid SalonId { get; set; }
-    
-    public List<Service> Services = [];
 }

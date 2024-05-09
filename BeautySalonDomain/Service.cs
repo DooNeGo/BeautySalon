@@ -20,7 +20,7 @@ public sealed record Service
 
     public TimeSpan Duration { get; set; }
     
-    public List<Master> Masters { get; set; } = [];
+    public List<Position> Positions { get; set; } = [];
 
     public List<Salon> Salons { get; set; } = [];
 }

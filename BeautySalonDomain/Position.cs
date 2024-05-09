@@ -13,4 +13,8 @@ public sealed record Position
     public Guid Id { get; }
 
     public string Title { get; set; } = string.Empty;
+
+    public List<Service> Services { get; init; } = [];
+
+    public List<Master> Masters { get; init; } = [];
 }

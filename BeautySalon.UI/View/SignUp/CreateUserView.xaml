@@ -7,7 +7,8 @@
     xmlns:viewmodel="clr-namespace:BeautySalon.UI.ViewModel"
     Padding="10"
     x:DataType="viewmodel:CreateUserViewModel"
-    HideSoftInputOnTapped="True">
+    HideSoftInputOnTapped="True"
+    Shell.TabBarIsVisible="False">
 
     <VerticalStackLayout Spacing="5">
         <VerticalStackLayout.Resources>
@@ -25,13 +26,13 @@
             FontFamily="Loto"
             FontSize="30"
             HorizontalOptions="Start"
-            Text="Credential"
+            Text="Учетные данные"
             VerticalOptions="Center" />
 
         <VerticalStackLayout>
             <Entry
                 x:Name="UsernameEntry"
-                Placeholder="Username"
+                Placeholder="Логин"
                 Text="{Binding Username}" />
             <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding UsernameError}" />
         </VerticalStackLayout>
@@ -39,7 +40,7 @@
         <VerticalStackLayout>
             <Entry
                 IsPassword="True"
-                Placeholder="Password"
+                Placeholder="Пароль"
                 Text="{Binding Password}" />
             <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding PasswordError}" />
         </VerticalStackLayout>
@@ -47,7 +48,7 @@
         <VerticalStackLayout>
             <Entry
                 IsPassword="True"
-                Placeholder="Re-type Password"
+                Placeholder="Подтвердите пароль"
                 Text="{Binding ConfirmedPassword}" />
             <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding ConfirmedPasswordError}" />
         </VerticalStackLayout>
@@ -56,7 +57,7 @@
             <Entry
                 Completed="EmailEntry_OnCompleted"
                 Keyboard="Email"
-                Placeholder="Email"
+                Placeholder="Электронная почта"
                 ReturnType="Done"
                 Text="{Binding Email}" />
             <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding EmailError}" />
@@ -72,7 +73,7 @@
             FontSize="16"
             HeightRequest="50"
             HorizontalOptions="End"
-            Text="Next"
+            Text="Далее"
             WidthRequest="140" />
     </VerticalStackLayout>
 </ContentPage>

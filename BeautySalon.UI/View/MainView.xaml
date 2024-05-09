@@ -94,7 +94,7 @@
                         </Label>
                     </Grid>
 
-                    <VerticalStackLayout Margin="15,0" BindableLayout.ItemsSource="{Binding FirstFiveServices}">
+                    <VerticalStackLayout Margin="5,0" BindableLayout.ItemsSource="{Binding FirstFiveServices}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <customcontrol:ServiceItem />
@@ -127,7 +127,7 @@
                         </Label>
                     </Grid>
 
-                    <VerticalStackLayout Margin="15,0" BindableLayout.ItemsSource="{Binding FirstFiveMasters}">
+                    <VerticalStackLayout Margin="5,0" BindableLayout.ItemsSource="{Binding FirstFiveMasters}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <customcontrol:MasterItem />

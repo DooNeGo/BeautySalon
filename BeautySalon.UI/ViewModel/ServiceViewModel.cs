@@ -6,17 +6,24 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace BeautySalon.UI.ViewModel;
 
-[QueryProperty(nameof(Service), nameof(Service))]
-public sealed partial class ServiceViewModel : ObservableObject
+public sealed partial class ServiceViewModel : ObservableObject, IQueryAttributable
 {
+    [ObservableProperty] private Service _service = null!;
+    [ObservableProperty] private IEnumerable<Master> _masters = [];
+
     private readonly IIdentityService _identityService;
+    private readonly IApplicationContext _context;
 
-    [ObservableProperty]
-    private Service _service = null!;
+    public ServiceViewModel(IIdentityService identityService, IApplicationContext context) =>
+        (_identityService, _context) = (identityService, context);
 
-    public ServiceViewModel(IIdentityService identityService, IServiceProvider serviceProvider)
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        _identityService = identityService;
+        Service = (Service)query["Service"];
+        Task.Run(() => Masters = _context.Positions
+            .Where(p => p.Services.Contains(Service))
+            .SelectMany(p => p.Masters)
+            .ToArray());
     }
 
     [RelayCommand]
