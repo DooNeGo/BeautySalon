@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="BeautySalon.UI.View.SignUpForServiceView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:BeautySalon.UI.CustomControl"
+    xmlns:domain="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
+    xmlns:viewModels="clr-namespace:BeautySalon.UI.ViewModel"
+    Title="Услуги"
+    Padding="15"
+    x:DataType="viewModels:SignUpForServiceViewModel"
+    Shell.TabBarIsVisible="False">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Далее" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Services}" Spacing="10">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="domain:Service">
+                    <Grid
+                        ColumnDefinitions="Auto, *"
+                        ColumnSpacing="10"
+                        RowDefinitions="Auto, Auto">
+
+                        <Frame
+                            Grid.RowSpan="2"
+                            Grid.Column="0"
+                            Padding="5"
+                            BackgroundColor="{StaticResource Gray50}">
+                            <Image Source="empty_photo.svg" />
+                        </Frame>
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            FontSize="16"
+                            Text="{Binding Name}" />
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            TextColor="{StaticResource Gray400}">
+                            <Label.Text>
+                                <MultiBinding StringFormat="{}{0} BYN, {1} мин">
+                                    <Binding Path="Price" />
+                                    <Binding Path="Duration.TotalMinutes" />
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+
+                        <CheckBox
+                            Grid.RowSpan="2"
+                            Grid.Column="1"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

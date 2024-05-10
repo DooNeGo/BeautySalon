@@ -6,24 +6,38 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
     Padding="5"
-    x:DataType="model:Master">
+    x:DataType="model:Master"
+    ColumnDefinitions="Auto, *"
+    ColumnSpacing="10"
+    RowDefinitions="Auto,Auto">
 
     <Grid.GestureRecognizers>
         <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
     </Grid.GestureRecognizers>
 
-    <HorizontalStackLayout Spacing="15">
-        <Frame Padding="5" BackgroundColor="{StaticResource Gray50}">
-            <Image Source="empty_photo.svg" />
-        </Frame>
+    <Frame
+        Grid.RowSpan="2"
+        Grid.Column="0"
+        Padding="5"
+        BackgroundColor="{StaticResource Gray50}">
+        <Image Source="empty_photo.svg" />
+    </Frame>
 
-        <VerticalStackLayout>
-            <Label FontSize="16" Text="{Binding FirstName}" />
-            <Label Text="{Binding Position.Title}" TextColor="{StaticResource Gray400}" />
-        </VerticalStackLayout>
-    </HorizontalStackLayout>
+    <Label
+        Grid.Row="0"
+        Grid.Column="1"
+        FontSize="16"
+        Text="{Binding FirstName}" />
+
+    <Label
+        Grid.Row="1"
+        Grid.Column="1"
+        Text="{Binding Position.Title}"
+        TextColor="{StaticResource Gray400}" />
 
     <Image
+        Grid.RowSpan="2"
+        Grid.Column="1"
         HeightRequest="14"
         HorizontalOptions="End"
         Source="angle_right"

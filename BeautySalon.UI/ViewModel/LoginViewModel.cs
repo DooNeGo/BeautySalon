@@ -17,8 +17,9 @@ public sealed partial class LoginViewModel(IIdentityService identityService) : O
     private string _username = string.Empty;
 
     public bool IsLoginButtonEnable =>
-            Username.Length >= 3 && Password.Length >= 3 && !string.IsNullOrWhiteSpace(Username)
-            && !string.IsNullOrWhiteSpace(Password);
+        Username.Length >= 3 && Password.Length >= 3 
+        && !string.IsNullOrWhiteSpace(Username)
+        && !string.IsNullOrWhiteSpace(Password);
 
     [RelayCommand]
     private async Task Login()

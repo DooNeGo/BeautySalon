@@ -22,6 +22,6 @@ public sealed partial class MainView
 
     private void SignUpForServiceButton_OnClicked(object? sender, EventArgs e)
     {
-        Shell.Current.GoToAsync(nameof(SignUpForServicePageModel));
+        Shell.Current.GoToAsync(nameof(SignUpForServiceViewModel));
     }
 }

@@ -1,6 +1,5 @@
 ﻿using BeautySalon.Domain;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace BeautySalon.Application.Interfaces;
 

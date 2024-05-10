@@ -6,31 +6,44 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
     Padding="5"
-    x:DataType="model:Service">
+    x:DataType="model:Service"
+    ColumnDefinitions="Auto, *"
+    ColumnSpacing="10"
+    RowDefinitions="Auto, Auto">
 
     <Grid.GestureRecognizers>
         <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
     </Grid.GestureRecognizers>
 
-    <HorizontalStackLayout Spacing="15">
-        <Frame Padding="5" BackgroundColor="{StaticResource Gray50}">
-            <Image Source="empty_photo.svg" />
-        </Frame>
+    <Frame
+        Grid.RowSpan="2"
+        Grid.Column="0"
+        Padding="5"
+        BackgroundColor="{StaticResource Gray50}">
+        <Image Source="empty_photo.svg" />
+    </Frame>
 
-        <VerticalStackLayout>
-            <Label FontSize="16" Text="{Binding Name}" />
-            <Label TextColor="{StaticResource Gray400}">
-                <Label.Text>
-                    <MultiBinding StringFormat="{}{0} BYN, {1} мин">
-                        <Binding Path="Price" />
-                        <Binding Path="Duration.TotalMinutes" />
-                    </MultiBinding>
-                </Label.Text>
-            </Label>
-        </VerticalStackLayout>
+    <Label
+        Grid.Row="0"
+        Grid.Column="1"
+        FontSize="16"
+        Text="{Binding Name}" />
 
-    </HorizontalStackLayout>
+    <Label
+        Grid.Row="1"
+        Grid.Column="1"
+        TextColor="{StaticResource Gray400}">
+        <Label.Text>
+            <MultiBinding StringFormat="{}{0} BYN, {1} мин">
+                <Binding Path="Price" />
+                <Binding Path="Duration.TotalMinutes" />
+            </MultiBinding>
+        </Label.Text>
+    </Label>
+
     <Image
+        Grid.RowSpan="2"
+        Grid.Column="1"
         HeightRequest="14"
         HorizontalOptions="End"
         Source="angle_right"
