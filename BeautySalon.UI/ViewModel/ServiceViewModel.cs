@@ -29,13 +29,15 @@ public sealed partial class ServiceViewModel : ObservableObject, IQueryAttributa
     [RelayCommand]
     private async Task SignUp()
     {
-        if (_identityService.CurrentUser is null)
+        if (_identityService.CurrentUser is not null)
         {
-            if (await Shell.Current.CurrentPage.DisplayAlert("Авторизация",
-                        "Вы должны войти в аккаунт для записи на услугу", "Войти", "Отмена"))
-            {
-                await Shell.Current.GoToAsync(nameof(StartView));   
-            }
+            await Shell.Current.GoToAsync(nameof(ChooseMasterViewModel),
+                new Dictionary<string, object> { { "Service", Service } });
+        }
+        else if (await Shell.Current.CurrentPage.DisplayAlert("Авторизация",
+                     "Вы должны войти в аккаунт для записи на услугу", "Войти", "Отмена"))
+        {
+            await Shell.Current.GoToAsync(nameof(StartView));
         }
     }
 }

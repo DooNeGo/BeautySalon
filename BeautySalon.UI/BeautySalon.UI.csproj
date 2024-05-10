@@ -96,7 +96,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="View\SignUpForServiceView.xaml.cs">
+        <Compile Update="View\SignUpForServiceStartView.xaml.cs">
           <DependentUpon>SignUpForServiceView.xaml</DependentUpon>
         </Compile>
         <Compile Update="View\SignUp\CreateAccountView.xaml.cs">

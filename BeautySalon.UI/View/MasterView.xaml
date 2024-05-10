@@ -22,6 +22,7 @@
                 Margin="0,10,0,0"
                 FontSize="22"
                 HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
                 Text="{Binding Master.FirstName}" />
 
             <Label

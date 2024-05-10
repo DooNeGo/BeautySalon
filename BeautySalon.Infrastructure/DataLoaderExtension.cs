@@ -9,7 +9,7 @@ internal static class DataLoaderExtension
     {
         if (context.Salons.Any()) return;
         
-        var salon = new Salon("Гомель, Советская 16");
+        var salon = new Salon("Гомель, Советская 16", new TimeOnly(9, 0), new TimeOnly(21, 0));
 
         List<Service> services =
         [
@@ -38,12 +38,12 @@ internal static class DataLoaderExtension
 
         List<Master> masters =
         [
-                new Master("Иванова", "Татьяна", null, "+375447452007") { SalonId = salon.Id, PositionId = positions[0].Id},
-                new Master("Семенова", "Мария", null, "+375447452007") { SalonId = salon.Id, PositionId = positions[1].Id },
-                new Master("Петрова", "Ольга", null, "+375447452007") { SalonId = salon.Id, PositionId = positions[2].Id },
-                new Master("Голубева", "Мария", null, "+375447452007") { SalonId = salon.Id, PositionId = positions[3].Id },
-                new Master("Ахрамович", "Мария", null, "+375447452007") { SalonId = salon.Id, PositionId = positions[4].Id },
-                new Master("Дрелько", "Дарья", null, "+375447452007") { SalonId = salon.Id, PositionId = positions[5].Id },
+                new Master("Иванова", "Татьяна", null, "+375447452007", positions[0]),
+                new Master("Семенова", "Мария", null, "+375447452007", positions[1]),
+                new Master("Петрова", "Ольга", null, "+375447452007", positions[2]),
+                new Master("Голубева", "Мария", null, "+375447452007", positions[3]),
+                new Master("Ахрамович", "Мария", null, "+375447452007", positions[4]),
+                new Master("Дрелько", "Дарья", null, "+375447452007", positions[5])
         ];
 
         salon.Masters = masters;

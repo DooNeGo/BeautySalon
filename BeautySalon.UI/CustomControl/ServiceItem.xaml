@@ -18,21 +18,24 @@
     <Frame
         Grid.RowSpan="2"
         Grid.Column="0"
-        Padding="5"
+        Padding="8"
         BackgroundColor="{StaticResource Gray50}">
-        <Image Source="empty_photo.svg" />
+        <Image HeightRequest="25" Source="empty_photo.svg" />
     </Frame>
 
     <Label
         Grid.Row="0"
         Grid.Column="1"
-        FontSize="16"
-        Text="{Binding Name}" />
+        FontSize="15"
+        Text="{Binding Name}"
+        VerticalOptions="Center" />
 
     <Label
         Grid.Row="1"
         Grid.Column="1"
-        TextColor="{StaticResource Gray400}">
+        FontSize="13"
+        TextColor="{StaticResource Gray400}"
+        VerticalOptions="Center">
         <Label.Text>
             <MultiBinding StringFormat="{}{0} BYN, {1} мин">
                 <Binding Path="Price" />
@@ -44,7 +47,7 @@
     <Image
         Grid.RowSpan="2"
         Grid.Column="1"
-        HeightRequest="14"
+        HeightRequest="15"
         HorizontalOptions="End"
         Source="angle_right"
         VerticalOptions="Center" />

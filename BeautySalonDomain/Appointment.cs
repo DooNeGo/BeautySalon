@@ -4,11 +4,10 @@ public sealed record Appointment
 {
     private Appointment() { }
 
-    public Appointment(DateOnly date, TimeOnly time, Master master, Customer customer, List<Service> services)
+    public Appointment(DateTime dateTime, Master master, Customer customer, List<Service> services)
     {
         Id = Guid.NewGuid();
-        Date = date;
-        Time = time;
+        DateTime = dateTime;
         Master = master;
         Services = services;
         Customer = customer;
@@ -16,9 +15,7 @@ public sealed record Appointment
 
     public Guid Id { get; }
 
-    public DateOnly Date { get; set; }
-
-    public TimeOnly Time { get; set; }
+    public DateTime DateTime { get; set; }
 
     public Master Master { get; set; } = null!;
 

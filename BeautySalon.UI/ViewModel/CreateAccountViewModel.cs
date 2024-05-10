@@ -64,7 +64,7 @@ public sealed partial class CreateAccountViewModel(IMediator mediator, IIdentity
 
         Customer customer = new(LastName, FirstName, MiddleName, Phone, _userId);
         await mediator.Send(new AddCustomerCommand(customer));
-        await Shell.Current.Navigation.PopToRootAsync();
+        await Shell.Current.GoToAsync($"../../{nameof(LoginViewModel)}");
     }
 
     private void UpdateErrorMessages()

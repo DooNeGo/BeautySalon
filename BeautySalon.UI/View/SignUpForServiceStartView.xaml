@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
-    x:Class="BeautySalon.UI.View.SignUpForServiceView"
+    x:Class="BeautySalon.UI.View.SignUpForServiceStartView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:BeautySalon.UI.CustomControl"
     xmlns:domain="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
     xmlns:viewModels="clr-namespace:BeautySalon.UI.ViewModel"
     Title="Услуги"
     Padding="15"
-    x:DataType="viewModels:SignUpForServiceViewModel"
+    x:DataType="viewModels:SignUpForServiceStartViewModel"
     Shell.TabBarIsVisible="False">
 
     <ContentPage.ToolbarItems>
@@ -28,21 +27,26 @@
                         <Frame
                             Grid.RowSpan="2"
                             Grid.Column="0"
-                            Padding="5"
-                            BackgroundColor="{StaticResource Gray50}">
-                            <Image Source="empty_photo.svg" />
+                            Padding="8"
+                            BackgroundColor="{StaticResource Gray50}"
+                            HeightRequest="48"
+                            WidthRequest="48">
+                            <Image HeightRequest="30" Source="empty_photo.svg" />
                         </Frame>
 
                         <Label
                             Grid.Row="0"
                             Grid.Column="1"
-                            FontSize="16"
-                            Text="{Binding Name}" />
+                            FontSize="15"
+                            Text="{Binding Name}"
+                            VerticalOptions="Center" />
 
                         <Label
                             Grid.Row="1"
                             Grid.Column="1"
-                            TextColor="{StaticResource Gray400}">
+                            FontSize="13"
+                            TextColor="{StaticResource Gray400}"
+                            VerticalOptions="Center">
                             <Label.Text>
                                 <MultiBinding StringFormat="{}{0} BYN, {1} мин">
                                     <Binding Path="Price" />

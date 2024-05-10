@@ -2,12 +2,12 @@ using BeautySalon.UI.ViewModel;
 
 namespace BeautySalon.UI.View;
 
-public sealed partial class SignUpForServiceView
+public sealed partial class SignUpForServiceStartView
 {
-    public SignUpForServiceView(SignUpForServiceViewModel viewModel)
+    public SignUpForServiceStartView(SignUpForServiceStartViewModel startViewModel)
     {
         InitializeComponent();
-        BindingContext = viewModel;
+        BindingContext = startViewModel;
     }
 
     private void ImageButton_Released(object sender, EventArgs e)

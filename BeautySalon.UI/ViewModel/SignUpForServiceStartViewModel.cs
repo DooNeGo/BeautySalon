@@ -5,12 +5,12 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace BeautySalon.UI.ViewModel;
 
-public sealed partial class SignUpForServiceViewModel : ObservableObject
+public sealed partial class SignUpForServiceStartViewModel : ObservableObject
 {
     [ObservableProperty]
     private IEnumerable<Service> _services;
 
-    public SignUpForServiceViewModel(IApplicationContext applicationContext)
+    public SignUpForServiceStartViewModel(IApplicationContext applicationContext)
     {
         Services = applicationContext.Services;
     }

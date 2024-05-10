@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="BeautySalon.UI.View.ChooseMasterView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:customControl="clr-namespace:BeautySalon.UI.CustomControl"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewModel="clr-namespace:BeautySalon.UI.ViewModel"
+    Title="Выбор мастеров"
+    Padding="10"
+    x:DataType="viewModel:ChooseMasterViewModel">
+    <VerticalStackLayout>
+        <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto">
+            <Label
+                Margin="5,0,0,0"
+                Text="Дата"
+                TextColor="{StaticResource Gray400}" />
+
+            <Label
+                Grid.Column="1"
+                Margin="5,0,0,0"
+                Text="Время"
+                TextColor="{StaticResource Gray400}" />
+
+            <DatePicker
+                Grid.Row="1"
+                Grid.Column="0"
+                Date="{Binding SelectedDate}"
+                FontSize="15"
+                Format="dd.MM.yyyy"
+                MinimumDate="{Binding MinimumDateTime}" />
+
+            <Picker
+                Grid.Row="1"
+                Grid.Column="1"
+                FontSize="15"
+                ItemsSource="{Binding MasterFreeTimeStrings}" />
+        </Grid>
+
+        <Label
+            Margin="5,15,0,5"
+            Text="Мастера"
+            TextColor="{StaticResource Gray400}" />
+        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Masters}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <toolkit:Expander>
+                        <toolkit:Expander.Header>
+                            <customControl:MasterItem />
+                        </toolkit:Expander.Header>
+
+                        <Label Text="Hello" />
+                    </toolkit:Expander>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>
