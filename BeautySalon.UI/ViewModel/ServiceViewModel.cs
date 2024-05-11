@@ -20,10 +20,9 @@ public sealed partial class ServiceViewModel : ObservableObject, IQueryAttributa
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         Service = (Service)query["Service"];
-        Task.Run(() => Masters = _context.Positions
+        Task.Run(() => Masters = [.. _context.Positions
             .Where(p => p.Services.Contains(Service))
-            .SelectMany(p => p.Masters)
-            .ToArray());
+            .SelectMany(p => p.Masters)]);
     }
 
     [RelayCommand]

@@ -4,7 +4,7 @@ public sealed record Customer
 {
     private Customer() { }
 
-    public Customer(string lastName, string firstName, string middleName, string phone, Guid userId)
+    public Customer(string lastName, string firstName, string? middleName, string phone, Guid userId)
     {
         Id = Guid.NewGuid();
         LastName = lastName;
@@ -20,7 +20,7 @@ public sealed record Customer
 
     public string FirstName { get; set; } = string.Empty;
 
-    public string MiddleName { get; set; } = string.Empty;
+    public string? MiddleName { get; set; }
 
     public string Phone { get; set; } = string.Empty;
     

@@ -1,6 +1,6 @@
 namespace BeautySalon.UI;
 
-public partial class AppShell
+public sealed partial class AppShell
 {
     public AppShell()
     {

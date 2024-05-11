@@ -9,7 +9,7 @@ namespace BeautySalon.UI.ViewModel;
 
 public sealed partial class MainViewModel : ObservableObject
 {
-    [ObservableProperty] private Salon _salon;
+    [ObservableProperty] private Salon _salon = null!;
     [ObservableProperty] private int _servicesCount;
     [ObservableProperty] private int _mastersCount;
     [ObservableProperty] private IEnumerable<Service> _firstFiveServices = [];
@@ -32,17 +32,20 @@ public sealed partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void SignUpForService()
-    {
-        
-    }
+    private Task SignUpForServices() =>
+        Shell.Current.GoToAsync(nameof(SignUpForServiceStartViewModel));
+
+    [RelayCommand]
+    private Task ViewAllServices() =>
+        Shell.Current.GoToAsync(nameof(ServicesViewModel));
+
+    [RelayCommand]
+    private Task ViewAllMasters() => 
+        Shell.Current.GoToAsync(nameof(MastersViewModel));
 
     [RelayCommand]
     private async Task Refresh()
     {
-        //if (IsRefreshing) return;
-        //IsRefreshing = true;
-
         try
         {
             Salon = await _mediator.Send(new GetSalonQuery());

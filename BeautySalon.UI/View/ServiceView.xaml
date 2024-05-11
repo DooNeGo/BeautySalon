@@ -54,7 +54,7 @@
             <VerticalStackLayout BindableLayout.ItemsSource="{Binding Masters}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <customControl:MasterItem />
+                        <customControl:NavigationMasterItem />
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </VerticalStackLayout>

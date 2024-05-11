@@ -96,6 +96,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Compile Update="CustomControl\NavigationMasterItem.xaml.cs">
+          <DependentUpon>NavigationMasterItem.xaml</DependentUpon>
+        </Compile>
         <Compile Update="View\SignUpForServiceStartView.xaml.cs">
           <DependentUpon>SignUpForServiceView.xaml</DependentUpon>
         </Compile>
@@ -109,6 +112,18 @@
     </ItemGroup>
 
     <ItemGroup>
+        <MauiXaml Update="CustomControl\MasterItem.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="CustomControl\MenuItem.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="CustomControl\NavigationServiceItem.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="CustomControl\ServiceItem.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
         <MauiXaml Update="View\SignUp\CreateAccountView.xaml">
             <Generator>MSBuild:Compile</Generator>
         </MauiXaml>

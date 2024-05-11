@@ -37,7 +37,7 @@
                             Source="logo.png" />
                         <Button
                             BackgroundColor="{StaticResource Primary}"
-                            Clicked="SignUpForServiceButton_OnClicked"
+                            Command="{Binding SignUpForServicesCommand}"
                             CornerRadius="40"
                             FontSize="14"
                             HorizontalOptions="End"
@@ -97,7 +97,7 @@
                             TextColor="{StaticResource Primary}"
                             VerticalOptions="Center">
                             <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="ServicesViewAll_OnTapped" />
+                                <TapGestureRecognizer Command="{Binding ViewAllServicesCommand}" />
                             </Label.GestureRecognizers>
                         </Label>
                     </Grid>
@@ -105,7 +105,7 @@
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding FirstFiveServices}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <customcontrol:ServiceItem />
+                                <customcontrol:NavigationServiceItem />
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
@@ -134,7 +134,7 @@
                             TextColor="{StaticResource Primary}"
                             VerticalOptions="Center">
                             <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="MastersViewAll_OnTapped" />
+                                <TapGestureRecognizer Command="{Binding ViewAllMastersCommand}" />
                             </Label.GestureRecognizers>
                         </Label>
                     </Grid>
@@ -142,7 +142,7 @@
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding FirstFiveMasters}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
-                                <customcontrol:MasterItem />
+                                <customcontrol:NavigationMasterItem />
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>

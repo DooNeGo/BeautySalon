@@ -12,7 +12,7 @@
     <CollectionView ItemsSource="{Binding Services}">
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <customcontrol:ServiceItem />
+                <customcontrol:NavigationServiceItem />
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>

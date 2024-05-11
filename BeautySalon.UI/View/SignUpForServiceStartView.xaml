@@ -4,6 +4,7 @@
     x:Class="BeautySalon.UI.View.SignUpForServiceStartView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:BeautySalon.UI.CustomControl"
     xmlns:domain="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
     xmlns:viewModels="clr-namespace:BeautySalon.UI.ViewModel"
     Title="Услуги"
@@ -16,51 +17,17 @@
     </ContentPage.ToolbarItems>
 
     <ScrollView>
-        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Services}" Spacing="10">
+        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Services}">
             <BindableLayout.ItemTemplate>
-                <DataTemplate x:DataType="domain:Service">
-                    <Grid
-                        ColumnDefinitions="Auto, *"
-                        ColumnSpacing="10"
-                        RowDefinitions="Auto, Auto">
-
-                        <Frame
-                            Grid.RowSpan="2"
-                            Grid.Column="0"
-                            Padding="8"
-                            BackgroundColor="{StaticResource Gray50}"
-                            HeightRequest="48"
-                            WidthRequest="48">
-                            <Image HeightRequest="30" Source="empty_photo.svg" />
-                        </Frame>
-
-                        <Label
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            FontSize="15"
-                            Text="{Binding Name}"
-                            VerticalOptions="Center" />
-
-                        <Label
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            FontSize="13"
-                            TextColor="{StaticResource Gray400}"
-                            VerticalOptions="Center">
-                            <Label.Text>
-                                <MultiBinding StringFormat="{}{0} BYN, {1} мин">
-                                    <Binding Path="Price" />
-                                    <Binding Path="Duration.TotalMinutes" />
-                                </MultiBinding>
-                            </Label.Text>
-                        </Label>
-
-                        <CheckBox
-                            Grid.RowSpan="2"
-                            Grid.Column="1"
-                            HorizontalOptions="End"
-                            VerticalOptions="Center" />
-                    </Grid>
+                <DataTemplate>
+                    <controls:ServiceItem>
+                        <controls:ServiceItem.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                        </controls:ServiceItem.GestureRecognizers>
+                        <controls:ServiceItem.TailView>
+                            <CheckBox />
+                        </controls:ServiceItem.TailView>
+                    </controls:ServiceItem>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </VerticalStackLayout>

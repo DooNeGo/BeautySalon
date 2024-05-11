@@ -49,7 +49,7 @@
             <VerticalStackLayout BindableLayout.ItemsSource="{Binding Services}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <customControl:ServiceItem />
+                        <customControl:NavigationServiceItem />
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </VerticalStackLayout>

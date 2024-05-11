@@ -12,7 +12,7 @@
     <CollectionView ItemsSource="{Binding Masters}">
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <customcontrol:MasterItem />
+                <customcontrol:NavigationMasterItem />
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>

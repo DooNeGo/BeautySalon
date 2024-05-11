@@ -1,18 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
-using BeautySalon.Application.Commands.AddCustomer;
-using BeautySalon.Application.Commands.UpdateUser;
-using BeautySalon.Application.Interfaces;
-using BeautySalon.Application.Queries.GetUserById;
+﻿using BeautySalon.Application.Commands.AddCustomer;
 using BeautySalon.Domain;
 using BeautySalon.UI.Attributes;
 using CommunityToolkit.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Mediator;
+using System.ComponentModel.DataAnnotations;
 
 namespace BeautySalon.UI.ViewModel;
 
-public sealed partial class CreateAccountViewModel(IMediator mediator, IIdentityService identityService) : ObservableValidator, IQueryAttributable
+public sealed partial class CreateAccountViewModel(IMediator mediator) : ObservableValidator, IQueryAttributable
 {
     [ObservableProperty]
     [NotifyDataErrorInfo]
@@ -41,7 +38,7 @@ public sealed partial class CreateAccountViewModel(IMediator mediator, IIdentity
 
     [ObservableProperty] private string _phoneError = string.Empty;
 
-    private Guid _userId = Guid.Empty;
+    private Guid _userId;
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {

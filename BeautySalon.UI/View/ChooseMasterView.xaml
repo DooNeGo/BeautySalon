@@ -10,6 +10,11 @@
     Title="Выбор мастеров"
     Padding="10"
     x:DataType="viewModel:ChooseMasterViewModel">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Далее" />
+    </ContentPage.ToolbarItems>
+
     <VerticalStackLayout>
         <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto">
             <Label
@@ -45,13 +50,18 @@
         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Masters}">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                    <toolkit:Expander>
-                        <toolkit:Expander.Header>
-                            <customControl:MasterItem />
-                        </toolkit:Expander.Header>
+                    <customControl:MasterItem x:Name="MasterItem">
+                        <customControl:MasterItem.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                        </customControl:MasterItem.GestureRecognizers>
 
-                        <Label Text="Hello" />
-                    </toolkit:Expander>
+                        <customControl:MasterItem.TailView>
+                            <RadioButton
+                                BindingContext="{Binding Source={x:Reference MasterItem}, Path=BindingContext}"
+                                CheckedChanged="RadioButton_CheckedChanged"
+                                GroupName="Masters" />
+                        </customControl:MasterItem.TailView>
+                    </customControl:MasterItem>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </VerticalStackLayout>
