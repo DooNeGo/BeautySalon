@@ -86,7 +86,7 @@
                         <Label
                             Grid.Column="1"
                             FontSize="19"
-                            Text="{Binding Salon.Services.Count}"
+                            Text="{Binding ServicesCount}"
                             TextColor="{StaticResource Gray400}" />
 
                         <Label
@@ -123,7 +123,7 @@
                         <Label
                             Grid.Column="1"
                             FontSize="19"
-                            Text="{Binding Salon.Masters.Count}"
+                            Text="{Binding MastersCount}"
                             TextColor="{StaticResource Gray400}" />
 
                         <Label

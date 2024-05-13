@@ -1,22 +1,14 @@
-using BeautySalon.Application.Interfaces;
+using BeautySalon.Application.Queries;
 using BeautySalon.Domain;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+using Mediator;
 
 namespace BeautySalon.UI.ViewModel;
 
 public sealed partial class SignUpForServiceStartViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private IEnumerable<Service> _services;
-
-    public SignUpForServiceStartViewModel(IApplicationContext applicationContext)
-    {
-        Services = applicationContext.Services;
-    }
-
-    [RelayCommand]
-    private Task GoToServiceView(Service service) =>
-        Shell.Current.GoToAsync(nameof(ServiceViewModel),
-            new Dictionary<string, object> { { "Service", service } });
+    [ObservableProperty] private IReadOnlyList<Service> _services = [];
+    
+    public SignUpForServiceStartViewModel(IMediator mediator, GlobalContext globalContext) =>
+        Task.Run(async () => Services = await mediator.Send(new GetServicesQuery(globalContext.Salon.Id)));
 }

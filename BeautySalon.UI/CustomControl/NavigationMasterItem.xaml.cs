@@ -2,7 +2,7 @@ using BeautySalon.UI.ViewModel;
 
 namespace BeautySalon.UI.CustomControl;
 
-public sealed partial class NavigationMasterItem : MasterItem
+public sealed partial class NavigationMasterItem
 {
     public NavigationMasterItem()
     {

@@ -1,6 +1,6 @@
 namespace BeautySalon.UI.CustomControl;
 
-public partial class MenuItem : Grid
+public partial class MenuItem
 {
     #region BindableProperties
     public static readonly BindableProperty HeadViewProperty = BindableProperty.Create(nameof(HeadView),

@@ -9,28 +9,24 @@ public sealed partial class LoginViewModel(IIdentityService identityService) : O
     [ObservableProperty] private string _errorMessage = string.Empty;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsLoginButtonEnable))]
+    [NotifyCanExecuteChangedFor(nameof(LoginCommand))]
     private string _password = string.Empty;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsLoginButtonEnable))]
+    [NotifyCanExecuteChangedFor(nameof(LoginCommand))]
     private string _username = string.Empty;
 
-    public bool IsLoginButtonEnable =>
-        Username.Length >= 3 && Password.Length >= 3 
+    [RelayCommand(CanExecute = nameof(CanLogin))]
+    private async Task Login(CancellationToken cancellationToken)
+    {
+        await identityService.AuthorizeAsync(Username.Trim(), Password.Trim(), cancellationToken);
+        if (identityService.CurrentUser is null) ErrorMessage = "*Неверный Логин или Пароль";
+        else await Shell.Current.GoToAsync("../..");
+    }
+
+    private bool CanLogin() =>
+        Username.Length >= 3
+        && Password.Length >= 3
         && !string.IsNullOrWhiteSpace(Username)
         && !string.IsNullOrWhiteSpace(Password);
-
-    [RelayCommand]
-    private async Task Login()
-    {
-        if (!await identityService.AuthorizeAsync(Username.Trim(), Password.Trim()))
-        {
-            ErrorMessage = "*Неверный Логин или Пароль";
-        }
-        else
-        {
-            await Shell.Current.GoToAsync("../..");
-        }
-    }
 }

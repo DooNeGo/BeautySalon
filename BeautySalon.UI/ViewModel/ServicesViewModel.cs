@@ -1,16 +1,14 @@
-using BeautySalon.Application.Interfaces;
+using BeautySalon.Application.Queries;
 using BeautySalon.Domain;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Mediator;
 
 namespace BeautySalon.UI.ViewModel;
 
 public sealed partial class ServicesViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private IEnumerable<Service> _services = [];
-
-    public ServicesViewModel(IApplicationContext context)
-    {
-        Task.Run(() => Services = context.Services);
-    }
+    [ObservableProperty] private IReadOnlyList<Service> _services = [];
+    
+    public ServicesViewModel(IMediator mediator, GlobalContext globalContext) =>
+        Task.Run(async () => Services = await mediator.Send(new GetServicesQuery(globalContext.Salon.Id)));
 }

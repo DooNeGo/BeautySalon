@@ -1,5 +1,5 @@
-﻿using BeautySalon.Application.Interfaces;
-using BeautySalon.Application.Queries.GetSalon;
+﻿using System.Diagnostics;
+using BeautySalon.Application.Queries;
 using BeautySalon.Domain;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -12,25 +12,21 @@ public sealed partial class MainViewModel : ObservableObject
     [ObservableProperty] private Salon _salon = null!;
     [ObservableProperty] private int _servicesCount;
     [ObservableProperty] private int _mastersCount;
-    [ObservableProperty] private IEnumerable<Service> _firstFiveServices = [];
-    [ObservableProperty] private IEnumerable<Master> _firstFiveMasters = [];
+    [ObservableProperty] private IReadOnlyList<Service> _firstFiveServices = [];
+    [ObservableProperty] private IReadOnlyList<Master> _firstFiveMasters = [];
     [ObservableProperty] private bool _isRefreshing;
 
     private readonly IMediator _mediator;
+    private readonly GlobalContext _globalContext;
 
-    public MainViewModel(IMediator mediator, IApplicationContext context)
+    public MainViewModel(IMediator mediator, GlobalContext globalContext)
     {
         _mediator = mediator;
-        Task.Run(() =>
-        {
-            Salon = context.Salons.First();
-            FirstFiveServices = Salon.Services.Take(5);
-            FirstFiveMasters = Salon.Masters.Take(5);
-            ServicesCount = Salon.Services.Count;
-            MastersCount = Salon.Masters.Count;
-        });
+        _globalContext = globalContext;
+        
+        Task.Run(Update);
     }
-
+    
     [RelayCommand]
     private Task SignUpForServices() =>
         Shell.Current.GoToAsync(nameof(SignUpForServiceStartViewModel));
@@ -40,19 +36,21 @@ public sealed partial class MainViewModel : ObservableObject
         Shell.Current.GoToAsync(nameof(ServicesViewModel));
 
     [RelayCommand]
-    private Task ViewAllMasters() => 
+    private Task ViewAllMasters() =>
         Shell.Current.GoToAsync(nameof(MastersViewModel));
 
     [RelayCommand]
-    private async Task Refresh()
+    private async Task Update()
     {
+        if (!IsRefreshing) IsRefreshing = true;
         try
         {
             Salon = await _mediator.Send(new GetSalonQuery());
-            FirstFiveServices = Salon.Services.Take(5);
-            FirstFiveMasters = Salon.Masters.Take(5);
-            ServicesCount = Salon.Services.Count;
-            MastersCount = Salon.Masters.Count;
+            FirstFiveServices = await _mediator.Send(new GetFirstFiveServicesQuery(Salon.Id));
+            FirstFiveMasters = await _mediator.Send(new GetFirstFiveMastersQuery(Salon.Id));
+            ServicesCount = await _mediator.Send(new GetServicesCountQuery(Salon.Id));
+            MastersCount = await _mediator.Send(new GetMastersCountQuery(Salon.Id));
+            _globalContext.Salon = Salon;
         }
         finally
         {

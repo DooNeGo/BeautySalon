@@ -4,22 +4,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BeautySalon.Infrastructure;
 
-public sealed class IdentityService(IApplicationContext context) : IIdentityService
+internal sealed class IdentityService(IApplicationContext context) : IIdentityService
 {
     public User? CurrentUser { get; private set; }
 
-    public event Action<User>? LoginSuccessful;
+    public event Action<User>? Authorized; 
 
-    public async Task<bool> AuthorizeAsync(string username, string password)
+    public async Task AuthorizeAsync(string username, string password, CancellationToken cancellationToken)
     {
-        CurrentUser = await context.Users.AsNoTracking()
-                .FirstOrDefaultAsync(p => p.Username == username && p.Password == password);
-
-        if (CurrentUser is not null)
-        {
-            LoginSuccessful?.Invoke(CurrentUser);
-        }
-
-        return CurrentUser is not null;
+        CurrentUser = await context.Users
+            .AsNoTracking()
+            .Where(u => u.Username == username && u.Password == password)
+            .Include(u => u.Customer)
+            .FirstOrDefaultAsync(cancellationToken);
+        
+        if (CurrentUser is not null) Authorized?.Invoke(CurrentUser);
     }
 }

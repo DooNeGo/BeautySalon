@@ -1,6 +1,6 @@
 namespace BeautySalon.UI.CustomControl;
 
-public partial class MasterItem : MenuItem
+public partial class MasterItem
 {
 	public MasterItem()
 	{

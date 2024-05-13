@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="BeautySalon.UI.View.ConfirmAppointmentView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModel="clr-namespace:BeautySalon.UI.ViewModel"
+    Title="Подтверждение записи"
+    x:DataType="viewModel:ConfirmAppointmentViewModel">
+    <VerticalStackLayout>
+        <Label>
+            <Label.Text>
+                <MultiBinding StringFormat="{}{0}">
+                    <Binding Path="Appointment.DateTime" />
+                </MultiBinding>
+            </Label.Text>
+        </Label>
+    </VerticalStackLayout>
+</ContentPage>

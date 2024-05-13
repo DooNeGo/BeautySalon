@@ -5,8 +5,8 @@ namespace BeautySalon.Application.Interfaces;
 public interface IIdentityService
 {
     public User? CurrentUser { get; }
+    
+    public event Action<User>? Authorized; 
 
-    public event Action<User>? LoginSuccessful;
-
-    public Task<bool> AuthorizeAsync(string username, string password);
+    public Task AuthorizeAsync(string username, string password, CancellationToken cancellationToken);
 }

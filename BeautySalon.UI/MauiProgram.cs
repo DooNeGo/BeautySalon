@@ -19,7 +19,11 @@ public static class MauiProgram
             fonts.AddFont("FASolid.otf", "FASolid");
         });
 
-        builder.Services.AddApplication().AddInfrastructure().AddUI();
+        builder.Services
+            .AddApplication()
+            .AddInfrastructure()
+            .AddUI()
+            .AddSingleton<GlobalContext>();
 
 #if DEBUG
         builder.Logging.AddDebug();

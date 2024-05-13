@@ -10,7 +10,7 @@ internal sealed class ApplicationContext : DbContext, IApplicationContext
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {
         Batteries_V2.Init();
-        Database.EnsureDeleted();
+        //Database.EnsureDeleted();
         Database.EnsureCreated();
         
         this.LoadData();
@@ -29,7 +29,7 @@ internal sealed class ApplicationContext : DbContext, IApplicationContext
     public DbSet<ServiceType> ServiceTypes => Set<ServiceType>();
 
     public DbSet<User> Users => Set<User>();
-
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);

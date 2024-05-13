@@ -1,3 +1,4 @@
+using BeautySalon.Domain;
 using BeautySalon.UI.CustomControl;
 using BeautySalon.UI.ViewModel;
 
@@ -6,19 +7,25 @@ namespace BeautySalon.UI.View;
 public partial class ChooseMasterView
 {
     private readonly ChooseMasterViewModel _viewModel;
+    
+    private Master? _selectedMaster;
 
     public ChooseMasterView(ChooseMasterViewModel viewModel)
     {
         InitializeComponent();
         _viewModel = viewModel;
         BindingContext = _viewModel;
+        _viewModel.PropertyChanged += (sender, args) =>
+        {
+            if (args.PropertyName is not nameof(_viewModel.SelectedMaster)) return;
+            _selectedMaster = _viewModel.SelectedMaster;
+        };
     }
 
     private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
     {
         if (!e.Value) return;
         if (sender is not BindableObject bindableObject) return;
-
         _viewModel.SetMasterCommand.Execute(bindableObject.BindingContext);
     }
 

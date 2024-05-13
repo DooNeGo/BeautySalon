@@ -1,6 +1,6 @@
 namespace BeautySalon.UI.CustomControl;
 
-public partial class ServiceItem : MenuItem
+public partial class ServiceItem
 {
 	public ServiceItem()
 	{

@@ -5,65 +5,90 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:customControl="clr-namespace:BeautySalon.UI.CustomControl"
+    xmlns:domain="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
+    xmlns:selectors="clr-namespace:BeautySalon.UI.TemplateSelectors"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:BeautySalon.UI.ViewModel"
+    x:Name="Page"
     Title="Выбор мастеров"
     Padding="10"
     x:DataType="viewModel:ChooseMasterViewModel">
 
+    <ContentPage.Resources>
+        <toolkit:IsEqualConverter x:Key="IsEqualConverter" />
+    </ContentPage.Resources>
+
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Далее" />
+        <ToolbarItem Command="{Binding GoNextCommand}" Text="Далее" />
     </ContentPage.ToolbarItems>
 
-    <VerticalStackLayout>
-        <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto">
-            <Label
-                Margin="5,0,0,0"
-                Text="Дата"
-                TextColor="{StaticResource Gray400}" />
+    <ScrollView>
+        <VerticalStackLayout>
+            <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto">
+                <Label
+                    Margin="5,0,0,0"
+                    Text="Дата"
+                    TextColor="{StaticResource Gray400}" />
+
+                <Label
+                    Grid.Column="1"
+                    Margin="5,0,0,0"
+                    Text="Время"
+                    TextColor="{StaticResource Gray400}" />
+
+                <DatePicker
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Date="{Binding SelectedDate}"
+                    FontSize="15"
+                    Format="dd.MM.yyyy"
+                    MinimumDate="{Binding MinimumDateTime}" />
+
+                <Picker
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    FontSize="15"
+                    ItemsSource="{Binding MasterFreeTime}"
+                    SelectedItem="{Binding SelectedTime}" />
+            </Grid>
 
             <Label
-                Grid.Column="1"
-                Margin="5,0,0,0"
-                Text="Время"
+                Margin="5,15,0,5"
+                Text="Мастера"
                 TextColor="{StaticResource Gray400}" />
-
-            <DatePicker
-                Grid.Row="1"
-                Grid.Column="0"
-                Date="{Binding SelectedDate}"
-                FontSize="15"
-                Format="dd.MM.yyyy"
-                MinimumDate="{Binding MinimumDateTime}" />
-
-            <Picker
-                Grid.Row="1"
-                Grid.Column="1"
-                FontSize="15"
-                ItemsSource="{Binding MasterFreeTimeStrings}" />
-        </Grid>
-
-        <Label
-            Margin="5,15,0,5"
-            Text="Мастера"
-            TextColor="{StaticResource Gray400}" />
-        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Masters}">
-            <BindableLayout.ItemTemplate>
-                <DataTemplate>
-                    <customControl:MasterItem x:Name="MasterItem">
-                        <customControl:MasterItem.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                        </customControl:MasterItem.GestureRecognizers>
-
-                        <customControl:MasterItem.TailView>
-                            <RadioButton
-                                BindingContext="{Binding Source={x:Reference MasterItem}, Path=BindingContext}"
-                                CheckedChanged="RadioButton_CheckedChanged"
-                                GroupName="Masters" />
-                        </customControl:MasterItem.TailView>
-                    </customControl:MasterItem>
-                </DataTemplate>
-            </BindableLayout.ItemTemplate>
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Masters}">
+                <BindableLayout.ItemTemplateSelector>
+                    <selectors:SelectionTemplateSelector SelectedItem="{Binding SelectedMaster}">
+                        <selectors:SelectionTemplateSelector.SelectedTemplate>
+                            <DataTemplate>
+                                <customControl:MasterItem x:Name="MasterItem">
+                                    <customControl:MasterItem.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                    </customControl:MasterItem.GestureRecognizers>
+                                    <customControl:MasterItem.TailView>
+                                        <RadioButton
+                                            CheckedChanged="RadioButton_CheckedChanged"
+                                            GroupName="Masters"
+                                            IsChecked="True" />
+                                    </customControl:MasterItem.TailView>
+                                </customControl:MasterItem>
+                            </DataTemplate>
+                        </selectors:SelectionTemplateSelector.SelectedTemplate>
+                        <selectors:SelectionTemplateSelector.DefaultTemplate>
+                            <DataTemplate>
+                                <customControl:MasterItem x:Name="MasterItem">
+                                    <customControl:MasterItem.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                    </customControl:MasterItem.GestureRecognizers>
+                                    <customControl:MasterItem.TailView>
+                                        <RadioButton CheckedChanged="RadioButton_CheckedChanged" GroupName="Masters" />
+                                    </customControl:MasterItem.TailView>
+                                </customControl:MasterItem>
+                            </DataTemplate>
+                        </selectors:SelectionTemplateSelector.DefaultTemplate>
+                    </selectors:SelectionTemplateSelector>
+                </BindableLayout.ItemTemplateSelector>
+            </VerticalStackLayout>
         </VerticalStackLayout>
-    </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

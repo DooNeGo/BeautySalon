@@ -27,8 +27,6 @@ public sealed record Master
     public Guid PositionId { get; set; }
 
     public string Phone { get; set; } = string.Empty;
-
-    public Salon Salon { get; set; } = null!;
     
     public Guid SalonId { get; set; }
 
