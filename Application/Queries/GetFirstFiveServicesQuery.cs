@@ -7,12 +7,14 @@ namespace BeautySalon.Application.Queries;
 
 public sealed record GetFirstFiveServicesQuery(Guid SalonId) : IQuery<List<Service>>;
 
-public sealed class GetFirstFiveServicesQueryHandler(IApplicationContext context) : IQueryHandler<GetFirstFiveServicesQuery, List<Service>>
+public sealed class GetFirstFiveServicesQueryHandler(IApplicationContext context)
+    : IQueryHandler<GetFirstFiveServicesQuery, List<Service>>
 {
     public ValueTask<List<Service>> Handle(GetFirstFiveServicesQuery query, CancellationToken cancellationToken) =>
-        new(context.Services
+        new(context.Salons
             .AsNoTracking()
-            .Where(s => s.Salons.Any(p => p.Id == query.SalonId))
+            .Where(salon => salon.Id == query.SalonId)
+            .SelectMany(salon => salon.Services)
             .Take(5)
             .ToListAsync(cancellationToken));
 }

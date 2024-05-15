@@ -57,37 +57,18 @@
                 Text="Мастера"
                 TextColor="{StaticResource Gray400}" />
             <VerticalStackLayout BindableLayout.ItemsSource="{Binding Masters}">
-                <BindableLayout.ItemTemplateSelector>
-                    <selectors:SelectionTemplateSelector SelectedItem="{Binding SelectedMaster}">
-                        <selectors:SelectionTemplateSelector.SelectedTemplate>
-                            <DataTemplate>
-                                <customControl:MasterItem x:Name="MasterItem">
-                                    <customControl:MasterItem.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                                    </customControl:MasterItem.GestureRecognizers>
-                                    <customControl:MasterItem.TailView>
-                                        <RadioButton
-                                            CheckedChanged="RadioButton_CheckedChanged"
-                                            GroupName="Masters"
-                                            IsChecked="True" />
-                                    </customControl:MasterItem.TailView>
-                                </customControl:MasterItem>
-                            </DataTemplate>
-                        </selectors:SelectionTemplateSelector.SelectedTemplate>
-                        <selectors:SelectionTemplateSelector.DefaultTemplate>
-                            <DataTemplate>
-                                <customControl:MasterItem x:Name="MasterItem">
-                                    <customControl:MasterItem.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                                    </customControl:MasterItem.GestureRecognizers>
-                                    <customControl:MasterItem.TailView>
-                                        <RadioButton CheckedChanged="RadioButton_CheckedChanged" GroupName="Masters" />
-                                    </customControl:MasterItem.TailView>
-                                </customControl:MasterItem>
-                            </DataTemplate>
-                        </selectors:SelectionTemplateSelector.DefaultTemplate>
-                    </selectors:SelectionTemplateSelector>
-                </BindableLayout.ItemTemplateSelector>
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <customControl:MasterItem x:Name="MasterItem">
+                            <customControl:MasterItem.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                            </customControl:MasterItem.GestureRecognizers>
+                            <customControl:MasterItem.TailView>
+                                <RadioButton CheckedChanged="RadioButton_CheckedChanged" GroupName="Masters" />
+                            </customControl:MasterItem.TailView>
+                        </customControl:MasterItem>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

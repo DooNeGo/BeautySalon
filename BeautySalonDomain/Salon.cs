@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace BeautySalon.Domain;
+﻿namespace BeautySalon.Domain;
 
 public sealed record Salon
 {

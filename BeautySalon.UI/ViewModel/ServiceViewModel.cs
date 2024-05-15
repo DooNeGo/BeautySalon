@@ -12,7 +12,7 @@ public sealed partial class ServiceViewModel(IIdentityService identityService, I
     : ObservableObject, IQueryAttributable
 {
     [ObservableProperty] private Service _service = null!;
-    [ObservableProperty] private List<Master> _masters = [];
+    [ObservableProperty] private IReadOnlyList<Master> _masters = [];
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {

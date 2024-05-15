@@ -51,13 +51,12 @@ public sealed partial class ChooseMasterViewModel : ObservableObject, IQueryAttr
         Task.Run(async () =>
         {
             Masters = await _mediator.Send(new GetMastersByServiceIdQuery(Service.Id, _globalContext.Salon.Id));
-            SelectedMaster = Masters[0];
+            //SelectedMaster = Masters[0];
         });
     }
 
     [RelayCommand]
-    private void SetMaster(Master master) =>
-        SelectedMaster = master;
+    private void SetMaster(Master master) => SelectedMaster = master;
 
     [RelayCommand(CanExecute = nameof(CanGoNext))]
     private async Task GoNext() =>
@@ -66,15 +65,13 @@ public sealed partial class ChooseMasterViewModel : ObservableObject, IQueryAttr
             {
                 {
                     "Appointment",
-                    new Appointment(SelectedDateTime, SelectedMaster!, _globalContext.User.Customer!, [Service])
+                    new Appointment(SelectedDateTime, SelectedMaster!, _globalContext.Customer, [Service])
                 }
             });
 
-    private bool CanGoNext() =>
-        SelectedMaster is not null && SelectedTime is not null;
+    private bool CanGoNext() => SelectedMaster is not null && SelectedTime is not null;
 
-    private async Task UpdateMasterFreeTimeAsync() =>
-        MasterFreeTime = await GetMasterFreeTimeAsync();
+    private async Task UpdateMasterFreeTimeAsync() => MasterFreeTime = await GetMasterFreeTimeAsync();
 
     private async Task<IReadOnlyList<TimeOnly>> GetMasterFreeTimeAsync()
     {

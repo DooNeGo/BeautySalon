@@ -25,8 +25,8 @@ public partial class ChooseMasterView
     private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
     {
         if (!e.Value) return;
-        if (sender is not BindableObject bindableObject) return;
-        _viewModel.SetMasterCommand.Execute(bindableObject.BindingContext);
+        if (sender is not RadioButton radioButton) return;
+        _viewModel.SetMasterCommand.Execute(radioButton.Parent.BindingContext);
     }
 
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)

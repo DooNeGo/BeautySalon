@@ -11,6 +11,7 @@ public sealed class GetServicesCountQueryHandler(IApplicationContext context)
 {
     public ValueTask<int> Handle(GetServicesCountQuery query, CancellationToken cancellationToken) =>
         new(context.Salons
+            .AsNoTracking()
             .Where(s => s.Id == query.SalonId)
             .SelectMany(s => s.Services)
             .CountAsync(cancellationToken));

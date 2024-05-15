@@ -6,9 +6,9 @@ namespace BeautySalon.UI;
 public sealed class GlobalContext
 {
     public GlobalContext(IIdentityService identityService) =>
-        identityService.Authorized += user => User = user;
+        identityService.Authorized += user => Customer = user.Customer!;
 
     public Salon Salon { get; set; } = null!;
 
-    public User User { get; set; } = null!;
+    public Customer Customer { get; private set; } = null!;
 }

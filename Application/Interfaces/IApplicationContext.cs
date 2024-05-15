@@ -14,6 +14,8 @@ public interface IApplicationContext
     public DbSet<Position> Positions { get; }
 
     public DbSet<Service> Services { get; }
+    
+    public DbSet<Appointment> Appointments { get; }
 
     public DbSet<ServiceType> ServiceTypes { get; }
 

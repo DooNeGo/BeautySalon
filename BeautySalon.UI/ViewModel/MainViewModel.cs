@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using BeautySalon.Application.Queries;
+﻿using BeautySalon.Application.Queries;
 using BeautySalon.Domain;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -21,23 +20,18 @@ public sealed partial class MainViewModel : ObservableObject
 
     public MainViewModel(IMediator mediator, GlobalContext globalContext)
     {
-        _mediator = mediator;
-        _globalContext = globalContext;
-        
+        (_mediator, _globalContext) = (mediator, globalContext);
         Task.Run(Update);
     }
     
     [RelayCommand]
-    private Task SignUpForServices() =>
-        Shell.Current.GoToAsync(nameof(SignUpForServiceStartViewModel));
+    private Task SignUpForServices() => Shell.Current.GoToAsync(nameof(SignUpForServiceStartViewModel));
 
     [RelayCommand]
-    private Task ViewAllServices() =>
-        Shell.Current.GoToAsync(nameof(ServicesViewModel));
+    private Task ViewAllServices() => Shell.Current.GoToAsync(nameof(ServicesViewModel));
 
     [RelayCommand]
-    private Task ViewAllMasters() =>
-        Shell.Current.GoToAsync(nameof(MastersViewModel));
+    private Task ViewAllMasters() => Shell.Current.GoToAsync(nameof(MastersViewModel));
 
     [RelayCommand]
     private async Task Update()
