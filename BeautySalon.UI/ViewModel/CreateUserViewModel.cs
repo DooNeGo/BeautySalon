@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using AsyncAwaitBestPractices;
 using BeautySalon.Application.Commands.AddUser;
 using BeautySalon.Domain;
 using BeautySalon.UI.Attributes;
@@ -24,7 +25,7 @@ public sealed partial class CreateUserViewModel(IMediator mediator) : Observable
     [ObservableProperty]
     private string _password = string.Empty;
     
-    //[Compare(nameof(Password), ErrorMessage = "Passwords must match")]
+    [IsMatchCondition(nameof(IsConfirmedPasswordValid), "*Данное поле должно совпадать с паролем")]
     [Required(ErrorMessage = "*Обязательное поле")]
     [LatinOnly("*Поле должно состоять только из латиницы, 0-9 и _")]
     [NotifyDataErrorInfo]
@@ -58,15 +59,21 @@ public sealed partial class CreateUserViewModel(IMediator mediator) : Observable
 
         try
         {
-            Guid id = await mediator.Send(new AddUserCommand(new User(Username, Password, Email)));
-            await Shell.Current.GoToAsync(nameof(CreateAccountViewModel),
-                    new ShellNavigationQueryParameters { { "UserId", id } });
+            Guid id = await mediator
+                .Send(new AddUserCommand(new User(Username, Password, Email)))
+                .ConfigureAwait(false);
+            
+            await Shell.Current
+                .GoToAsync(nameof(CreateAccountViewModel), new Dictionary<string, object> { { "UserId", id } })
+                .ConfigureAwait(false);
         }
         catch (Exception e)
         {
             Error = e.InnerException?.Message ?? string.Empty;
         }
     }
+
+    private bool IsConfirmedPasswordValid() => string.Equals(ConfirmedPassword, Password, StringComparison.Ordinal);
 
     private void UpdateErrorMessages()
     {

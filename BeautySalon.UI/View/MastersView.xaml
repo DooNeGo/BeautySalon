@@ -9,11 +9,13 @@
     Title="Мастера"
     Padding="10"
     x:DataType="viewmodel:MastersViewModel">
-    <CollectionView ItemsSource="{Binding Masters}">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <customcontrol:NavigationMasterItem />
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+        <CollectionView ItemsSource="{Binding Masters}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <customcontrol:NavigationMasterItem />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
 </ContentPage>

@@ -60,8 +60,8 @@ public sealed partial class CreateAccountViewModel(IMediator mediator) : Observa
         if (_userId == Guid.Empty) ThrowHelper.ThrowInvalidDataException("The user id was empty");
 
         Customer customer = new(LastName, FirstName, MiddleName, Phone, _userId);
-        await mediator.Send(new AddCustomerCommand(customer));
-        await Shell.Current.GoToAsync($"../../{nameof(LoginViewModel)}");
+        await mediator.Send(new AddCustomerCommand(customer)).ConfigureAwait(false);
+        await Shell.Current.GoToAsync($"../../{nameof(LoginViewModel)}").ConfigureAwait(false);
     }
 
     private void UpdateErrorMessages()

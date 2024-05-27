@@ -7,57 +7,59 @@
     xmlns:customControl="clr-namespace:BeautySalon.UI.CustomControl"
     xmlns:viewmodel="clr-namespace:BeautySalon.UI.ViewModel"
     Title="Услуга"
-    Padding="10"
+    Padding="0"
     x:DataType="viewmodel:ServiceViewModel">
-    <ScrollView>
-        <VerticalStackLayout>
-            <Frame BackgroundColor="{StaticResource Gray100}" HorizontalOptions="Center">
-                <Image
-                    HeightRequest="100"
-                    Source="empty_photo.svg"
-                    WidthRequest="100" />
-            </Frame>
+    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+        <ScrollView Padding="10">
+            <VerticalStackLayout>
+                <Frame BackgroundColor="{StaticResource Gray100}" HorizontalOptions="Center">
+                    <Image
+                        HeightRequest="65"
+                        Source="empty_photo.svg"
+                        WidthRequest="65" />
+                </Frame>
 
-            <Label
-                Margin="0,10,0,0"
-                FontSize="22"
-                HorizontalOptions="Center"
-                HorizontalTextAlignment="Center"
-                Text="{Binding Service.Name}" />
+                <Label
+                    Margin="0,10,0,0"
+                    FontSize="22"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding Service.Name}" />
 
-            <Label
-                FontSize="16"
-                HorizontalOptions="Center"
-                TextColor="{StaticResource Gray400}">
-                <Label.Text>
-                    <MultiBinding StringFormat="{}{0} BYN, {1} мин">
-                        <Binding Path="Service.Price" />
-                        <Binding Path="Service.Duration.TotalMinutes" />
-                    </MultiBinding>
-                </Label.Text>
-            </Label>
+                <Label
+                    FontSize="16"
+                    HorizontalOptions="Center"
+                    TextColor="{StaticResource Gray400}">
+                    <Label.Text>
+                        <MultiBinding StringFormat="{}{0} BYN, {1} мин">
+                            <Binding Path="Service.Price" />
+                            <Binding Path="Service.Duration.TotalMinutes" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
 
-            <Button
-                Margin="0,15,0,0"
-                Command="{Binding SignUpCommand}"
-                FontAttributes="Bold"
-                HorizontalOptions="Center"
-                Text="Записаться"
-                TextTransform="Uppercase"
-                WidthRequest="200" />
+                <Button
+                    Margin="0,15,0,0"
+                    Command="{Binding SignUpCommand}"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    Text="Записаться"
+                    TextTransform="Uppercase"
+                    WidthRequest="200" />
 
-            <Label
-                Margin="5,30,0,5"
-                FontSize="16"
-                Text="Мастера"
-                TextColor="{StaticResource Gray400}" />
-            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Masters}">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate>
-                        <customControl:NavigationMasterItem />
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
+                <Label
+                    Margin="5,30,0,5"
+                    FontSize="16"
+                    Text="Мастера"
+                    TextColor="{StaticResource Gray400}" />
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Masters}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <customControl:NavigationMasterItem />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
             </VerticalStackLayout>
-        </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+    </RefreshView>
 </customControl:AnimatablePage>

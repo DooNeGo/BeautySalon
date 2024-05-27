@@ -1,7 +1,6 @@
 using BeautySalon.Application.Interfaces;
 using BeautySalon.Application.Queries;
 using BeautySalon.Domain;
-using BeautySalon.UI.View.SignIn;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Mediator;
@@ -13,12 +12,21 @@ public sealed partial class ServiceViewModel(IIdentityService identityService, I
 {
     [ObservableProperty] private Service _service = null!;
     [ObservableProperty] private IReadOnlyList<Master> _masters = [];
+    [ObservableProperty] private bool _isRefreshing;
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    public async void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         Service = (Service)query["Service"];
-        Task.Run(async () =>
-            Masters = await mediator.Send(new GetMastersByServiceIdQuery(Service.Id, globalContext.Salon.Id)));
+        await Refresh(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    [RelayCommand]
+    private async Task Refresh(CancellationToken cancellationToken)
+    {
+        if (!IsRefreshing) IsRefreshing = true;
+        Masters = await mediator.Send(new GetMastersByServiceIdQuery(Service.Id, globalContext.Salon.Id), cancellationToken)
+            .ConfigureAwait(false);
+        IsRefreshing = false;
     }
 
     [RelayCommand]
@@ -27,12 +35,12 @@ public sealed partial class ServiceViewModel(IIdentityService identityService, I
         if (identityService.CurrentUser is not null)
         {
             await Shell.Current.GoToAsync(nameof(ChooseMasterViewModel),
-                new Dictionary<string, object> { { "Service", Service } });
+                new Dictionary<string, object> { { "Service", Service } }).ConfigureAwait(false);
         }
         else if (await Shell.Current.CurrentPage.DisplayAlert("Авторизация",
                      "Вы должны войти в аккаунт для записи на услугу", "Войти", "Отмена"))
         {
-            await Shell.Current.GoToAsync(nameof(StartView));
+            await Shell.Current.GoToAsync(nameof(StartViewModel)).ConfigureAwait(false);
         }
     }
 }

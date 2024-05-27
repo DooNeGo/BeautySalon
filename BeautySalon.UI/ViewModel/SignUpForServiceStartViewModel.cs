@@ -1,3 +1,4 @@
+using AsyncAwaitBestPractices;
 using BeautySalon.Application.Queries;
 using BeautySalon.Domain;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -10,5 +11,6 @@ public sealed partial class SignUpForServiceStartViewModel : ObservableObject
     [ObservableProperty] private IReadOnlyList<Service> _services = [];
     
     public SignUpForServiceStartViewModel(IMediator mediator, GlobalContext globalContext) =>
-        Task.Run(async () => Services = await mediator.Send(new GetServicesQuery(globalContext.Salon.Id)));
+        Task.Run(async () => Services = await mediator.Send(new GetServicesQuery(globalContext.Salon.Id))
+            .ConfigureAwait(false)).SafeFireAndForget();
 }

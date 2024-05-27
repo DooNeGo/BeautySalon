@@ -16,7 +16,8 @@ internal sealed class IdentityService(IApplicationContext context) : IIdentitySe
             .AsNoTracking()
             .Where(u => u.Username == username && u.Password == password)
             .Include(u => u.Customer)
-            .FirstOrDefaultAsync(cancellationToken);
+            .FirstOrDefaultAsync(cancellationToken)
+            .ConfigureAwait(false);
         
         if (CurrentUser is not null) Authorized?.Invoke(CurrentUser);
     }

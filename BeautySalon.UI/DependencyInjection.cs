@@ -9,7 +9,7 @@ namespace BeautySalon.UI;
 internal static class DependencyInjection
 {
     public static IServiceCollection AddUI(this IServiceCollection services) =>
-        services.AddTransientWithShellRoute<StartView, StartView>(nameof(StartView))
+        services.AddTransientWithShellRoute<StartView, StartViewModel>(nameof(StartViewModel))
             .AddTransientWithShellRoute<LoginView, LoginViewModel>(nameof(LoginViewModel))
             .AddTransientWithShellRoute<CreateAccountView, CreateAccountViewModel>(nameof(CreateAccountViewModel))
             .AddTransientWithShellRoute<CreateUserView, CreateUserViewModel>(nameof(CreateUserViewModel))

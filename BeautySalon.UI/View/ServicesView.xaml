@@ -9,11 +9,13 @@
     Title="Услуги"
     Padding="10"
     x:DataType="viewmodel:ServicesViewModel">
-    <CollectionView ItemsSource="{Binding Services}">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <customcontrol:NavigationServiceItem />
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+        <CollectionView ItemsSource="{Binding Services}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <customcontrol:NavigationServiceItem />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
 </ContentPage>

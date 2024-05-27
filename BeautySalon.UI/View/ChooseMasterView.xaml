@@ -5,24 +5,17 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:customControl="clr-namespace:BeautySalon.UI.CustomControl"
-    xmlns:domain="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
-    xmlns:selectors="clr-namespace:BeautySalon.UI.TemplateSelectors"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:BeautySalon.UI.ViewModel"
     x:Name="Page"
     Title="Выбор мастеров"
-    Padding="10"
+    Padding="0"
     x:DataType="viewModel:ChooseMasterViewModel">
-
-    <ContentPage.Resources>
-        <toolkit:IsEqualConverter x:Key="IsEqualConverter" />
-    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding GoNextCommand}" Text="Далее" />
     </ContentPage.ToolbarItems>
 
-    <ScrollView>
+    <ScrollView Padding="10">
         <VerticalStackLayout>
             <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto">
                 <Label

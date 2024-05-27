@@ -7,52 +7,54 @@
     xmlns:customControl="clr-namespace:BeautySalon.UI.CustomControl"
     xmlns:viewModel="clr-namespace:BeautySalon.UI.ViewModel"
     Title="Мастер"
-    Padding="10"
+    Padding="0"
     x:DataType="viewModel:MasterViewModel">
-    <ScrollView>
-        <VerticalStackLayout>
-            <Frame BackgroundColor="{StaticResource Gray100}" HorizontalOptions="Center">
-                <Image
-                    HeightRequest="100"
-                    Source="empty_photo.svg"
-                    WidthRequest="100" />
-            </Frame>
+    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+        <ScrollView Padding="10">
+            <VerticalStackLayout>
+                <Frame BackgroundColor="{StaticResource Gray100}" HorizontalOptions="Center">
+                    <Image
+                        HeightRequest="65"
+                        Source="empty_photo.svg"
+                        WidthRequest="65" />
+                </Frame>
 
-            <Label
-                Margin="0,10,0,0"
-                FontSize="22"
-                HorizontalOptions="Center"
-                HorizontalTextAlignment="Center"
-                Text="{Binding Master.FirstName}" />
+                <Label
+                    Margin="0,10,0,0"
+                    FontSize="22"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding Master.FirstName}" />
 
-            <Label
-                FontSize="16"
-                HorizontalOptions="Center"
-                Text="{Binding Master.Position.Title}"
-                TextColor="{StaticResource Gray400}" />
+                <Label
+                    FontSize="16"
+                    HorizontalOptions="Center"
+                    Text="{Binding Master.Position.Title}"
+                    TextColor="{StaticResource Gray400}" />
 
-            <Button
-                Margin="0,15,0,0"
-                Command="{Binding}"
-                FontAttributes="Bold"
-                HorizontalOptions="Center"
-                Text="Записаться"
-                TextTransform="Uppercase"
-                WidthRequest="200" />
+                <Button
+                    Margin="0,15,0,0"
+                    Command="{Binding SignUpCommand}"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    Text="Записаться"
+                    TextTransform="Uppercase"
+                    WidthRequest="200" />
 
-            <Label
-                Margin="5,30,0,5"
-                FontSize="16"
-                Text="Услуги"
-                TextColor="{StaticResource Gray400}" />
+                <Label
+                    Margin="5,30,0,5"
+                    FontSize="16"
+                    Text="Услуги"
+                    TextColor="{StaticResource Gray400}" />
 
-            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Services}">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate>
-                        <customControl:NavigationServiceItem />
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Services}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <customControl:NavigationServiceItem />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
             </VerticalStackLayout>
-        </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+    </RefreshView>
 </ContentPage>

@@ -1,4 +1,5 @@
-﻿using BeautySalon.Application.Queries;
+﻿using AsyncAwaitBestPractices;
+using BeautySalon.Application.Queries;
 using BeautySalon.Domain;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -8,6 +9,9 @@ namespace BeautySalon.UI.ViewModel;
 
 public sealed partial class MainViewModel : ObservableObject
 {
+    private readonly IMediator _mediator;
+    private readonly GlobalContext _globalContext;
+    
     [ObservableProperty] private Salon _salon = null!;
     [ObservableProperty] private int _servicesCount;
     [ObservableProperty] private int _mastersCount;
@@ -15,13 +19,10 @@ public sealed partial class MainViewModel : ObservableObject
     [ObservableProperty] private IReadOnlyList<Master> _firstFiveMasters = [];
     [ObservableProperty] private bool _isRefreshing;
 
-    private readonly IMediator _mediator;
-    private readonly GlobalContext _globalContext;
-
     public MainViewModel(IMediator mediator, GlobalContext globalContext)
     {
         (_mediator, _globalContext) = (mediator, globalContext);
-        Task.Run(Update);
+        Refresh().SafeFireAndForget();
     }
     
     [RelayCommand]
@@ -34,16 +35,16 @@ public sealed partial class MainViewModel : ObservableObject
     private Task ViewAllMasters() => Shell.Current.GoToAsync(nameof(MastersViewModel));
 
     [RelayCommand]
-    private async Task Update()
+    private async Task Refresh()
     {
         if (!IsRefreshing) IsRefreshing = true;
         try
         {
-            Salon = await _mediator.Send(new GetSalonQuery());
-            FirstFiveServices = await _mediator.Send(new GetFirstFiveServicesQuery(Salon.Id));
-            FirstFiveMasters = await _mediator.Send(new GetFirstFiveMastersQuery(Salon.Id));
-            ServicesCount = await _mediator.Send(new GetServicesCountQuery(Salon.Id));
-            MastersCount = await _mediator.Send(new GetMastersCountQuery(Salon.Id));
+            Salon = await _mediator.Send(new GetSalonQuery()).ConfigureAwait(false);
+            FirstFiveServices = await _mediator.Send(new GetFirstFiveServicesQuery(Salon.Id)).ConfigureAwait(false);
+            FirstFiveMasters = await _mediator.Send(new GetFirstFiveMastersQuery(Salon.Id)).ConfigureAwait(false);
+            ServicesCount = await _mediator.Send(new GetServicesCountQuery(Salon.Id)).ConfigureAwait(false);
+            MastersCount = await _mediator.Send(new GetMastersCountQuery(Salon.Id)).ConfigureAwait(false);
             _globalContext.Salon = Salon;
         }
         finally

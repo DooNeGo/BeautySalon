@@ -15,7 +15,7 @@ public sealed partial class SelectionTemplateSelector : DataTemplateSelector
     protected override DataTemplate? OnSelectTemplate(object item, BindableObject container)
     {
         DataTemplate? res;
-        if (ReferenceEquals(item, _selectedItem))
+        if (ReferenceEquals(item, SelectedItem))
             res = SelectedTemplate;
         else
             res = DefaultTemplate;

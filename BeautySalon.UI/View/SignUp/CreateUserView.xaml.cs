@@ -7,7 +7,6 @@ public sealed partial class CreateUserView
     public CreateUserView(CreateUserViewModel viewModel)
     {
         InitializeComponent();
-
         BindingContext = viewModel;
     }
 

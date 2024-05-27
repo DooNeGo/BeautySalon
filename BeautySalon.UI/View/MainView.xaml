@@ -17,137 +17,139 @@
         <toolkit:StatusBarBehavior StatusBarColor="White" StatusBarStyle="DarkContent" />
     </ContentPage.Behaviors>
 
-    <Grid>
-        <Image
-            Aspect="AspectFill"
-            Source="background1.png"
-            VerticalOptions="Start" />
-        <ScrollView>
-            <Border
-                Margin="0,250,0,0"
-                BackgroundColor="White"
-                StrokeShape="RoundRectangle 15,15,0,0"
-                StrokeThickness="0">
+    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+        <Grid>
+            <Image
+                Aspect="AspectFill"
+                Source="background1.png"
+                VerticalOptions="Start" />
+            <ScrollView>
+                <Border
+                    Margin="0,250,0,0"
+                    BackgroundColor="White"
+                    StrokeShape="RoundRectangle 15,15,0,0"
+                    StrokeThickness="0">
 
-                <VerticalStackLayout Padding="15" Spacing="8">
-                    <Grid>
-                        <Image
-                            HeightRequest="85"
-                            HorizontalOptions="Start"
-                            Source="logo.png" />
-                        <Button
-                            BackgroundColor="{StaticResource Primary}"
-                            Command="{Binding SignUpForServicesCommand}"
-                            CornerRadius="40"
-                            FontSize="14"
-                            HorizontalOptions="End"
-                            Text="Записаться"
+                    <VerticalStackLayout Padding="15" Spacing="8">
+                        <Grid>
+                            <Image
+                                HeightRequest="85"
+                                HorizontalOptions="Start"
+                                Source="logo.png" />
+                            <Button
+                                BackgroundColor="{StaticResource Primary}"
+                                Command="{Binding SignUpForServicesCommand}"
+                                CornerRadius="40"
+                                FontSize="14"
+                                HorizontalOptions="End"
+                                Text="Записаться"
+                                VerticalOptions="Center" />
+                        </Grid>
+
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="17"
+                            Text="Салон красоты"
                             VerticalOptions="Center" />
-                    </Grid>
 
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="17"
-                        Text="Салон красоты"
-                        VerticalOptions="Center" />
+                        <Grid>
+                            <Label FontSize="15" Text="{Binding Salon.Address}" />
+                            <HorizontalStackLayout HorizontalOptions="End" Spacing="5">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="13"
+                                    Text="На карте"
+                                    VerticalOptions="Center" />
 
-                    <Grid>
-                        <Label FontSize="15" Text="{Binding Salon.Address}" />
-                        <HorizontalStackLayout HorizontalOptions="End" Spacing="5">
+                                <Image HeightRequest="13" Source="angle_right.svg" />
+                            </HorizontalStackLayout>
+                        </Grid>
+
+                        <Label FontSize="14" VerticalOptions="Center">
+                            <Label.Text>
+                                <MultiBinding StringFormat="{}Пн – Вс: {0:HH:mm} – {1:HH:mm}">
+                                    <Binding Path="Salon.StartTime" />
+                                    <Binding Path="Salon.EndTime" />
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+
+                        <Grid
+                            Margin="0,10,0,0"
+                            ColumnDefinitions="Auto, *"
+                            ColumnSpacing="10">
                             <Label
                                 FontAttributes="Bold"
-                                FontSize="13"
-                                Text="На карте"
-                                VerticalOptions="Center" />
+                                FontSize="19"
+                                Text="Услуги"
+                                TextColor="{StaticResource Primary}" />
 
-                            <Image HeightRequest="13" Source="angle_right.svg" />
-                        </HorizontalStackLayout>
-                    </Grid>
+                            <Label
+                                Grid.Column="1"
+                                FontSize="19"
+                                Text="{Binding ServicesCount}"
+                                TextColor="{StaticResource Gray400}" />
 
-                    <Label FontSize="14" VerticalOptions="Center">
-                        <Label.Text>
-                            <MultiBinding StringFormat="{}Пн – Вс: {0:HH:mm} – {1:HH:mm}">
-                                <Binding Path="Salon.StartTime" />
-                                <Binding Path="Salon.EndTime" />
-                            </MultiBinding>
-                        </Label.Text>
-                    </Label>
+                            <Label
+                                Grid.Column="1"
+                                FontSize="15"
+                                HorizontalOptions="End"
+                                Text="См. все"
+                                TextColor="{StaticResource Primary}"
+                                VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ViewAllServicesCommand}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
 
-                    <Grid
-                        Margin="0,10,0,0"
-                        ColumnDefinitions="Auto, *"
-                        ColumnSpacing="10">
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="19"
-                            Text="Услуги"
-                            TextColor="{StaticResource Primary}" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding FirstFiveServices}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <customcontrol:NavigationServiceItem />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
 
-                        <Label
-                            Grid.Column="1"
-                            FontSize="19"
-                            Text="{Binding ServicesCount}"
-                            TextColor="{StaticResource Gray400}" />
+                        <Grid
+                            Margin="0,10,0,0"
+                            ColumnDefinitions="Auto, *"
+                            ColumnSpacing="10">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="19"
+                                Text="Мастера"
+                                TextColor="{StaticResource Primary}" />
 
-                        <Label
-                            Grid.Column="1"
-                            FontSize="15"
-                            HorizontalOptions="End"
-                            Text="См. все"
-                            TextColor="{StaticResource Primary}"
-                            VerticalOptions="Center">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ViewAllServicesCommand}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </Grid>
+                            <Label
+                                Grid.Column="1"
+                                FontSize="19"
+                                Text="{Binding MastersCount}"
+                                TextColor="{StaticResource Gray400}" />
 
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding FirstFiveServices}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                <customcontrol:NavigationServiceItem />
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
+                            <Label
+                                Grid.Column="1"
+                                FontSize="15"
+                                HorizontalOptions="End"
+                                Text="См. все"
+                                TextColor="{StaticResource Primary}"
+                                VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ViewAllMastersCommand}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding FirstFiveMasters}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <customcontrol:NavigationMasterItem />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
-
-                    <Grid
-                        Margin="0,10,0,0"
-                        ColumnDefinitions="Auto, *"
-                        ColumnSpacing="10">
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="19"
-                            Text="Мастера"
-                            TextColor="{StaticResource Primary}" />
-
-                        <Label
-                            Grid.Column="1"
-                            FontSize="19"
-                            Text="{Binding MastersCount}"
-                            TextColor="{StaticResource Gray400}" />
-
-                        <Label
-                            Grid.Column="1"
-                            FontSize="15"
-                            HorizontalOptions="End"
-                            Text="См. все"
-                            TextColor="{StaticResource Primary}"
-                            VerticalOptions="Center">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ViewAllMastersCommand}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </Grid>
-
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding FirstFiveMasters}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate>
-                                <customcontrol:NavigationMasterItem />
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </VerticalStackLayout>
-                </VerticalStackLayout>
-            </Border>
-        </ScrollView>
-    </Grid>
+                </Border>
+            </ScrollView>
+        </Grid>
+    </RefreshView>
 </ContentPage>

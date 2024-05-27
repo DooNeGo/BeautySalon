@@ -7,7 +7,6 @@ public sealed partial class CreateAccountView
     public CreateAccountView(CreateAccountViewModel viewModel)
     {
         InitializeComponent();
-
         BindingContext = viewModel;
     }
 
@@ -19,14 +18,14 @@ public sealed partial class CreateAccountView
         base.OnAppearing();
     }
 
-    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
         FirstNameEntry.Unfocus();
         LastNameEntry.Unfocus();
         MiddleNameEntry.Unfocus();
         PhoneEntry.Unfocus();
 
-        FirstNameEntry.HideSoftInputAsync(CancellationToken.None);
+        await FirstNameEntry.HideSoftInputAsync(CancellationToken.None);
     }
 
     private async void PhoneEntry_Completed(object sender, EventArgs e)

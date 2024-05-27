@@ -19,14 +19,14 @@ public sealed partial class LoginViewModel(IIdentityService identityService) : O
     [RelayCommand(CanExecute = nameof(CanLogin))]
     private async Task Login(CancellationToken cancellationToken)
     {
-        await identityService.AuthorizeAsync(Username.Trim(), Password.Trim(), cancellationToken);
+        await identityService.AuthorizeAsync(Username.Trim(), Password.Trim(), cancellationToken).ConfigureAwait(false);
         if (identityService.CurrentUser is null) ErrorMessage = "*Неверный Логин или Пароль";
-        else await Shell.Current.GoToAsync("../..");
+        else await Shell.Current.GoToAsync("../..").ConfigureAwait(false);
     }
 
     private bool CanLogin() =>
-        Username.Length >= 3
-        && Password.Length >= 3
+        Username.Trim().Length >= 3
+        && Password.Trim().Length >= 3
         && !string.IsNullOrWhiteSpace(Username)
         && !string.IsNullOrWhiteSpace(Password);
 }

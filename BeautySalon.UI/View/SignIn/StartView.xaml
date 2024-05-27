@@ -5,7 +5,9 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewModel="clr-namespace:BeautySalon.UI.ViewModel"
     Padding="10"
+    x:DataType="viewModel:StartViewModel"
     Shell.TabBarIsVisible="False">
 
     <ContentPage.Behaviors>
@@ -32,7 +34,7 @@
             Source="logo.png" />
 
         <Button
-            Clicked="CreateAccountButton_Clicked"
+            Command="{Binding GoToCreateViewCommand}"
             CornerRadius="20"
             FontFamily="Loto"
             Text="Создать аккаунт" />
@@ -41,7 +43,7 @@
             BackgroundColor="Transparent"
             BorderColor="{StaticResource Primary}"
             BorderWidth="1"
-            Clicked="LoginWithAccountButton_Clicked"
+            Command="{Binding GoToLoginViewCommand}"
             CornerRadius="20"
             FontFamily="Loto"
             Text="Войти с существующим аккаунтом"
