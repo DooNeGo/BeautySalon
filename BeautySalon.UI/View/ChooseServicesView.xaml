@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="BeautySalon.UI.View.ChooseServicesView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:BeautySalon.UI.CustomControl"
+    xmlns:viewModels="clr-namespace:BeautySalon.UI.ViewModel"
+    Title="Услуги"
+    Padding="0"
+    x:DataType="viewModels:ChooseServicesViewModel"
+    Shell.TabBarIsVisible="False">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Далее" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView Padding="10">
+        <VerticalStackLayout>
+            <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto">
+                <Label
+                    Margin="5,0,0,0"
+                    Text="Дата"
+                    TextColor="{StaticResource Gray400}" />
+
+                <Label
+                    Grid.Column="1"
+                    Margin="5,0,0,0"
+                    Text="Время"
+                    TextColor="{StaticResource Gray400}" />
+
+                <DatePicker
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Date="{Binding SelectedDate}"
+                    FontSize="15"
+                    Format="dd.MM.yyyy"
+                    MinimumDate="{Binding MinimumDateTime}" />
+
+                <Picker
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    FontSize="15"
+                    ItemsSource="{Binding MasterFreeTime}"
+                    SelectedItem="{Binding SelectedTime}" />
+            </Grid>
+
+            <Label
+                IsVisible="{Binding IsErrorVisible}"
+                Style="{StaticResource ErrorLabelStyle}"
+                Text="*Достигнуто максимальное количество услуг" />
+
+            <Label
+                Margin="5,15,0,5"
+                Text="Услуги"
+                TextColor="{StaticResource Gray400}" />
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Services}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <controls:ServiceItem>
+                            <controls:ServiceItem.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                            </controls:ServiceItem.GestureRecognizers>
+                            <controls:ServiceItem.TailView>
+                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" />
+                            </controls:ServiceItem.TailView>
+                        </controls:ServiceItem>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -34,7 +34,8 @@ public sealed partial class MasterViewModel(IIdentityService identityService, IM
     {
         if (identityService.CurrentUser is not null)
         {
-           
+           await Shell.Current.GoToAsync(nameof(ChooseServicesViewModel),
+               new Dictionary<string, object?> { { "Master", Master } }).ConfigureAwait(false);
         }
         else if (await Shell.Current.CurrentPage.DisplayAlert("Авторизация",
                      "Вы должны войти в аккаунт для записи на услугу", "Войти", "Отмена"))

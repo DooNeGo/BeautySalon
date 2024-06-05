@@ -1,4 +1,6 @@
-﻿namespace BeautySalon.Domain;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BeautySalon.Domain;
 
 public sealed record Appointment
 {
@@ -22,4 +24,18 @@ public sealed record Appointment
     public List<Service> Services { get; set; } = [];
 
     public Customer Customer { get; set; } = null!;
+
+    [NotMapped]
+    public decimal TotalPrice
+    {
+        get
+        {
+            decimal result = 0;
+            foreach (Service service in Services)
+            {
+                result += service.Price;
+            }
+            return result;
+        }
+    }
 }

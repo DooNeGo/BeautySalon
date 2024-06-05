@@ -24,9 +24,6 @@ public sealed partial class MainViewModel : ObservableObject
         (_mediator, _globalContext) = (mediator, globalContext);
         Refresh().SafeFireAndForget();
     }
-    
-    [RelayCommand]
-    private Task SignUpForServices() => Shell.Current.GoToAsync(nameof(SignUpForServiceStartViewModel));
 
     [RelayCommand]
     private Task ViewAllServices() => Shell.Current.GoToAsync(nameof(ServicesViewModel));
@@ -37,7 +34,6 @@ public sealed partial class MainViewModel : ObservableObject
     [RelayCommand]
     private async Task Refresh()
     {
-        if (!IsRefreshing) IsRefreshing = true;
         try
         {
             Salon = await _mediator.Send(new GetSalonQuery()).ConfigureAwait(false);

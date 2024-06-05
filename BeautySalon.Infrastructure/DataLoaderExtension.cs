@@ -29,7 +29,6 @@ internal static class DataLoaderExtension
         List<Position> positions =
         [
             new Position("Визажист") { Services = [services[1], services[5]]},
-            new Position("Парикмахер"),
             new Position("Мастер маникюра") { Services = [services[2], services[0]]},
             new Position("Мастер педикюра") { Services = [services[3], services[4]]},
             new Position("Бровист") { Services = [services[10], services[9]]},
@@ -40,11 +39,11 @@ internal static class DataLoaderExtension
         [
             new Master("Иванова", "Татьяна", null, "+375447452007", positions[0]),
             new Master("Семенова", "Мария", null, "+375447452007", positions[1]),
-            new Master("Петрова", "Ольга", null, "+375447452007", positions[2]),
-            new Master("Голубева", "Мария", null, "+375447452007", positions[3]),
-            new Master("Ахрамович", "Мария", null, "+375447452007", positions[4]),
-            new Master("Дрелько", "Дарья", null, "+375447452007", positions[5]),
-            new Master("Кострома", "Матвей", null, "+375447452007", positions[5])
+            new Master("Петрова", "Ольга", null, "+375447452007", positions[1]),
+            new Master("Голубева", "Мария", null, "+375447452007", positions[2]),
+            new Master("Ахрамович", "Мария", null, "+375447452007", positions[3]),
+            new Master("Дрелько", "Дарья", null, "+375447452007", positions[4]),
+            new Master("Кострома", "Матвей", null, "+375447452007", positions[4])
         ];
 
         salon.Masters = masters;
@@ -55,8 +54,16 @@ internal static class DataLoaderExtension
         var customer = new Customer("dasdas", "dsads", null, "+375447452007", user.Id);
         user.Customer = customer;
 
+        List<Appointment> appointments =
+        [
+            new Appointment(DateTime.Now.AddDays(1), masters[0], customer, [services[1], services[5]]),
+            new Appointment(DateTime.Now.AddDays(2), masters[1], customer, [services[2], services[0]]),
+            new Appointment(DateTime.Now.AddDays(3), masters[2], customer, [services[3]]),
+        ];
+
         context.Salons.Add(salon);
         context.Users.Add(user);
+        context.Appointments.AddRange(appointments);
         context.SaveChanges();
     }
 }

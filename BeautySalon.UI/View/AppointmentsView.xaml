@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BeautySalon.UI.View.AppointmentsView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:domain="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewModel="clr-namespace:BeautySalon.UI.ViewModel"
+    Title="AppointmentsView"
+    Padding="15,0"
+    x:DataType="viewModel:AppointmentsViewModel"
+    Shell.NavBarIsVisible="False">
+    <Grid toolkit:StateContainer.CurrentState="{Binding CurrentState}">
+        <toolkit:StateContainer.StateViews>
+            <RefreshView
+                toolkit:StateView.StateKey="Normal"
+                Command="{Binding RefreshCommand}"
+                IsRefreshing="{Binding IsRefreshing}">
+                <CollectionView ItemsSource="{Binding Appointments}">
+                    <CollectionView.Header>
+                        <Label
+                            Margin="0,20"
+                            FontAttributes="Bold"
+                            FontSize="28"
+                            Text="Мои записи" />
+                    </CollectionView.Header>
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="domain:Appointment">
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem BackgroundColor="{StaticResource Error}" Text="Удалить" />
+                                        <SwipeItem BackgroundColor="DarkOrange" Text="Изменить" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+
+                                <Border
+                                    Padding="10"
+                                    BackgroundColor="White"
+                                    StrokeShape="RoundRectangle 5">
+                                    <VerticalStackLayout Spacing="6">
+                                        <Label FontSize="15" Text="{Binding Master, StringFormat='Мастер: {0}'}" />
+                                        <Label FontSize="15" Text="{Binding TotalPrice, StringFormat='Полная стоимость: {0} BYN'}" />
+                                        <Grid>
+                                            <Label FontSize="15" Text="{Binding DateTime, StringFormat='Дата: {0:dd.MM.yyyy   |   Время: HH:mm}'}" />
+                                        </Grid>
+
+                                        <Border Padding="5" HorizontalOptions="FillAndExpand">
+                                            <HorizontalStackLayout>
+                                                <Label
+                                                    Margin="0,0,-20,0"
+                                                    FontAttributes="Bold"
+                                                    FontSize="16"
+                                                    HorizontalOptions="Start"
+                                                    MinimumHeightRequest="55"
+                                                    Rotation="-90"
+                                                    Text="Услуги" />
+                                                <HorizontalStackLayout
+                                                    BindableLayout.ItemsSource="{Binding Services}"
+                                                    Spacing="5"
+                                                    VerticalOptions="Center">
+                                                    <BindableLayout.ItemTemplate>
+                                                        <DataTemplate x:DataType="domain:Service">
+                                                            <Label
+                                                                MaximumWidthRequest="100"
+                                                                MinimumWidthRequest="0"
+                                                                Text="{Binding Name}" />
+                                                        </DataTemplate>
+                                                    </BindableLayout.ItemTemplate>
+                                                </HorizontalStackLayout>
+                                            </HorizontalStackLayout>
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+
+            <VerticalStackLayout
+                toolkit:StateView.StateKey="NotLoggedIn"
+                Spacing="25"
+                VerticalOptions="CenterAndExpand">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="22"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="Для того, чтобы полностью использовать все возможности приложения необходимо авторизоваться!" />
+                <Button
+                    Command="{Binding GoToAuthorizationCommand}"
+                    FontSize="15"
+                    Text="Авторизоваться" />
+            </VerticalStackLayout>
+        </toolkit:StateContainer.StateViews>
+    </Grid>
+</ContentPage>

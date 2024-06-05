@@ -75,6 +75,7 @@
 
     <ItemGroup>
         <None Remove="Resources\Fonts\Lato-Regular.ttf" />
+        <None Remove="Resources\Images\book_open.svg" />
         <None Remove="Resources\Images\circle_info.svg" />
     </ItemGroup>
 
@@ -85,7 +86,7 @@
         <PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
         <PackageReference Include="CommunityToolkit.Maui.Markup" Version="4.0.0" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.6" />
         <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
         <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
@@ -101,8 +102,8 @@
         <Compile Update="CustomControl\NavigationMasterItem.xaml.cs">
           <DependentUpon>NavigationMasterItem.xaml</DependentUpon>
         </Compile>
-        <Compile Update="View\SignUpForServiceStartView.xaml.cs">
-          <DependentUpon>SignUpForServiceView.xaml</DependentUpon>
+        <Compile Update="View\ChooseServicesView.xaml.cs">
+          <DependentUpon>ChooseServicesView.xaml</DependentUpon>
         </Compile>
         <Compile Update="View\SignUp\CreateAccountView.xaml.cs">
             <DependentUpon>CreateAccountView.xaml</DependentUpon>
@@ -124,6 +125,12 @@
           <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
         <MauiXaml Update="CustomControl\ServiceItem.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="View\AppointmentsView.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="View\ChooseDateTimeView.xaml">
           <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
         <MauiXaml Update="View\SignUp\CreateAccountView.xaml">

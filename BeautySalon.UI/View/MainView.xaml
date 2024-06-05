@@ -38,7 +38,6 @@
                                 Source="logo.png" />
                             <Button
                                 BackgroundColor="{StaticResource Primary}"
-                                Command="{Binding SignUpForServicesCommand}"
                                 CornerRadius="40"
                                 FontSize="14"
                                 HorizontalOptions="End"

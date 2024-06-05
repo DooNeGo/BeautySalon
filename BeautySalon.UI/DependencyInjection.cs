@@ -16,9 +16,10 @@ internal static class DependencyInjection
             .AddTransientWithShellRoute<MainView, MainViewModel>(nameof(MainViewModel))
             .AddTransientWithShellRoute<MastersView, MastersViewModel>(nameof(MastersViewModel))
             .AddTransientWithShellRoute<ServicesView, ServicesViewModel>(nameof(ServicesViewModel))
-            .AddTransientWithShellRoute<SignUpForServiceStartView, SignUpForServiceStartViewModel>(nameof(SignUpForServiceStartViewModel))
+            .AddTransientWithShellRoute<ChooseServicesView, ChooseServicesViewModel>(nameof(ChooseServicesViewModel))
             .AddTransientWithShellRoute<ServiceView, ServiceViewModel>(nameof(ServiceViewModel))
             .AddTransientWithShellRoute<MasterView, MasterViewModel>(nameof(MasterViewModel))
             .AddTransientWithShellRoute<ChooseMasterView, ChooseMasterViewModel>(nameof(ChooseMasterViewModel))
-            .AddTransientWithShellRoute<ConfirmAppointmentView, ConfirmAppointmentViewModel>(nameof(ConfirmAppointmentViewModel));
+            .AddTransientWithShellRoute<ConfirmAppointmentView, ConfirmAppointmentViewModel>(nameof(ConfirmAppointmentViewModel))
+            .AddTransientWithShellRoute<AppointmentsView, AppointmentsViewModel>(nameof(AppointmentsViewModel));
 }

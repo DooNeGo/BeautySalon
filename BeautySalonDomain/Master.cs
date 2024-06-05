@@ -31,4 +31,6 @@ public sealed record Master
     public Guid SalonId { get; set; }
 
     public List<Appointment> Appointments { get; } = [];
+
+    public override string? ToString() => $"{FirstName} {LastName}";
 }

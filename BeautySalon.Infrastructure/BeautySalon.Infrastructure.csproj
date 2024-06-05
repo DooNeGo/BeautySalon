@@ -8,12 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.6" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Application\BeautySalon.Application.csproj"/>
-        <ProjectReference Include="..\BeautySalonDomain\BeautySalon.Domain.csproj"/>
+        <ProjectReference Include="..\Application\BeautySalon.Application.csproj" />
+        <ProjectReference Include="..\BeautySalonDomain\BeautySalon.Domain.csproj" />
     </ItemGroup>
 
 </Project>

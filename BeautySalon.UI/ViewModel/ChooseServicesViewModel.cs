@@ -4,78 +4,88 @@ using BeautySalon.Domain;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Mediator;
+using System.Collections.ObjectModel;
 
 namespace BeautySalon.UI.ViewModel;
 
-public sealed partial class ChooseMasterViewModel : ObservableObject, IQueryAttributable
+public sealed partial class ChooseServicesViewModel : ObservableObject, IQueryAttributable
 {
     private const int TimeStepInMinutes = 30;
 
     private readonly IMediator _mediator;
     private readonly GlobalContext _globalContext;
-    
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(GoNextCommand))]
-    private Master? _selectedMaster;
-    
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(GoNextCommand))]
-    private TimeOnly? _selectedTime;
-    
-    [ObservableProperty] private Service _service = null!;
-    [ObservableProperty] private IReadOnlyList<Master> _masters = [];
-    [ObservableProperty] private IReadOnlyList<TimeOnly> _masterFreeTime = [];
-    [ObservableProperty] private DateTime _selectedDate;
-    [ObservableProperty] private DateTime _minimumDateTime;
 
-    public ChooseMasterViewModel(IMediator mediator, IClock clock, GlobalContext globalContext)
+    [ObservableProperty]
+    private TimeOnly? _selectedTime;
+
+    [ObservableProperty] private DateTime _selectedDate;
+    [ObservableProperty] private IReadOnlyList<Service> _services = [];
+    [ObservableProperty] private ObservableCollection<Service> _selectedServices = [];
+    [ObservableProperty] private IReadOnlyList<TimeOnly> _masterFreeTime = [];
+    [ObservableProperty] private DateTime _minimumDateTime;
+    [ObservableProperty] private bool _isRefreshing;
+    [ObservableProperty] private bool _isErrorVisible;
+
+    private Master? _master;
+
+    public ChooseServicesViewModel(IMediator mediator, IClock clock, GlobalContext globalContext)
     {
         _mediator = mediator;
         _globalContext = globalContext;
         MinimumDateTime = clock.GetTime().AddDays(1);
-        
+
+        SelectedServices.CollectionChanged += async (sender, e) =>
+        {
+            SelectedTime = null;
+            MasterFreeTime = await GetMasterFreeTimeAsync().ConfigureAwait(false);
+        };
+
         PropertyChanged += async (_, args) =>
         {
-            if (args.PropertyName is nameof(SelectedMaster) or nameof(SelectedDate))
+            if (args.PropertyName is nameof(SelectedDate))
             {
-                 MasterFreeTime = await GetMasterFreeTimeAsync().ConfigureAwait(false);
+                MasterFreeTime = await GetMasterFreeTimeAsync().ConfigureAwait(false);
             }
         };
     }
 
-    private DateTime SelectedDateTime => SelectedDate.Add(SelectedTime!.Value.ToTimeSpan());
-
     public async void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        Service = (Service)query["Service"];
-        Masters = await _mediator.Send(new GetMastersByServiceIdQuery(Service.Id, _globalContext.Salon.Id))
-            .ConfigureAwait(false);
+        _master = (Master)query["Master"];
+        await Refresh(CancellationToken.None).ConfigureAwait(false);
     }
 
     [RelayCommand]
-    private void SetMaster(Master master) => SelectedMaster = master;
+    private async Task Refresh(CancellationToken cancellationToken)
+    {
+        Services = await _mediator
+            .Send(new GetServicesByMasterIdQuery(_master!.Id), cancellationToken)
+            .ConfigureAwait(false);
+        IsRefreshing = false;
+    }
 
-    [RelayCommand(CanExecute = nameof(CanGoNext))]
-    private Task GoNext() =>
-        Shell.Current.GoToAsync(nameof(ConfirmAppointmentViewModel),
-            new Dictionary<string, object>
-            {
-                {
-                    "Appointment",
-                    new Appointment(SelectedDateTime, SelectedMaster!, _globalContext.Customer!, [Service])
-                }
-            });
+    [RelayCommand]
+    private void AddService(Service service)
+    {
+        if (SelectedServices.Count is 5) IsErrorVisible = true;
+        else SelectedServices.Add(service);
+    }
 
-    private bool CanGoNext() => SelectedMaster is not null && SelectedTime is not null;
+    [RelayCommand]
+    private void RemoveService(Service service)
+    {
+        if (IsErrorVisible) IsErrorVisible = false;
+        SelectedServices.Remove(service);
+    }
 
     private async Task<IReadOnlyList<TimeOnly>> GetMasterFreeTimeAsync()
     {
-        if (SelectedMaster is null) return [];
+        if (_master is null) return [];
 
         List<TimeOnly> workTime = GetWorkTime();
-        List<Appointment> appointments =
-            await _mediator.Send(new GetAppointmentsByMasterIdQuery(SelectedMaster.Id, SelectedDate))
-                .ConfigureAwait(false);
+        List<Appointment> appointments = await _mediator
+            .Send(new GetAppointmentsByMasterIdQuery(_master.Id, SelectedDate))
+            .ConfigureAwait(false);
 
         foreach (Appointment appointment in appointments)
         {

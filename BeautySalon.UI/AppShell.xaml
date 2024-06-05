@@ -12,5 +12,9 @@
             Title="Главная"
             ContentTemplate="{DataTemplate view:MainView}"
             Icon="house.svg" />
+        <ShellContent
+            Title="Записи"
+            ContentTemplate="{DataTemplate view:AppointmentsView}"
+            Icon="book_open.svg" />
     </TabBar>
 </Shell>
