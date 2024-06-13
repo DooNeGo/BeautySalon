@@ -1,7 +1,6 @@
 ﻿using BeautySalon.Application;
 using BeautySalon.Infrastructure;
 using CommunityToolkit.Maui;
-using CommunityToolkit.Maui.Markup;
 using Microsoft.Extensions.Logging;
 
 namespace BeautySalon.UI;

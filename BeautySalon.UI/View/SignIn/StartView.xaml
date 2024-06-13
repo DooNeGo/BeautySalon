@@ -33,19 +33,13 @@
             HeightRequest="180"
             Source="logo.png" />
 
-        <Button
-            Command="{Binding GoToCreateViewCommand}"
-            CornerRadius="20"
-            FontFamily="Loto"
-            Text="Создать аккаунт" />
+        <Button Command="{Binding GoToCreateViewCommand}" Text="Создать аккаунт" />
 
         <Button
             BackgroundColor="Transparent"
             BorderColor="{StaticResource Primary}"
             BorderWidth="1"
             Command="{Binding GoToLoginViewCommand}"
-            CornerRadius="20"
-            FontFamily="Loto"
             Text="Войти с существующим аккаунтом"
             TextColor="{StaticResource Primary}" />
 

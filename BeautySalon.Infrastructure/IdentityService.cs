@@ -8,7 +8,9 @@ internal sealed class IdentityService(IApplicationContext context) : IIdentitySe
 {
     public User? CurrentUser { get; private set; }
 
-    public event Action<User>? Authorized; 
+    public event Action<User>? Authorized;
+
+    public event Action? Unauthorized; 
 
     public async Task AuthorizeAsync(string username, string password, CancellationToken cancellationToken)
     {
@@ -20,5 +22,11 @@ internal sealed class IdentityService(IApplicationContext context) : IIdentitySe
             .ConfigureAwait(false);
         
         if (CurrentUser is not null) Authorized?.Invoke(CurrentUser);
+    }
+
+    public void Unauthorize()
+    {
+        CurrentUser = null;
+        Unauthorized?.Invoke();
     }
 }

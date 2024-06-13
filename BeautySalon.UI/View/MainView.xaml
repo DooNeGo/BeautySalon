@@ -146,6 +146,16 @@
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
+
+                        <Button
+                            Margin="0,20"
+                            BackgroundColor="Transparent"
+                            BorderColor="{StaticResource Primary}"
+                            BorderWidth="1"
+                            Command="{Binding LogoutCommand}"
+                            IsVisible="{Binding IsLogoutButtonVisible}"
+                            Text="Выйти"
+                            TextColor="{StaticResource Primary}" />
                     </VerticalStackLayout>
                 </Border>
             </ScrollView>

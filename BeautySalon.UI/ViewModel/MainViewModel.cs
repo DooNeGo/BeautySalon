@@ -1,4 +1,5 @@
 ﻿using AsyncAwaitBestPractices;
+using BeautySalon.Application.Interfaces;
 using BeautySalon.Application.Queries;
 using BeautySalon.Domain;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -11,17 +12,21 @@ public sealed partial class MainViewModel : ObservableObject
 {
     private readonly IMediator _mediator;
     private readonly GlobalContext _globalContext;
-    
+    private readonly IIdentityService _identityService;
+
     [ObservableProperty] private Salon _salon = null!;
     [ObservableProperty] private int _servicesCount;
     [ObservableProperty] private int _mastersCount;
     [ObservableProperty] private IReadOnlyList<Service> _firstFiveServices = [];
     [ObservableProperty] private IReadOnlyList<Master> _firstFiveMasters = [];
     [ObservableProperty] private bool _isRefreshing;
+    [ObservableProperty] private bool _isLogoutButtonVisible;
 
-    public MainViewModel(IMediator mediator, GlobalContext globalContext)
+    public MainViewModel(IMediator mediator, GlobalContext globalContext, IIdentityService identityService)
     {
-        (_mediator, _globalContext) = (mediator, globalContext);
+        (_mediator, _globalContext, _identityService) = (mediator, globalContext, identityService);
+        _identityService.Authorized += _ => IsLogoutButtonVisible = true;
+        _identityService.Unauthorized += () => IsLogoutButtonVisible = false;
         Refresh().SafeFireAndForget();
     }
 
@@ -48,4 +53,7 @@ public sealed partial class MainViewModel : ObservableObject
             IsRefreshing = false;
         }
     }
+
+    [RelayCommand]
+    private void Logout() => _identityService.Unauthorize();
 }

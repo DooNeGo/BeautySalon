@@ -3,13 +3,19 @@
     x:Class="BeautySalon.UI.View.AppointmentsView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:BeautySalon.UI.Converters"
     xmlns:domain="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:BeautySalon.UI.ViewModel"
     Title="AppointmentsView"
-    Padding="15,0"
+    Padding="5"
     x:DataType="viewModel:AppointmentsViewModel"
     Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <converters:DayOfWeekConverter x:Key="DayOfWeekConverter" />
+    </ContentPage.Resources>
+
     <Grid toolkit:StateContainer.CurrentState="{Binding CurrentState}">
         <toolkit:StateContainer.StateViews>
             <RefreshView
@@ -19,14 +25,19 @@
                 <CollectionView ItemsSource="{Binding Appointments}">
                     <CollectionView.Header>
                         <Label
-                            Margin="0,20"
+                            Margin="10,20"
                             FontAttributes="Bold"
                             FontSize="28"
-                            Text="Мои записи" />
+                            Text="Мои записи"
+                            TextColor="{StaticResource Primary}">
+                            <Label.Shadow>
+                                <Shadow Brush="{StaticResource InversePrimary}" Radius="10" />
+                            </Label.Shadow>
+                        </Label>
                     </CollectionView.Header>
 
                     <CollectionView.ItemsLayout>
-                        <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                        <LinearItemsLayout ItemSpacing="0" Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
 
                     <CollectionView.ItemTemplate>
@@ -34,47 +45,42 @@
                             <SwipeView>
                                 <SwipeView.RightItems>
                                     <SwipeItems>
-                                        <SwipeItem BackgroundColor="{StaticResource Error}" Text="Удалить" />
-                                        <SwipeItem BackgroundColor="DarkOrange" Text="Изменить" />
+                                        <SwipeItem
+                                            BackgroundColor="{StaticResource Error}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:AppointmentsViewModel}}, Path=DeleteAppointmentCommand}"
+                                            CommandParameter="{Binding .}"
+                                            Text="Удалить" />
+                                        <SwipeItem BackgroundColor="Orange" Text="Изменить" />
                                     </SwipeItems>
                                 </SwipeView.RightItems>
 
                                 <Border
+                                    Margin="5,5,5,10"
                                     Padding="10"
                                     BackgroundColor="White"
-                                    StrokeShape="RoundRectangle 5">
+                                    StrokeShape="RoundRectangle 15"
+                                    StrokeThickness="0.1">
+
+                                    <Border.Shadow>
+                                        <Shadow
+                                            Brush="{StaticResource Black}"
+                                            Opacity="0.08"
+                                            Radius="30"
+                                            Offset="0,10" />
+                                    </Border.Shadow>
+
                                     <VerticalStackLayout Spacing="6">
                                         <Label FontSize="15" Text="{Binding Master, StringFormat='Мастер: {0}'}" />
-                                        <Label FontSize="15" Text="{Binding TotalPrice, StringFormat='Полная стоимость: {0} BYN'}" />
-                                        <Grid>
-                                            <Label FontSize="15" Text="{Binding DateTime, StringFormat='Дата: {0:dd.MM.yyyy   |   Время: HH:mm}'}" />
-                                        </Grid>
+                                        <Label FontSize="15" Text="{Binding Services.Count, StringFormat='Количество услуг: {0}'}" />
+                                        <Label FontSize="15" Text="{Binding TotalPrice, StringFormat='Итоговая стоимость: {0} BYN'}" />
 
-                                        <Border Padding="5" HorizontalOptions="FillAndExpand">
-                                            <HorizontalStackLayout>
-                                                <Label
-                                                    Margin="0,0,-20,0"
-                                                    FontAttributes="Bold"
-                                                    FontSize="16"
-                                                    HorizontalOptions="Start"
-                                                    MinimumHeightRequest="55"
-                                                    Rotation="-90"
-                                                    Text="Услуги" />
-                                                <HorizontalStackLayout
-                                                    BindableLayout.ItemsSource="{Binding Services}"
-                                                    Spacing="5"
-                                                    VerticalOptions="Center">
-                                                    <BindableLayout.ItemTemplate>
-                                                        <DataTemplate x:DataType="domain:Service">
-                                                            <Label
-                                                                MaximumWidthRequest="100"
-                                                                MinimumWidthRequest="0"
-                                                                Text="{Binding Name}" />
-                                                        </DataTemplate>
-                                                    </BindableLayout.ItemTemplate>
-                                                </HorizontalStackLayout>
-                                            </HorizontalStackLayout>
-                                        </Border>
+                                        <BoxView BackgroundColor="{StaticResource Gray500}" HeightRequest="0.5" />
+
+                                        <FlexLayout JustifyContent="SpaceEvenly">
+                                            <Label FontSize="16" Text="{Binding DateTime, StringFormat='{0:dd MMMM}'}" />
+                                            <Label FontSize="16" Text="{Binding DateTime.DayOfWeek, Converter={StaticResource DayOfWeekConverter}}" />
+                                            <Label FontSize="16" Text="{Binding DateTime, StringFormat='{0:HH:mm}'}" />
+                                        </FlexLayout>
                                     </VerticalStackLayout>
                                 </Border>
                             </SwipeView>
@@ -84,6 +90,7 @@
             </RefreshView>
 
             <VerticalStackLayout
+                Padding="10"
                 toolkit:StateView.StateKey="NotLoggedIn"
                 Spacing="25"
                 VerticalOptions="CenterAndExpand">

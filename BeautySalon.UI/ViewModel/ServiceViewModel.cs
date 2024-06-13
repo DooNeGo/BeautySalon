@@ -24,7 +24,8 @@ public sealed partial class ServiceViewModel(IIdentityService identityService, I
     private async Task Refresh(CancellationToken cancellationToken)
     {
         if (!IsRefreshing) IsRefreshing = true;
-        Masters = await mediator.Send(new GetMastersByServiceIdQuery(Service.Id, globalContext.Salon.Id), cancellationToken)
+        Masters = await mediator
+            .Send(new GetMastersByServiceIdQuery(Service.Id, globalContext.Salon.Id), cancellationToken)
             .ConfigureAwait(false);
         IsRefreshing = false;
     }
