@@ -25,7 +25,8 @@ public sealed partial class ServicesViewModel : ObservableObject
     [RelayCommand]
     private async Task Refresh(CancellationToken cancellationToken)
     {
-        Services = await _mediator.Send(new GetServicesQuery(_globalContext.Salon.Id), cancellationToken)
+        Services = await _mediator
+            .Send(new GetServicesQuery(_globalContext.Salon.Id), cancellationToken)
             .ConfigureAwait(false);
         IsRefreshing = false;
     }

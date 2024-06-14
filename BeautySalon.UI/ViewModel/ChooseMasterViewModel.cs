@@ -1,5 +1,3 @@
-using System.Collections.Immutable;
-using System.ComponentModel;
 using BeautySalon.Application.Interfaces;
 using BeautySalon.Application.Queries;
 using BeautySalon.Domain;
@@ -8,6 +6,8 @@ using CommunityToolkit.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Mediator;
+using System.Collections.Immutable;
+using System.ComponentModel;
 
 namespace BeautySalon.UI.ViewModel;
 
@@ -21,11 +21,11 @@ public sealed partial class ChooseMasterViewModel : ObservableObject, IQueryAttr
     [NotifyCanExecuteChangedFor(nameof(GoNextCommand))]
     [NotifyPropertyChangedFor(nameof(IsTimePickerEnable))]
     private Master? _selectedMaster;
-    
+
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(GoNextCommand))]
     private TimeOnly? _selectedTime;
-    
+
     [ObservableProperty] private Service _service = null!;
     [ObservableProperty] private IReadOnlyList<Master> _masters = [];
     [ObservableProperty] private ImmutableArray<TimeOnly> _masterFreeTime = [];
@@ -55,14 +55,14 @@ public sealed partial class ChooseMasterViewModel : ObservableObject, IQueryAttr
     }
 
     public bool IsTimePickerEnable => SelectedMaster is not null;
-    
+
     private DateTime SelectedDateTime => SelectedDate.Add(SelectedTime!.Value.ToTimeSpan());
 
     public async void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        Service = (Service)query["Service"];
-        
         Guard.IsNotNull(_globalContext.Salon, nameof(_globalContext.Salon));
+
+        Service = (Service)query["Service"];
         Masters = await _mediator
             .Send(new GetMastersByServiceIdQuery(Service.Id, _globalContext.Salon.Id))
             .ConfigureAwait(false);

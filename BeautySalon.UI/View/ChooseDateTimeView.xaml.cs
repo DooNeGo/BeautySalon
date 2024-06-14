@@ -1,6 +1,6 @@
 namespace BeautySalon.UI.View;
 
-public partial class ChooseDateTimeView : ContentPage
+public sealed partial class ChooseDateTimeView : ContentPage
 {
 	public ChooseDateTimeView()
 	{

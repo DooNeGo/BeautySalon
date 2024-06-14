@@ -17,8 +17,8 @@ public interface IMasterScheduleService
 
 public sealed class MasterScheduleService : IMasterScheduleService
 {
-    public const int TimeIntervalInMinutes = 30;
-    public static readonly TimeSpan TimeInterval = TimeSpan.FromMinutes(TimeIntervalInMinutes);
+    private const int TimeIntervalInMinutes = 30;
+    private static readonly TimeSpan TimeInterval = TimeSpan.FromMinutes(TimeIntervalInMinutes);
     
     private readonly IMediator _mediator;
     private readonly GlobalContext _globalContext;
