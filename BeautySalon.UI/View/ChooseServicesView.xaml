@@ -12,7 +12,7 @@
     Shell.TabBarIsVisible="False">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Далее" />
+        <ToolbarItem Command="{Binding GoToConfirmationPageCommand}" Text="Далее" />
     </ContentPage.ToolbarItems>
 
     <ScrollView Padding="10">
@@ -56,15 +56,18 @@
                 TextColor="{StaticResource Gray400}" />
             <VerticalStackLayout BindableLayout.ItemsSource="{Binding Services}">
                 <BindableLayout.ItemTemplate>
-                    <DataTemplate>
-                        <controls:ServiceItem>
-                            <controls:ServiceItem.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                            </controls:ServiceItem.GestureRecognizers>
-                            <controls:ServiceItem.TailView>
-                                <CheckBox CheckedChanged="CheckBox_CheckedChanged" />
-                            </controls:ServiceItem.TailView>
-                        </controls:ServiceItem>
+                    <DataTemplate x:DataType="viewModels:SelectableService">
+                        <Grid x:Name="Grid">
+                            <controls:ServiceItem BindingContext="{Binding Path=Value}">
+                                <controls:ServiceItem.TailView>
+                                    <CheckBox IsChecked="{Binding IsSelected}">
+                                        <CheckBox.BindingContext>
+                                            <Binding Source="{x:Reference Grid}" Path="BindingContext" />
+                                        </CheckBox.BindingContext>
+                                    </CheckBox>
+                                </controls:ServiceItem.TailView>
+                            </controls:ServiceItem>
+                        </Grid>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </VerticalStackLayout>

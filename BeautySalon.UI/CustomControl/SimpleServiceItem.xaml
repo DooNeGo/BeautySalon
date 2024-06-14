@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<VerticalStackLayout
+    x:Class="BeautySalon.UI.CustomControl.SimpleServiceItem"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:BeautySalon.UI.Converters"
+    xmlns:domain="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
+    Padding="10,0"
+    x:DataType="domain:Service">
+    <VerticalStackLayout.Resources>
+        <converters:TimeSpanConverter x:Key="TimeSpanConverter" />
+    </VerticalStackLayout.Resources>
+
+    <Grid>
+        <Label FontSize="15" Text="{Binding Name}" />
+        <Label
+            FontSize="15"
+            HorizontalOptions="End"
+            Text="{Binding Price, StringFormat='{0} BYN'}" />
+    </Grid>
+    <Label Text="{Binding Duration, Converter={StaticResource TimeSpanConverter}}" TextColor="{StaticResource Gray400}" />
+</VerticalStackLayout>

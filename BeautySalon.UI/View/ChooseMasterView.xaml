@@ -41,6 +41,7 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     FontSize="15"
+                    IsEnabled="{Binding IsTimePickerEnable}"
                     ItemsSource="{Binding MasterFreeTime}"
                     SelectedItem="{Binding SelectedTime}" />
             </Grid>

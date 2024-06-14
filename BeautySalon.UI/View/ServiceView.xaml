@@ -4,6 +4,7 @@
     x:Class="BeautySalon.UI.View.ServiceView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:BeautySalon.UI.Converters"
     xmlns:customControl="clr-namespace:BeautySalon.UI.CustomControl"
     xmlns:viewmodel="clr-namespace:BeautySalon.UI.ViewModel"
     Title="Услуга"
@@ -12,6 +13,10 @@
     <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
         <ScrollView Padding="10">
             <VerticalStackLayout>
+                <VerticalStackLayout.Resources>
+                    <converters:TimeSpanConverter x:Key="TimeSpanConverter" />
+                </VerticalStackLayout.Resources>
+
                 <Frame BackgroundColor="{StaticResource Gray100}" HorizontalOptions="Center">
                     <Image
                         HeightRequest="65"
@@ -31,9 +36,9 @@
                     HorizontalOptions="Center"
                     TextColor="{StaticResource Gray400}">
                     <Label.Text>
-                        <MultiBinding StringFormat="{}{0} BYN, {1} мин">
+                        <MultiBinding StringFormat="{}{0} BYN, {1}">
                             <Binding Path="Service.Price" />
-                            <Binding Path="Service.Duration.TotalMinutes" />
+                            <Binding Converter="{StaticResource TimeSpanConverter}" Path="Service.Duration" />
                         </MultiBinding>
                     </Label.Text>
                 </Label>

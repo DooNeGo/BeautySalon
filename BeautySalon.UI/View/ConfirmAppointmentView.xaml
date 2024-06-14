@@ -4,16 +4,82 @@
     x:Class="BeautySalon.UI.View.ConfirmAppointmentView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:BeautySalon.UI.Converters"
+    xmlns:domain="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
     xmlns:viewModel="clr-namespace:BeautySalon.UI.ViewModel"
+    xmlns:customControl="clr-namespace:BeautySalon.UI.CustomControl"
     Title="Подтверждение записи"
-    x:DataType="viewModel:ConfirmAppointmentViewModel">
-    <VerticalStackLayout>
-        <Label>
-            <Label.Text>
-                <MultiBinding StringFormat="{}{0}">
-                    <Binding Path="Appointment.DateTime" />
-                </MultiBinding>
-            </Label.Text>
-        </Label>
-    </VerticalStackLayout>
+    x:DataType="viewModel:ConfirmAppointmentViewModel"
+    Shell.TabBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <converters:TimeSpanConverter x:Key="TimeSpanConverter" />
+    </ContentPage.Resources>
+
+    <Grid>
+        <ScrollView>
+            <Grid BackgroundColor="#47058A" RowDefinitions="110, *">
+                <BoxView
+                    Grid.Row="1"
+                    Margin="0,-20,0,0"
+                    BackgroundColor="White"
+                    CornerRadius="20,20,0,0" />
+
+                <Label
+                    Margin="10,20,0,0"
+                    FontAttributes="Bold"
+                    FontSize="24"
+                    Text="{Binding Appointment.DateTime, StringFormat='{0:dd MMMM, HH:mm}'}"
+                    TextColor="White" />
+
+                <VerticalStackLayout
+                    Grid.Row="1"
+                    Padding="15,0"
+                    Spacing="15">
+                    <VerticalStackLayout Spacing="5">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="22"
+                            Text="{Binding Appointment.Master}" />
+                        <Label Text="{Binding Appointment.Master.Position.Title}" TextColor="{StaticResource Gray500}" />
+                    </VerticalStackLayout>
+
+                    <Label
+                        Margin="0,10,0,0"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        Text="Услуги"
+                        TextColor="{StaticResource Primary}" />
+
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Appointment.Services}" Spacing="5">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <customControl:SimpleServiceItem />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                    <BoxView BackgroundColor="{StaticResource Gray500}" HeightRequest="0.4" />
+
+                    <VerticalStackLayout Padding="10,0">
+                        <Grid>
+                            <Label FontSize="15" Text="Итого" />
+                            <Label
+                                FontSize="15"
+                                HorizontalOptions="End"
+                                Text="{Binding Appointment.TotalPrice, StringFormat='{0} BYN'}" />
+                        </Grid>
+                        <Label Text="{Binding Appointment.TotalDuration, Converter={StaticResource TimeSpanConverter}}" TextColor="{StaticResource Gray400}" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+
+        <Button
+            Margin="20,0,20,50"
+            Command="{Binding ConfirmAppointmentCommand}"
+            FontSize="15"
+            Text="Подтвердить запись"
+            VerticalOptions="End" />
+    </Grid>
 </ContentPage>

@@ -1,5 +1,6 @@
 ﻿using BeautySalon.Application;
 using BeautySalon.Infrastructure;
+using BeautySalon.UI.Services;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
@@ -25,6 +26,7 @@ public static class MauiProgram
             .AddApplication()
             .AddInfrastructure()
             .AddUI()
+            .AddSingleton<IMasterScheduleService, MasterScheduleService>()
             .AddSingleton<GlobalContext>();
 
 #if DEBUG

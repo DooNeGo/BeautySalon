@@ -55,5 +55,17 @@ public sealed partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void Logout() => _identityService.Unauthorize();
+    private async Task LogoutAsync(CancellationToken cancellationToken)
+    {
+        if (await App.Current.MainPage
+                .DisplayAlert("Выход", 
+                    "Вы уверены,что хотите выйти?", 
+                    "Да", "Нет")
+                .WaitAsync(cancellationToken)
+                .ConfigureAwait(false))
+        {
+            _identityService.Unauthorize();    
+        }
+        
+    }
 }

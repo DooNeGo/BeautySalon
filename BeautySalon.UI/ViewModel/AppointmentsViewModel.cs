@@ -68,6 +68,13 @@ public sealed partial class AppointmentsViewModel : ObservableObject
         }
     }
 
+    [RelayCommand]
+    private Task GoToEditPageAsync(Appointment appointment, CancellationToken cancellationToken = default) =>
+        Shell.Current.GoToAsync(nameof(ChooseServicesViewModel), new Dictionary<string, object>
+        {
+            { "Appointment", appointment }
+        }).WaitAsync(cancellationToken);
+
     private void UpdateCurrentState() =>
         CurrentState = _globalContext.Customer is null
             ? States.NotLoggedIn : States.Normal;

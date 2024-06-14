@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:BeautySalon.UI.Converters"
+    xmlns:customControl="clr-namespace:BeautySalon.UI.CustomControl"
     xmlns:domain="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:BeautySalon.UI.ViewModel"
@@ -50,7 +51,11 @@
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:AppointmentsViewModel}}, Path=DeleteAppointmentCommand}"
                                             CommandParameter="{Binding .}"
                                             Text="Удалить" />
-                                        <SwipeItem BackgroundColor="Orange" Text="Изменить" />
+                                        <SwipeItem
+                                            BackgroundColor="Orange"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:AppointmentsViewModel}}, Path=GoToEditPageCommand}"
+                                            CommandParameter="{Binding .}"
+                                            Text="Изменить" />
                                     </SwipeItems>
                                 </SwipeView.RightItems>
 
@@ -59,29 +64,68 @@
                                     Padding="10"
                                     BackgroundColor="White"
                                     StrokeShape="RoundRectangle 15"
-                                    StrokeThickness="0.1">
+                                    StrokeThickness="0.2">
 
                                     <Border.Shadow>
                                         <Shadow
                                             Brush="{StaticResource Black}"
                                             Opacity="0.08"
-                                            Radius="30"
+                                            Radius="25"
                                             Offset="0,10" />
                                     </Border.Shadow>
 
-                                    <VerticalStackLayout Spacing="6">
-                                        <Label FontSize="15" Text="{Binding Master, StringFormat='Мастер: {0}'}" />
-                                        <Label FontSize="15" Text="{Binding Services.Count, StringFormat='Количество услуг: {0}'}" />
-                                        <Label FontSize="15" Text="{Binding TotalPrice, StringFormat='Итоговая стоимость: {0} BYN'}" />
+                                    <toolkit:Expander ExpandedChanged="Expander_OnExpandedChanged">
+                                        <toolkit:Expander.Header>
+                                            <VerticalStackLayout Spacing="6">
+                                                <Grid>
+                                                    <Label FontSize="15" Text="{Binding Master, StringFormat='Мастер: {0}'}" />
+                                                    <Image
+                                                        x:Name="Chevron"
+                                                        HeightRequest="15"
+                                                        Margin="0,0,5,0"
+                                                        HorizontalOptions="End"
+                                                        Source="chevron_up.png" />
+                                                </Grid>
 
-                                        <BoxView BackgroundColor="{StaticResource Gray500}" HeightRequest="0.5" />
+                                                <Label FontSize="15" Text="{Binding Services.Count, StringFormat='Количество услуг: {0}'}" />
+                                                <Label FontSize="15" Text="{Binding TotalPrice, StringFormat='Итоговая стоимость: {0} BYN'}" />
 
-                                        <FlexLayout JustifyContent="SpaceEvenly">
-                                            <Label FontSize="16" Text="{Binding DateTime, StringFormat='{0:dd MMMM}'}" />
-                                            <Label FontSize="16" Text="{Binding DateTime.DayOfWeek, Converter={StaticResource DayOfWeekConverter}}" />
-                                            <Label FontSize="16" Text="{Binding DateTime, StringFormat='{0:HH:mm}'}" />
-                                        </FlexLayout>
-                                    </VerticalStackLayout>
+                                                <BoxView BackgroundColor="{StaticResource Gray500}" HeightRequest="0.5" />
+
+                                                <Grid ColumnDefinitions="*,*,*">
+                                                    <Label
+                                                        Grid.Column="0"
+                                                        FontSize="16"
+                                                        HorizontalOptions="Center"
+                                                        HorizontalTextAlignment="Center"
+                                                        Text="{Binding DateTime, StringFormat='{0:dd MMMM}'}" />
+                                                    <Label
+                                                        Grid.Column="1"
+                                                        FontSize="16"
+                                                        HorizontalOptions="Center"
+                                                        HorizontalTextAlignment="Center"
+                                                        Text="{Binding DateTime.DayOfWeek, Converter={StaticResource DayOfWeekConverter}}" />
+                                                    <Label
+                                                        Grid.Column="2"
+                                                        FontSize="16"
+                                                        HorizontalOptions="Center"
+                                                        HorizontalTextAlignment="Center"
+                                                        Text="{Binding DateTime, StringFormat='{0:HH:mm}'}" />
+                                                </Grid>
+                                            </VerticalStackLayout>
+                                        </toolkit:Expander.Header>
+                                        <VerticalStackLayout Margin="0,10,0,0" Spacing="5">
+                                            <BoxView BackgroundColor="{StaticResource Gray500}" HeightRequest="0.5" />
+
+                                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Services}" Spacing="5">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <customControl:SimpleServiceItem />
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </VerticalStackLayout>
+                                        </VerticalStackLayout>
+                                    </toolkit:Expander>
                                 </Border>
                             </SwipeView>
                         </DataTemplate>

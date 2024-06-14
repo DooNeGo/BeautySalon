@@ -6,7 +6,7 @@ namespace BeautySalon.UI;
 
 public sealed partial class GlobalContext : ObservableObject
 {
-    [ObservableProperty] private Salon _salon = null!;
+    [ObservableProperty] private Salon? _salon;
 
     private Customer? _customer;
 

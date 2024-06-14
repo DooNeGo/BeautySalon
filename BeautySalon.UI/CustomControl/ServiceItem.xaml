@@ -5,12 +5,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:BeautySalon.UI.CustomControl"
     xmlns:domain="clr-namespace:BeautySalon.Domain;assembly=BeautySalon.Domain"
+    xmlns:converters="clr-namespace:BeautySalon.UI.Converters"
     Title="{Binding Name}"
     x:DataType="domain:Service">
+    
+    <controls:MenuItem.Resources>
+        <converters:TimeSpanConverter x:Key="TimeSpanConverter"/>
+    </controls:MenuItem.Resources>
+    
     <controls:MenuItem.Detail>
-        <MultiBinding StringFormat="{}{0} BYN, {1} мин">
+        <MultiBinding StringFormat="{}{0} BYN, {1}">
             <Binding Path="Price" />
-            <Binding Path="Duration.TotalMinutes" />
+            <Binding Path="Duration" Converter="{StaticResource TimeSpanConverter}"  />
         </MultiBinding>
     </controls:MenuItem.Detail>
     <controls:MenuItem.HeadView>

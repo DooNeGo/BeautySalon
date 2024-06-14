@@ -10,7 +10,7 @@ internal sealed class ApplicationContext : DbContext, IApplicationContext
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {
         Batteries_V2.Init();
-        //Database.EnsureDeleted();
+        Database.EnsureDeleted();
         Database.EnsureCreated();
         
         this.LoadData();
@@ -27,8 +27,6 @@ internal sealed class ApplicationContext : DbContext, IApplicationContext
     public DbSet<Service> Services => Set<Service>();
 
     public DbSet<Appointment> Appointments => Set<Appointment>();
-
-    public DbSet<ServiceType> ServiceTypes => Set<ServiceType>();
 
     public DbSet<User> Users => Set<User>();
     
@@ -48,7 +46,6 @@ internal sealed class ApplicationContext : DbContext, IApplicationContext
         modelBuilder.Entity<Salon>().HasKey(p => p.Id);
         modelBuilder.Entity<Service>().HasKey(p => p.Id);
         modelBuilder.Entity<Appointment>().HasKey(a => a.Id);
-        modelBuilder.Entity<ServiceType>().HasKey(p => p.Id);
 
         modelBuilder.Entity<User>().HasKey(p => p.Id);
         modelBuilder.Entity<User>().HasIndex(p => p.Username).IsUnique();

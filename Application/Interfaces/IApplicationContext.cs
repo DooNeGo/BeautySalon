@@ -17,8 +17,6 @@ public interface IApplicationContext
     
     public DbSet<Appointment> Appointments { get; }
 
-    public DbSet<ServiceType> ServiceTypes { get; }
-
     public DbSet<User> Users { get; }
 
     public int SaveChanges();
