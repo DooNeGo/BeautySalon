@@ -13,7 +13,6 @@ public sealed class GetAppointmentsByMasterIdAndDateQueryHandler(IApplicationCon
     public ValueTask<List<Appointment>> Handle(GetAppointmentsByMasterIdAndDateQuery query,
         CancellationToken cancellationToken) =>
         new(context.Appointments
-            .AsNoTracking()
             .Where(appointment => appointment.Master.Id == query.MasterId && appointment.DateTime.Date == query.Date.Date)
             .Include(appointment => appointment.Services)
             .ToListAsync(cancellationToken));

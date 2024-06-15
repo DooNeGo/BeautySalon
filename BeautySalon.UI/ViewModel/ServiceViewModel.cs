@@ -1,6 +1,8 @@
+using AsyncAwaitBestPractices;
 using BeautySalon.Application.Interfaces;
 using BeautySalon.Application.Queries;
 using BeautySalon.Domain;
+using CommunityToolkit.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Mediator;
@@ -14,15 +16,16 @@ public sealed partial class ServiceViewModel(IIdentityService identityService, I
     [ObservableProperty] private IReadOnlyList<Master> _masters = [];
     [ObservableProperty] private bool _isRefreshing;
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         Service = (Service)query["Service"];
-        await Refresh(CancellationToken.None).ConfigureAwait(false);
+        Refresh(CancellationToken.None).SafeFireAndForget();
     }
 
     [RelayCommand]
     private async Task Refresh(CancellationToken cancellationToken)
     {
+        Guard.IsNotNull(globalContext.Salon, nameof(globalContext.Salon));
         Masters = await mediator
             .Send(new GetMastersByServiceIdQuery(Service.Id, globalContext.Salon.Id), cancellationToken)
             .ConfigureAwait(false);

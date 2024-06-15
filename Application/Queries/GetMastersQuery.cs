@@ -11,7 +11,6 @@ public sealed class GetMastersQueryHandler(IApplicationContext context) : IQuery
 {
     public ValueTask<List<Master>> Handle(GetMastersQuery query, CancellationToken cancellationToken) =>
         new(context.Masters
-            .AsNoTracking()
             .Where(m => m.SalonId == query.SalonId)
             .Include(m => m.Position)
             .ToListAsync(cancellationToken));

@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using BeautySalon.Application.Interfaces;
 using BeautySalon.Application.Queries;
 using BeautySalon.Domain;
@@ -9,6 +10,7 @@ using System.ComponentModel;
 using AsyncAwaitBestPractices;
 using BeautySalon.UI.Services;
 using CommunityToolkit.Diagnostics;
+using IQueryAttributable = Microsoft.Maui.Controls.IQueryAttributable;
 
 namespace BeautySalon.UI.ViewModel;
 
@@ -16,7 +18,7 @@ public partial class SelectableObjectWrapper<T>(T value) : ObservableObject
 {
     [ObservableProperty] private bool _isSelected;
 
-    public T Value { get; init; } = value;
+    public T Value => value;
 }
 
 public sealed class SelectableService(Service service) : SelectableObjectWrapper<Service>(service);
@@ -26,7 +28,7 @@ public sealed partial class ChooseServicesViewModel : ObservableObject, IQueryAt
     private readonly IMediator _mediator;
     private readonly GlobalContext _globalContext;
     private readonly IMasterScheduleService _masterScheduleService;
-
+    
     [ObservableProperty] private TimeOnly? _selectedTime;
     [ObservableProperty] private DateTime _selectedDate;
     [ObservableProperty] private ImmutableArray<SelectableService> _services = [];
@@ -42,11 +44,11 @@ public sealed partial class ChooseServicesViewModel : ObservableObject, IQueryAt
     public ChooseServicesViewModel(IMediator mediator, IClock clock, GlobalContext globalContext,
         IMasterScheduleService masterScheduleService)
     {
-        _mediator = mediator;
-        _globalContext = globalContext;
-        _masterScheduleService = masterScheduleService;
+        (_mediator, _globalContext, _masterScheduleService) = (mediator, globalContext, masterScheduleService);
         MinimumDateTime = clock.GetTime().AddDays(1);
     }
+
+    public bool IsAnyServiceSelected => Services.Any(service => service.IsSelected);
     
     private DateTime SelectedDateTime => SelectedDate.Add(SelectedTime!.Value.ToTimeSpan());
 
@@ -61,7 +63,6 @@ public sealed partial class ChooseServicesViewModel : ObservableObject, IQueryAt
         else
         {
             _master = (Master)query["Master"];
-            await UpdateMasterFreeTimeAsync().ConfigureAwait(false);
         }
         
         PropertyChanged += OnPropertyChangedEventHandler;
@@ -113,14 +114,30 @@ public sealed partial class ChooseServicesViewModel : ObservableObject, IQueryAt
         Guard.IsNotNull(_globalContext.Customer, nameof(_globalContext.Customer));
 
         List<Service> selectedServices = Services
-            .Where(service => service.IsSelected = true)
+            .Where(service => service.IsSelected)
             .Select(service => service.Value)
             .ToList();
-
-        return Shell.Current.GoToAsync(nameof(ConfirmAppointmentViewModel), new Dictionary<string, object>
+        
+        Dictionary<string, object?> parameters = new()
         {
-            { "Appointment", new Appointment(SelectedDateTime, _master, _globalContext.Customer.Id, selectedServices) }
-        }).WaitAsync(cancellationToken);
+            { "Action", _appointment is null ? Action.Add : Action.Update }
+        };
+        
+        if (_appointment is not null)
+        {
+            parameters.Add("Appointment",
+                new Appointment(SelectedDateTime, _master, _globalContext.Customer.Id, selectedServices)
+                    { Id = _appointment.Id });
+        }
+        else
+        {
+            parameters.Add("Appointment",
+                new Appointment(SelectedDateTime, _master, _globalContext.Customer.Id, selectedServices));
+        }
+
+        return Shell.Current
+            .GoToAsync(nameof(ConfirmAppointmentViewModel), parameters)
+            .WaitAsync(cancellationToken);
     }
     
     private Task UpdateMasterFreeTimeAsync(CancellationToken cancellationToken = default)
@@ -129,11 +146,10 @@ public sealed partial class ChooseServicesViewModel : ObservableObject, IQueryAt
         
         Guard.IsNotNull(_master, nameof(_master));
         Guid appointmentId = _appointment?.Id ?? Guid.Empty;
-        
-        _updateMasterFreeTimeTask = Task.Run(async () =>
-            MasterFreeTime = await _masterScheduleService
-                .GetMasterFreeTimeByDateAsync(_master.Id, SelectedDate, appointmentId, cancellationToken)
-                .ConfigureAwait(false), cancellationToken);
+
+        _updateMasterFreeTimeTask = Task.Run(async () => MasterFreeTime = await _masterScheduleService
+            .GetMasterFreeTimeByDateAsync(_master.Id, SelectedDate, appointmentId, cancellationToken)
+            .ConfigureAwait(false), cancellationToken);
         
         return _updateMasterFreeTimeTask;
     }
@@ -142,21 +158,18 @@ public sealed partial class ChooseServicesViewModel : ObservableObject, IQueryAt
     {
         foreach (SelectableService service in Services.AsSpan())
         {
-            service.PropertyChanged += OnServiceOnPropertyChanged;
+            service.PropertyChanged += ServiceOnPropertyChanged;
         }
     }
-
+    
     private void UnsubscribeOnServices()
     {
         foreach (SelectableService service in Services.AsSpan())
         {
-            service.PropertyChanged -= OnServiceOnPropertyChanged;
+            service.PropertyChanged -= ServiceOnPropertyChanged;
         }
     }
-    
-    private void OnServiceOnPropertyChanged(object? s, PropertyChangedEventArgs args)
-    {
-        SelectedTime = null;
-        UpdateMasterFreeTimeAsync().SafeFireAndForget();
-    }
+
+    private void ServiceOnPropertyChanged(object? sender, PropertyChangedEventArgs e) =>
+        OnPropertyChanged(nameof(IsAnyServiceSelected));
 }

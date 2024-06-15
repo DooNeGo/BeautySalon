@@ -12,7 +12,6 @@ public sealed class GetServicesByMasterIdQueryHandler(IApplicationContext contex
 {
     public ValueTask<List<Service>> Handle(GetServicesByMasterIdQuery query, CancellationToken cancellationToken) =>
         new(context.Masters
-            .AsNoTracking()
             .Where(m => m.Id == query.MasterId)
             .Select(m => m.Position)
             .SelectMany(p => p.Services)

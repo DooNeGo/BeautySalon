@@ -11,9 +11,24 @@
     Padding="0"
     x:DataType="viewModel:ChooseMasterViewModel">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding GoNextCommand}" Text="Далее" />
-    </ContentPage.ToolbarItems>
+    <Shell.TitleView>
+        <Grid>
+            <Label
+                FontAttributes="Bold"
+                FontSize="21"
+                Text="Услуги"
+                VerticalOptions="Center" />
+            <Button
+                BackgroundColor="Transparent"
+                Command="{Binding GoNextCommand}"
+                FontAttributes="Bold"
+                FontSize="15"
+                HorizontalOptions="End"
+                IsVisible="{Binding IsMasterSelected}"
+                Text="Далее"
+                TextColor="{StaticResource Primary}" />
+        </Grid>
+    </Shell.TitleView>
 
     <ScrollView Padding="10">
         <VerticalStackLayout>
@@ -41,7 +56,7 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     FontSize="15"
-                    IsEnabled="{Binding IsTimePickerEnable}"
+                    IsEnabled="{Binding IsMasterSelected}"
                     ItemsSource="{Binding MasterFreeTime}"
                     SelectedItem="{Binding SelectedTime}" />
             </Grid>

@@ -14,7 +14,7 @@ public sealed record Position
 
     public string Title { get; set; } = string.Empty;
 
-    public List<Service> Services { get; init; } = [];
+    public List<Service> Services { get; set; } = [];
 
-    public List<Master> Masters { get; init; } = [];
+    public List<Master> Masters { get; set; } = [];
 }

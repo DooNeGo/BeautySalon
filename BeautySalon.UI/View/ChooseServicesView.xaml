@@ -11,9 +11,24 @@
     x:DataType="viewModels:ChooseServicesViewModel"
     Shell.TabBarIsVisible="False">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding GoToConfirmationPageCommand}" Text="Далее" />
-    </ContentPage.ToolbarItems>
+    <Shell.TitleView>
+        <Grid>
+            <Label
+                FontAttributes="Bold"
+                FontSize="21"
+                Text="Услуги"
+                VerticalOptions="Center" />
+            <Button
+                BackgroundColor="Transparent"
+                Command="{Binding GoToConfirmationPageCommand}"
+                FontAttributes="Bold"
+                FontSize="15"
+                HorizontalOptions="End"
+                IsVisible="{Binding IsAnyServiceSelected}"
+                Text="Далее"
+                TextColor="{StaticResource Primary}" />
+        </Grid>
+    </Shell.TitleView>
 
     <ScrollView Padding="10">
         <VerticalStackLayout>
@@ -41,6 +56,7 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     FontSize="15"
+                    IsEnabled="{Binding IsAnyServiceSelected}"
                     ItemsSource="{Binding MasterFreeTime}"
                     SelectedItem="{Binding SelectedTime}" />
             </Grid>
@@ -58,11 +74,14 @@
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:SelectableService">
                         <Grid x:Name="Grid">
-                            <controls:ServiceItem BindingContext="{Binding Path=Value}">
+                            <controls:ServiceItem BindingContext="{Binding Path=Value, Mode=OneTime}">
                                 <controls:ServiceItem.TailView>
                                     <CheckBox IsChecked="{Binding IsSelected}">
                                         <CheckBox.BindingContext>
-                                            <Binding Source="{x:Reference Grid}" Path="BindingContext" />
+                                            <Binding
+                                                Mode="OneWay"
+                                                Path="BindingContext"
+                                                Source="{x:Reference Grid}" />
                                         </CheckBox.BindingContext>
                                     </CheckBox>
                                 </controls:ServiceItem.TailView>

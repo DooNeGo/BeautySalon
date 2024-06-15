@@ -12,9 +12,9 @@ public sealed class GetAppointmentsByCustomerIdQueryHandler(IApplicationContext 
 {
     public ValueTask<List<Appointment>> Handle(GetAppointmentsByCustomerIdQuery query, CancellationToken cancellationToken) =>
         new(context.Appointments
-            .AsNoTracking()
             .Where(appointment => appointment.Customer.Id == query.CustomerId)
             .Include(appointment => appointment.Services)
             .Include(appointment => appointment.Master)
+            .ThenInclude(master => master.Position)
             .ToListAsync(cancellationToken: cancellationToken));
 }

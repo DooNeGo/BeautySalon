@@ -129,9 +129,6 @@
         <MauiXaml Update="View\AppointmentsView.xaml">
           <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
-        <MauiXaml Update="View\ChooseDateTimeView.xaml">
-          <Generator>MSBuild:Compile</Generator>
-        </MauiXaml>
         <MauiXaml Update="View\SignUp\CreateAccountView.xaml">
             <Generator>MSBuild:Compile</Generator>
         </MauiXaml>

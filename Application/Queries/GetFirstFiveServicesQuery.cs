@@ -12,7 +12,6 @@ public sealed class GetFirstFiveServicesQueryHandler(IApplicationContext context
 {
     public ValueTask<List<Service>> Handle(GetFirstFiveServicesQuery query, CancellationToken cancellationToken) =>
         new(context.Salons
-            .AsNoTracking()
             .Where(salon => salon.Id == query.SalonId)
             .SelectMany(salon => salon.Services)
             .Take(5)

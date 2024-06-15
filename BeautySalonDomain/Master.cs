@@ -32,5 +32,5 @@ public sealed record Master
 
     public List<Appointment> Appointments { get; } = [];
 
-    public override string? ToString() => $"{FirstName} {LastName}";
+    public override string ToString() => $"{FirstName} {LastName}";
 }

@@ -25,4 +25,6 @@ public sealed record Customer
     public string Phone { get; set; } = string.Empty;
     
     public Guid UserId { get; set; }
+
+    public List<Appointment> Appointments { get; set; } = [];
 }

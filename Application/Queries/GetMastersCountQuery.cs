@@ -10,7 +10,6 @@ public sealed class GetMastersCountQueryHandler(IApplicationContext context) : I
 {
     public ValueTask<int> Handle(GetMastersCountQuery query, CancellationToken cancellationToken) =>
         new(context.Masters
-            .AsNoTracking()
             .Where(master => master.SalonId == query.SalonId)
             .CountAsync(cancellationToken));
 }

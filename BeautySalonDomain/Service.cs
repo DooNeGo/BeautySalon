@@ -23,4 +23,6 @@ public sealed record Service
     public List<Position> Positions { get; set; } = [];
 
     public List<Salon> Salons { get; set; } = [];
+
+    public List<Appointment> Appointments { get; set; } = [];
 }

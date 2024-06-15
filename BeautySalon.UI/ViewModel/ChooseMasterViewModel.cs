@@ -19,7 +19,7 @@ public sealed partial class ChooseMasterViewModel : ObservableObject, IQueryAttr
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(GoNextCommand))]
-    [NotifyPropertyChangedFor(nameof(IsTimePickerEnable))]
+    [NotifyPropertyChangedFor(nameof(IsMasterSelected))]
     private Master? _selectedMaster;
 
     [ObservableProperty]
@@ -39,11 +39,12 @@ public sealed partial class ChooseMasterViewModel : ObservableObject, IQueryAttr
         _globalContext = globalContext;
         _masterScheduleService = masterScheduleService;
         MinimumDateTime = clock.GetTime().AddDays(1);
-
         PropertyChanged += OnPropertyChangedEventHandler;
     }
 
-    private async void OnPropertyChangedEventHandler(object? _, PropertyChangedEventArgs args)
+    public bool IsMasterSelected => SelectedMaster is not null;
+    
+    private async void OnPropertyChangedEventHandler(object? s, PropertyChangedEventArgs args)
     {
         if (args.PropertyName is not (nameof(SelectedMaster) or nameof(SelectedDate))) return;
         if (SelectedMaster is null) return;
@@ -53,8 +54,6 @@ public sealed partial class ChooseMasterViewModel : ObservableObject, IQueryAttr
             .GetMasterFreeTimeByDateAsync(SelectedMaster.Id, SelectedDate)
             .ConfigureAwait(false);
     }
-
-    public bool IsTimePickerEnable => SelectedMaster is not null;
 
     private DateTime SelectedDateTime => SelectedDate.Add(SelectedTime!.Value.ToTimeSpan());
 

@@ -11,7 +11,6 @@ public sealed class GetFirstFiveMastersQueryHandler(IApplicationContext context)
 {
     public ValueTask<List<Master>> Handle(GetFirstFiveMastersQuery query, CancellationToken cancellationToken) =>
         new (context.Masters
-            .AsNoTracking()
             .Where(m => m.SalonId == query.SalonId)
             .Take(5)
             .Include(m => m.Position)

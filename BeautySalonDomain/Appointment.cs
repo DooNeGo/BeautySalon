@@ -2,7 +2,7 @@
 
 namespace BeautySalon.Domain;
 
-public sealed record Appointment
+public sealed record Appointment : IComparable<Appointment>
 {
     private Appointment() { }
 
@@ -15,7 +15,7 @@ public sealed record Appointment
         CustomerId = customerId;
     }
 
-    public Guid Id { get; }
+    public Guid Id { get; init; }
 
     public DateTime DateTime { get; set; }
 
@@ -37,4 +37,11 @@ public sealed record Appointment
         Services.Aggregate(TimeSpan.Zero, (current, service) => current + service.Duration);
 
     public bool Equals(Appointment? other) => Id == other?.Id;
+
+    public int CompareTo(Appointment? other)
+    {
+        if (ReferenceEquals(this, other)) return 0;
+        if (ReferenceEquals(null, other)) return 1;
+        return DateTime.CompareTo(other.DateTime);
+    }
 }

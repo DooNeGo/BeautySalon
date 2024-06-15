@@ -10,9 +10,8 @@ internal sealed class ApplicationContext : DbContext, IApplicationContext
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {
         Batteries_V2.Init();
-        Database.EnsureDeleted();
+        //Database.EnsureDeleted();
         Database.EnsureCreated();
-        
         this.LoadData();
     }
     

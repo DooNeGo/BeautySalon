@@ -1,6 +1,7 @@
 using AsyncAwaitBestPractices;
 using BeautySalon.Application.Queries;
 using BeautySalon.Domain;
+using CommunityToolkit.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Mediator;
@@ -25,6 +26,7 @@ public sealed partial class ServicesViewModel : ObservableObject
     [RelayCommand]
     private async Task Refresh(CancellationToken cancellationToken)
     {
+        Guard.IsNotNull(_globalContext.Salon, nameof(_globalContext.Salon));
         Services = await _mediator
             .Send(new GetServicesQuery(_globalContext.Salon.Id), cancellationToken)
             .ConfigureAwait(false);

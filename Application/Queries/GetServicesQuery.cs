@@ -11,8 +11,8 @@ public sealed class GetServicesQueryHandler(IApplicationContext context)
     : IQueryHandler<GetServicesQuery, List<Service>>
 {
     public ValueTask<List<Service>> Handle(GetServicesQuery query, CancellationToken cancellationToken) =>
-        new(context.Services
-            .AsNoTracking()
-            .Where(s => s.Salons.Any(p => p.Id == query.SalonId))
+        new(context.Salons
+            .Where(salon => salon.Id == query.SalonId)
+            .SelectMany(salon => salon.Services)
             .ToListAsync(cancellationToken));
 }

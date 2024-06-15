@@ -1,55 +1,59 @@
-﻿using AsyncAwaitBestPractices;
+﻿using System.Collections.ObjectModel;
+using BeautySalon.Application.Interfaces;
 using BeautySalon.Application.Queries;
 using BeautySalon.Domain;
+using BeautySalon.UI.Messages;
+using CommunityToolkit.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Mediator;
-using System.Collections.ObjectModel;
 
 namespace BeautySalon.UI.ViewModel;
 
-public sealed partial class AppointmentsViewModel : ObservableObject
+public sealed partial class AppointmentsViewModel
+    : ObservableObject, IRecipient<AppointmentAddedMessage>, IRecipient<AppointmentUpdatedMessage>
 {
     private readonly IMediator _mediator;
-    private readonly GlobalContext _globalContext;
+    private readonly IIdentityService _identityService;
 
     [ObservableProperty] private ObservableCollection<Appointment> _appointments = [];
-    [ObservableProperty] private bool _isRefreshing;
     [ObservableProperty] private string _currentState = States.NotLoggedIn;
+    [ObservableProperty] private bool _isRefreshing;
 
-    public AppointmentsViewModel(IMediator mediator, GlobalContext globalContext)
+    public AppointmentsViewModel(IMediator mediator, IIdentityService identityService, IMessenger messenger)
     {
-        _mediator = mediator;
-        _globalContext = globalContext;
-
-        _globalContext.PropertyChanged += async (_, e) =>
+        (_mediator, _identityService) = (mediator, identityService);
+        
+        messenger.Register<AppointmentAddedMessage>(this);
+        messenger.Register<AppointmentUpdatedMessage>(this);
+        
+        identityService.Authorized += _ =>
         {
-            if (e.PropertyName is not nameof(_globalContext.Customer)) return;
-            await RefreshAsync().ConfigureAwait(false);
+            UpdateCurrentState();
+            IsRefreshing = true;
         };
-
-        RefreshAsync().SafeFireAndForget();
+        identityService.Unauthorized += UpdateCurrentState;
+        UpdateCurrentState();
     }
+
+    public void Receive(AppointmentAddedMessage message) => IsRefreshing = true;
+
+    public void Receive(AppointmentUpdatedMessage message) => IsRefreshing = true;
 
     [RelayCommand]
     private async Task RefreshAsync(CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
+        Guard.IsNotNull(_identityService.CurrentUser, nameof(_identityService.CurrentUser));
 
-        UpdateCurrentState();
+        await Task.Delay(300, cancellationToken).ConfigureAwait(false);
+        List<Appointment> response = await _mediator
+            .Send(new GetAppointmentsByCustomerIdQuery(_identityService.CurrentUser.Customer!.Id), cancellationToken)
+            .ConfigureAwait(false);
 
-        if (_globalContext.Customer is not null)
-        {
-            List<Appointment> response = await _mediator
-                .Send(new GetAppointmentsByCustomerIdQuery(_globalContext.Customer.Id), cancellationToken)
-                .ConfigureAwait(false);
-
-            response.Sort((appointment, appointment1) =>
-                (int)(appointment.DateTime - appointment1.DateTime).TotalDays);
-
-            Appointments = [.. response];
-        }
-
+        await Task.Run(response.Sort, cancellationToken).ConfigureAwait(false);
+        Appointments = [.. response];
         IsRefreshing = false;
     }
 
@@ -60,12 +64,10 @@ public sealed partial class AppointmentsViewModel : ObservableObject
     [RelayCommand]
     private async Task DeleteAppointment(Appointment appointment)
     {
-        if (await App.Current!.MainPage!.DisplayAlert(
-            "Потвеждение удаления", "Вы точно хотите удалить запись?", "Да", "Нет")
-            .ConfigureAwait(false))
-        {
+        if (await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert(
+                    "Потвеждение удаления", "Вы точно хотите удалить запись?", "Да", "Нет")
+                .ConfigureAwait(false))
             Appointments.Remove(appointment);
-        }
     }
 
     [RelayCommand]
@@ -76,8 +78,9 @@ public sealed partial class AppointmentsViewModel : ObservableObject
         }).WaitAsync(cancellationToken);
 
     private void UpdateCurrentState() =>
-        CurrentState = _globalContext.Customer is null
-            ? States.NotLoggedIn : States.Normal;
+        CurrentState = _identityService.CurrentUser is null
+            ? States.NotLoggedIn
+            : States.Normal;
 
     private static class States
     {

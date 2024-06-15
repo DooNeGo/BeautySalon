@@ -10,5 +10,5 @@ public sealed record GetSalonQuery : IQuery<Salon>;
 public sealed class GetSalonQueryHandler(IApplicationContext context) : IQueryHandler<GetSalonQuery, Salon>
 {
     public ValueTask<Salon> Handle(GetSalonQuery query, CancellationToken cancellationToken) =>
-        new(context.Salons.AsNoTracking().FirstAsync(cancellationToken));
+        new(context.Salons.FirstAsync(cancellationToken));
 }
