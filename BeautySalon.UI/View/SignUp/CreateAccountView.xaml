@@ -74,6 +74,8 @@
                 Text="{Binding Phone}" />
             <Label Style="{StaticResource ErrorLabelStyle}" Text="{Binding PhoneError}" />
         </VerticalStackLayout>
+        
+        <Label Text="{Binding Error}" Style="{StaticResource ErrorLabelStyle}" />
 
         <Button
             x:Name="FinishButton"

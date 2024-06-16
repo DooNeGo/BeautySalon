@@ -4,6 +4,7 @@ using BeautySalon.Application.Interfaces;
 using BeautySalon.Application.Queries;
 using BeautySalon.Domain;
 using BeautySalon.UI.Messages;
+using CommunityToolkit.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -48,11 +49,12 @@ public sealed partial class AppointmentsViewModel
     {
         cancellationToken.ThrowIfCancellationRequested();
         if (_identityService.CurrentUser is null) return;
+        Guard.IsNotNull(_identityService.CurrentUser.Customer, nameof(_identityService.CurrentUser.Customer));
 
         await Task.Delay(300, cancellationToken).ConfigureAwait(false);
         
         List<Appointment> response = await _mediator
-            .Send(new GetAppointmentsByCustomerIdQuery(_identityService.CurrentUser.Customer!.Id), cancellationToken)
+            .Send(new GetAppointmentsByCustomerIdQuery(_identityService.CurrentUser.Customer.Id), cancellationToken)
             .ConfigureAwait(false);
 
         await Task.Run(response.Sort, cancellationToken).ConfigureAwait(false);

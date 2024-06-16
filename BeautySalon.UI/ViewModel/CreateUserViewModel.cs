@@ -5,11 +5,10 @@ using BeautySalon.Domain;
 using BeautySalon.UI.Attributes;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Mediator;
 
 namespace BeautySalon.UI.ViewModel;
 
-public sealed partial class CreateUserViewModel(IMediator mediator) : ObservableValidator
+public sealed partial class CreateUserViewModel : ObservableValidator
 {
     [Required(ErrorMessage = "*Обязательное поле")]
     [LatinOnly("*Поле должно состоять только из латиницы, 0-9 и _")]
@@ -59,12 +58,9 @@ public sealed partial class CreateUserViewModel(IMediator mediator) : Observable
 
         try
         {
-            Guid id = await mediator
-                .Send(new AddUserCommand(new User(Username, Password, Email)))
-                .ConfigureAwait(false);
-            
+            var user = new User(Username, Password, Email);
             await Shell.Current
-                .GoToAsync(nameof(CreateAccountViewModel), new Dictionary<string, object> { { "UserId", id } })
+                .GoToAsync(nameof(CreateAccountViewModel), new Dictionary<string, object> { { "User", user } })
                 .ConfigureAwait(false);
         }
         catch (Exception e)

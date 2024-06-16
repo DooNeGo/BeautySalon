@@ -4,14 +4,13 @@ public sealed record Customer
 {
     private Customer() { }
 
-    public Customer(string lastName, string firstName, string? middleName, string phone, Guid userId)
+    public Customer(string lastName, string firstName, string? middleName, string phone)
     {
         Id = Guid.NewGuid();
         LastName = lastName;
         FirstName = firstName;
         MiddleName = middleName;
         Phone = phone;
-        UserId = userId;
     }
 
     public Guid Id { get; }
@@ -24,7 +23,7 @@ public sealed record Customer
 
     public string Phone { get; set; } = string.Empty;
     
-    public Guid UserId { get; set; }
+    public Guid UserId { get; init; }
 
     public List<Appointment> Appointments { get; set; } = [];
 }

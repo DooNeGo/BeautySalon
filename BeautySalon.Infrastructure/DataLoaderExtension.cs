@@ -50,20 +50,21 @@ internal static class DataLoaderExtension
         salon.Positions = positions;
         salon.Services = services;
 
-        var user = new User("qwerty", "123123123", "dasdas@gmail.com");
-        var customer = new Customer("dasdas", "dsads", null, "+375447452007", user.Id);
-        user.Customer = customer;
+        var user = new User("qwerty", "123123123", "dasdas@gmail.com")
+        {
+            Customer = new Customer("dasdas", "dsads", null, "+375447452007")
+        };
 
         DateTime now = DateTime.Now;
 
         List<Appointment> appointments =
         [
             new Appointment(new DateTime(DateOnly.FromDateTime(now.AddDays(1)), new TimeOnly(12, 0)), masters[0],
-                customer.Id, [services[1], services[5]]),
+                user.Customer.Id, [services[1], services[5]]),
             new Appointment(new DateTime(DateOnly.FromDateTime(now.AddDays(2)), new TimeOnly(12, 0)), masters[1],
-                customer.Id, [services[2], services[0]]),
+                user.Customer.Id, [services[2], services[0]]),
             new Appointment(new DateTime(DateOnly.FromDateTime(now.AddDays(3)), new TimeOnly(12, 0)), masters[2],
-                customer.Id, [services[3]]),
+                user.Customer.Id, [services[2]]),
         ];
 
         context.Salons.Add(salon);

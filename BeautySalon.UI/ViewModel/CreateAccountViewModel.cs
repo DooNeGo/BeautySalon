@@ -1,11 +1,10 @@
-﻿using BeautySalon.Application.Commands.AddCustomer;
-using BeautySalon.Domain;
+﻿using BeautySalon.Domain;
 using BeautySalon.UI.Attributes;
-using CommunityToolkit.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Mediator;
 using System.ComponentModel.DataAnnotations;
+using BeautySalon.Application.Commands.AddUser;
 
 namespace BeautySalon.UI.ViewModel;
 
@@ -37,12 +36,13 @@ public sealed partial class CreateAccountViewModel(IMediator mediator) : Observa
     private string _phone = string.Empty;
 
     [ObservableProperty] private string _phoneError = string.Empty;
+    [ObservableProperty] private string _error = string.Empty;
 
-    private Guid _userId;
+    private User _user = null!;
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        _userId = (Guid)query["UserId"];
+        _user = (User)query["User"];
     }
 
     [RelayCommand]
@@ -57,11 +57,17 @@ public sealed partial class CreateAccountViewModel(IMediator mediator) : Observa
         UpdateErrorMessages();
 
         if (HasErrors) return;
-        if (_userId == Guid.Empty) ThrowHelper.ThrowInvalidDataException("The user id was empty");
-
-        Customer customer = new(LastName, FirstName, MiddleName, Phone, _userId);
-        await mediator.Send(new AddCustomerCommand(customer)).ConfigureAwait(false);
-        await Shell.Current.GoToAsync($"../../{nameof(LoginViewModel)}").ConfigureAwait(false);
+        
+        try
+        {
+            _user.Customer = new Customer(LastName, FirstName, MiddleName, Phone);
+            await mediator.Send(new AddUserCommand(_user)).ConfigureAwait(false);
+            await Shell.Current.GoToAsync($"../../{nameof(LoginViewModel)}").ConfigureAwait(false);
+        }
+        catch (Exception e)
+        {
+            Error = e.InnerException is not null ? e.InnerException.Message : e.Message;
+        }
     }
 
     private void UpdateErrorMessages()

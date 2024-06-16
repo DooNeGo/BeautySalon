@@ -11,7 +11,7 @@ internal sealed class AddAppointmentCommandHandler(IApplicationContext context)
 {
     public async ValueTask<Guid> Handle(AddAppointmentCommand command, CancellationToken cancellationToken)
     {
-        context.Appointments.Add(command.Appointment);
+        await context.Appointments.AddAsync(command.Appointment, cancellationToken).ConfigureAwait(false);
         await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         return command.Appointment.Id;
     }

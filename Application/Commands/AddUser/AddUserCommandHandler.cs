@@ -1,5 +1,7 @@
 ﻿using BeautySalon.Application.Interfaces;
+using BeautySalon.Domain;
 using Mediator;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace BeautySalon.Application.Commands.AddUser;
 
@@ -7,8 +9,8 @@ public sealed class AddUserCommandHandler(IApplicationContext context) : IComman
 {
     public async ValueTask<Guid> Handle(AddUserCommand command, CancellationToken cancellationToken)
     {
-        Guid id = (await context.Users.AddAsync(command.User, cancellationToken)).Entity.Id;
+        EntityEntry<User> entity = await context.Users.AddAsync(command.User, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
-        return id;
+        return entity.Entity.Id;
     }
 }

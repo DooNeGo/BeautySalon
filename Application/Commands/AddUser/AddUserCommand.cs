@@ -3,4 +3,4 @@ using Mediator;
 
 namespace BeautySalon.Application.Commands.AddUser;
 
-public record AddUserCommand(User User) : ICommand<Guid>;
+public sealed record AddUserCommand(User User) : ICommand<Guid>;
