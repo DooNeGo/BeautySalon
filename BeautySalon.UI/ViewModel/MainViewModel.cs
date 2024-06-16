@@ -31,10 +31,12 @@ public sealed partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private Task ViewAllServices() => Shell.Current.GoToAsync(nameof(ServicesViewModel));
+    private Task ViewAllServices(CancellationToken cancellationToken = default) => 
+        Shell.Current.GoToAsync(nameof(ServicesViewModel)).WaitAsync(cancellationToken);
 
     [RelayCommand]
-    private Task ViewAllMasters() => Shell.Current.GoToAsync(nameof(MastersViewModel));
+    private Task ViewAllMasters(CancellationToken cancellationToken = default) => 
+        Shell.Current.GoToAsync(nameof(MastersViewModel)).WaitAsync(cancellationToken);
 
     [RelayCommand]
     private async Task Refresh()
@@ -53,6 +55,22 @@ public sealed partial class MainViewModel : ObservableObject
             IsRefreshing = false;
         }
     }
+
+    [RelayCommand]
+    private async Task SignUpForService(CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        string? answer = await App.Current.MainPage.DisplayActionSheet("Создание записи", "Отмена",
+            null, "Услуги", "Мастера").WaitAsync(cancellationToken);
+        await GetSignUpAction(answer, cancellationToken).ConfigureAwait(false);
+    }
+
+    private Task GetSignUpAction(string answer, CancellationToken cancellationToken) => answer switch
+    {
+        "Услуги" => ViewAllServices(cancellationToken),
+        "Мастера" => ViewAllMasters(cancellationToken),
+        _ => Task.CompletedTask
+    };
 
     [RelayCommand]
     private async Task LogoutAsync(CancellationToken cancellationToken)

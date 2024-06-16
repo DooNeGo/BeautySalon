@@ -37,6 +37,8 @@ public sealed class MasterScheduleService : IMasterScheduleService
     public async Task<ImmutableArray<TimeOnly>> GetMasterFreeTimeByDateAsync(Guid masterId,
         DateTime dateTime, Guid withoutAppointmentId, CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+        
         List<Appointment> appointments = await _mediator
             .Send(new GetAppointmentsByMasterIdAndDateQuery(masterId, dateTime), cancellationToken)
             .ConfigureAwait(false);
@@ -44,7 +46,7 @@ public sealed class MasterScheduleService : IMasterScheduleService
         if (withoutAppointmentId != Guid.Empty)
         {
             int index = appointments.FindIndex(appointment => appointment.Id == withoutAppointmentId);
-            appointments.RemoveAt(index);
+            if (index is not -1) appointments.RemoveAt(index);
         }
 
         return await CalculateMasterFreeTimeAsync(appointments, cancellationToken).ConfigureAwait(false);
@@ -52,23 +54,26 @@ public sealed class MasterScheduleService : IMasterScheduleService
 
     private Task<ImmutableArray<TimeOnly>> CalculateMasterFreeTimeAsync(IReadOnlyList<Appointment> appointments,
         CancellationToken token = default) => Task.Run(() =>
+    {
+        token.ThrowIfCancellationRequested();
+        ImmutableArray<TimeOnly>.Builder result = _workIntervals.ToBuilder();
+        
+        foreach (Appointment appointment in appointments)
         {
-            List<TimeOnly> result = [.. _workIntervals];
-            foreach (Appointment appointment in appointments)
+            token.ThrowIfCancellationRequested();
+
+            TimeOnly start = TimeOnly.FromTimeSpan(appointment.DateTime.TimeOfDay);
+            TimeOnly end = start.Add(appointment.TotalDuration);
+
+            while (start <= end)
             {
-                token.ThrowIfCancellationRequested();
-                
-                TimeOnly start = TimeOnly.FromTimeSpan(appointment.DateTime.TimeOfDay);
-                TimeOnly end = start.Add(appointment.TotalDuration);
-                
-                while (start <= end)
-                {
-                    result.Remove(start);
-                    start = start.Add(TimeInterval);
-                }
+                result.Remove(start);
+                start = start.Add(TimeInterval);
             }
-            return result.ToImmutableArray();
-        }, token);
+        }
+        
+        return result.ToImmutableArray();
+    }, token);
 
     private ImmutableArray<TimeOnly> GetWorkIntervals()
     {

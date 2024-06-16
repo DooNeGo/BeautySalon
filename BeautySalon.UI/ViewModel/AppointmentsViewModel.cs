@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using BeautySalon.Application.Commands.DeleteAppointment;
 using BeautySalon.Application.Interfaces;
 using BeautySalon.Application.Queries;
 using BeautySalon.Domain;
 using BeautySalon.UI.Messages;
-using CommunityToolkit.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -34,7 +34,9 @@ public sealed partial class AppointmentsViewModel
             IsRefreshing = true;
         };
         identityService.Unauthorized += UpdateCurrentState;
+        
         UpdateCurrentState();
+        IsRefreshing = true;
     }
 
     public void Receive(AppointmentAddedMessage message) => IsRefreshing = true;
@@ -45,9 +47,10 @@ public sealed partial class AppointmentsViewModel
     private async Task RefreshAsync(CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        Guard.IsNotNull(_identityService.CurrentUser, nameof(_identityService.CurrentUser));
+        if (_identityService.CurrentUser is null) return;
 
         await Task.Delay(300, cancellationToken).ConfigureAwait(false);
+        
         List<Appointment> response = await _mediator
             .Send(new GetAppointmentsByCustomerIdQuery(_identityService.CurrentUser.Customer!.Id), cancellationToken)
             .ConfigureAwait(false);
@@ -62,12 +65,17 @@ public sealed partial class AppointmentsViewModel
         Shell.Current.GoToAsync(nameof(StartViewModel)).WaitAsync(cancellationToken);
 
     [RelayCommand]
-    private async Task DeleteAppointment(Appointment appointment)
+    private async Task DeleteAppointmentAsync(Appointment appointment)
     {
         if (await Microsoft.Maui.Controls.Application.Current!.MainPage!.DisplayAlert(
                     "Потвеждение удаления", "Вы точно хотите удалить запись?", "Да", "Нет")
                 .ConfigureAwait(false))
+        {
             Appointments.Remove(appointment);
+            await _mediator
+                .Send(new DeleteAppointmentCommand(appointment.Id))
+                .ConfigureAwait(false);
+        }
     }
 
     [RelayCommand]

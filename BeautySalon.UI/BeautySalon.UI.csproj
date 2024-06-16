@@ -42,7 +42,7 @@
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android34.0|AnyCPU'">
         <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
         <RunAOTCompilation>True</RunAOTCompilation>
-        <AndroidEnableProfiledAot>True</AndroidEnableProfiledAot>
+        <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
         <AndroidLinkTool>r8</AndroidLinkTool>
         <PublishTrimmed>True</PublishTrimmed>
     </PropertyGroup>
@@ -50,7 +50,7 @@
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android34.0|AnyCPU'">
         <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
         <RunAOTCompilation>False</RunAOTCompilation>
-        <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
+        <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
         <AndroidEnableSGenConcurrent>False</AndroidEnableSGenConcurrent>
         <PublishTrimmed>False</PublishTrimmed>
     </PropertyGroup>

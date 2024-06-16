@@ -80,8 +80,13 @@ public sealed partial class ChooseMasterViewModel : ObservableObject, IQueryAttr
             {
                 {
                     "Appointment",
-                    new Appointment(SelectedDateTime, SelectedMaster, _globalContext.Customer.Id, [Service])
-                }
+                    new Appointment(
+                        SelectedDateTime, 
+                        SelectedMaster, 
+                        _globalContext.Customer.Id,
+                        [Service])
+                },
+                { "Action", Action.Add }
             });
     }
 

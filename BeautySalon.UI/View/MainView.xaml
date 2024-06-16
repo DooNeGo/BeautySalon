@@ -40,6 +40,7 @@
                                 BackgroundColor="{StaticResource Primary}"
                                 CornerRadius="40"
                                 FontSize="14"
+                                Command="{Binding SignUpForServiceCommand}"
                                 HorizontalOptions="End"
                                 Text="Записаться"
                                 VerticalOptions="Center" />

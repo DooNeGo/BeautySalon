@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Collections.ObjectModel;
 using BeautySalon.Application.Interfaces;
 using BeautySalon.Application.Queries;
 using BeautySalon.Domain;
@@ -52,31 +51,46 @@ public sealed partial class ChooseServicesViewModel : ObservableObject, IQueryAt
     
     private DateTime SelectedDateTime => SelectedDate.Add(SelectedTime!.Value.ToTimeSpan());
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         if (query.TryGetValue("Appointment", out object? value))
         {
             _appointment = (Appointment)value;
             _master = _appointment.Master;
-            SelectedDate = _appointment.DateTime.Date;
         }
         else
         {
             _master = (Master)query["Master"];
         }
         
-        PropertyChanged += OnPropertyChangedEventHandler;
-        await UpdateMasterFreeTimeAsync().ConfigureAwait(false);
-        await RefreshAsync().ConfigureAwait(false);
+        InitializeAsync().SafeFireAndForget();
+    }
+
+    private async Task InitializeAsync(CancellationToken cancellationToken = default)
+    {
+        await UpdateMasterFreeTimeAsync(cancellationToken).ConfigureAwait(false);
+        await UpdatedServicesAsync(cancellationToken).ConfigureAwait(false);
         
-        if (_appointment is null) return;
-        foreach (SelectableService service in Services)
+        if (_appointment is not null)
         {
-            if (_appointment.Services.TrueForAll(s => s.Id != service.Value.Id)) continue;
+            InitializeSelectedServices();
+            SelectedDate = _appointment.DateTime.Date;
+            SelectedTime = TimeOnly.FromTimeSpan(_appointment.DateTime.TimeOfDay);
+        }
+        
+        PropertyChanged += OnPropertyChangedEventHandler;
+    }
+
+    private void InitializeSelectedServices()
+    {
+        Guard.IsNotNull(_appointment, nameof(_appointment));
+        IEnumerable<SelectableService> selectedServices = Services.Where(service => 
+            !_appointment.Services.TrueForAll(s => s.Id != service.Value.Id));
+
+        foreach (SelectableService service in selectedServices)
+        {
             service.IsSelected = true;
         }
-
-        SelectedTime = TimeOnly.FromTimeSpan(_appointment.DateTime.TimeOfDay);
     }
 
     private void OnPropertyChangedEventHandler(object? s, PropertyChangedEventArgs args)
@@ -87,7 +101,7 @@ public sealed partial class ChooseServicesViewModel : ObservableObject, IQueryAt
     }
 
     [RelayCommand]
-    private async Task RefreshAsync(CancellationToken cancellationToken = default)
+    private async Task UpdatedServicesAsync(CancellationToken cancellationToken = default)
     {
         if (IsRefreshing) return;
         IsRefreshing = true;
@@ -122,17 +136,17 @@ public sealed partial class ChooseServicesViewModel : ObservableObject, IQueryAt
         {
             { "Action", _appointment is null ? Action.Add : Action.Update }
         };
-        
+
         if (_appointment is not null)
         {
-            parameters.Add("Appointment",
-                new Appointment(SelectedDateTime, _master, _globalContext.Customer.Id, selectedServices)
-                    { Id = _appointment.Id });
+            parameters.Add("Appointment", new Appointment(SelectedDateTime,
+                _master, _globalContext.Customer.Id, selectedServices) 
+                { Id = _appointment.Id });   
         }
         else
         {
-            parameters.Add("Appointment",
-                new Appointment(SelectedDateTime, _master, _globalContext.Customer.Id, selectedServices));
+            parameters.Add("Appointment", new Appointment(SelectedDateTime,
+                _master, _globalContext.Customer.Id, selectedServices));
         }
 
         return Shell.Current
