@@ -42,7 +42,6 @@
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android34.0|AnyCPU'">
         <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
         <RunAOTCompilation>True</RunAOTCompilation>
-        <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
         <AndroidLinkTool>r8</AndroidLinkTool>
         <PublishTrimmed>True</PublishTrimmed>
     </PropertyGroup>
@@ -50,8 +49,6 @@
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android34.0|AnyCPU'">
         <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
         <RunAOTCompilation>False</RunAOTCompilation>
-        <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
-        <AndroidEnableSGenConcurrent>False</AndroidEnableSGenConcurrent>
         <PublishTrimmed>False</PublishTrimmed>
     </PropertyGroup>
 
@@ -114,10 +111,16 @@
     </ItemGroup>
 
     <ItemGroup>
+        <MauiXaml Update="CustomControl\AnimatablePage.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
         <MauiXaml Update="CustomControl\MasterItem.xaml">
           <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
         <MauiXaml Update="CustomControl\MenuItem.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="CustomControl\NavigationMasterItem.xaml">
           <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
         <MauiXaml Update="CustomControl\NavigationServiceItem.xaml">
@@ -126,7 +129,31 @@
         <MauiXaml Update="CustomControl\ServiceItem.xaml">
           <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
+        <MauiXaml Update="CustomControl\SimpleServiceItem.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
         <MauiXaml Update="View\AppointmentsView.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="View\ChooseMasterView.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="View\ChooseServicesView.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="View\ConfirmAppointmentView.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="View\MastersView.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="View\MasterView.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="View\ServicesView.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="View\ServiceView.xaml">
           <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
         <MauiXaml Update="View\SignUp\CreateAccountView.xaml">
@@ -148,12 +175,6 @@
           <SubType>Designer</SubType>
           <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Update="View\LoginView.xaml">
-            <Generator>MSBuild:Compile</Generator>
-        </None>
     </ItemGroup>
 
 </Project>
